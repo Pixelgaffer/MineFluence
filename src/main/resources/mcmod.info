@@ -1,14 +1,14 @@
 [
 {
-  "modid": "examplemod",
-  "name": "Example Mod",
-  "description": "Example placeholder mod.",
+  "modid": "minefluence",
+  "name": "Mine Fluence",
+  "description": "Epischer Mod der Epischkeit",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
-  "authorList": ["ExampleDude"],
-  "credits": "The Forge and FML guys, for making this example",
+  "authorList": ["nicosio2", "msrd0"],
+  "credits": "",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []
