@@ -94,7 +94,7 @@ public class MachineBlocks extends BlockContainer {
 			if(side == 2) {
 				return inputFront;
 			}
-			if(side == 4) {
+			if(side == 3) {
 				return inputBack;
 			}
 			return inputSide;
@@ -158,8 +158,8 @@ public class MachineBlocks extends BlockContainer {
 		workerTop = iconRegister.registerIcon("minefluence:mblock_worker_top");
 		workerBottom = iconRegister.registerIcon("minefluence:mblock_worker_bottom");
 		workerSide = iconRegister.registerIcon("minefluence:mblock_worker_side");
-		workerFront = iconRegister.registerIcon("minefluence:mblock_output_front");
-		workerBack = iconRegister.registerIcon("minefluence:mblock_output_back");
+		workerFront = iconRegister.registerIcon("minefluence:mblock_worker_front");
+		workerBack = iconRegister.registerIcon("minefluence:mblock_worker_back");
 	}
 	
 	@Override
