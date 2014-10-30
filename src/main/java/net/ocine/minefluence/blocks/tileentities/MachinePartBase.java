@@ -1,29 +1,31 @@
 package net.ocine.minefluence.blocks.tileentities;
 
-public class MachinePartBase implements IMachinePart{
+public class MachinePartBase{
     private Machine machine;
-    @Override
+    private IMachinePart part;
+
+    public MachinePartBase(IMachinePart part) {
+        this.part = part;
+    }
+
     public Machine getMachine() {
         return machine;
     }
 
-    @Override
     public boolean isPartOfMachine() {
         return machine != null;
     }
 
-    @Override
     public boolean assignToMachine(Machine machine, boolean force) {
         if(isPartOfMachine() && !force)return false;
         this.machine = machine;
-        machine.addPart(this);
+        machine.addPart(part);
         return true;
     }
 
-    @Override
     public boolean removeFromMachine() {
         if(!isPartOfMachine())return false;
-        machine.removePart(this);
+        machine.removePart(part);
         machine = null;
         return true;
     }

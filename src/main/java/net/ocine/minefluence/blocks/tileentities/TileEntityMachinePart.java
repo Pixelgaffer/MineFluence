@@ -7,7 +7,11 @@ import javax.annotation.Nullable;
 
 public abstract class TileEntityMachinePart extends TileEntity implements IMachinePart {
 	
-	MachinePartBase machinePartBase = new MachinePartBase();
+	MachinePartBase machinePartBase;
+
+    protected TileEntityMachinePart() {
+        machinePartBase = new MachinePartBase(this);
+    }
 
     @Nullable
     @Override
