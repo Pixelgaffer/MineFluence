@@ -64,11 +64,11 @@ public class Algorithm {
      * @param toRemove
      * @return list of remaining items or null if not applicable
      */
-    public List<ItemStack> getRemaining(ItemStack input, ItemStack toRemove){
+    public static List<ItemStack> getRemaining(ItemStack input, ItemStack toRemove){
         throw new ExplosionExeption();
     }
 
-    public boolean areItemsSame(ItemStack item1, ItemStack item2){
+    public static boolean areItemsSame(ItemStack item1, ItemStack item2){
         return item1.isItemEqual(item2);
     }
 }
