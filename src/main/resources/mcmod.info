@@ -1,7 +1,7 @@
 [
 {
   "modid": "minefluence",
-  "name": "Mine Fluence",
+  "name": "MineFluence",
   "description": "Epischer Mod der Epischkeit",
   "version": "${version}",
   "mcversion": "${mcversion}",
