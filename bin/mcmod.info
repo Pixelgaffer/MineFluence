@@ -1,0 +1,16 @@
+[
+{
+  "modid": "minefluence",
+  "name": "Mine Fluence",
+  "description": "Epischer Mod der Epischkeit",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["nicosio2", "msrd0"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
