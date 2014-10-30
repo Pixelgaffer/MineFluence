@@ -1,17 +1,7 @@
 package net.ocine.minefluence.blocks.tileentities;
 
-<<<<<<< HEAD
 public class MachinePartBase implements IMachinePart{
     private Machine machine;
-
-=======
-import javax.annotation.Nullable;
-
-public class MachinePartBase implements IMachinePart{
-    private Machine machine;
-
-    @Nullable
->>>>>>> origin/master
     @Override
     public Machine getMachine() {
         return machine;
