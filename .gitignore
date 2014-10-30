@@ -3,3 +3,10 @@
 **/*.log
 **/*.jar
 **/*~
+.gradle/
+eclipse/
+
+# IntelliJ
+.idea/
+.metadata/
+*.iml
