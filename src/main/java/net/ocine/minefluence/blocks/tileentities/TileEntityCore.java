@@ -2,7 +2,7 @@ package net.ocine.minefluence.blocks.tileentities;
 
 import net.ocine.minefluence.blocks.MachineBlocks.Machines;
 
-public class TileEntityCore extends TileEntityMachineBlock {
+public class TileEntityCore extends TileEntityMachinePart {
 		
 	private int counter = 0;
 	@Override
