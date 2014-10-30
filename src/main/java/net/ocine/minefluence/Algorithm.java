@@ -59,13 +59,38 @@ public class Algorithm {
 	}
 
     /**
-     * does magic
+     * Subtracts the elements from input with toRemove.
      * @param input
      * @param toRemove
      * @return list of remaining items or null if not applicable
      */
-    public static List<ItemStack> getRemaining(ItemStack input, ItemStack toRemove){
-        throw new ExplosionExeption();
+    public static List<ItemStack> getRemaining (List<ItemStack> input, Collection<ItemStack> toRemove)
+    {
+        LinkedList<ItemStack> result = new LinkedList(input);
+        
+        // clone objects
+        for (ItemStack stack : input)
+	    result.addLast(new ItemStack(stack));
+        
+        // subtract lists
+        for (ItemStack del : toRemove)
+        {
+	    ItemStack rm = new ItemStack(del);
+	    for (ItemStack in : result)
+	    {
+		if (areItemsSame(rm, in))
+		{
+		    int subtract = Math.min(in.stackSize, rm.stackSize);
+		    in.stackSize -= subtract;
+		    rm.stackSize -
+		}
+		if (rm.stackSize <= 0)
+		    break;
+	    }
+        }
+        
+        // finished
+        return result;
     }
 
     public static boolean areItemsSame(ItemStack item1, ItemStack item2){
