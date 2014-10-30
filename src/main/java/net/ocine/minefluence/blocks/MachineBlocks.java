@@ -8,7 +8,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import net.ocine.minefluence.blocks.tileentities.IMachineBlock;
+import net.ocine.minefluence.blocks.tileentities.IMachinePart;
 import net.ocine.minefluence.blocks.tileentities.InventoryTileEntity;
 import net.ocine.minefluence.blocks.tileentities.TileEntityCore;
 import net.ocine.minefluence.blocks.tileentities.TileEntityDisplay;
@@ -36,7 +36,7 @@ public class MachineBlocks extends BlockContainer {
 	
 	@Override
 	public void onBlockPreDestroy(World world, int x, int y, int z, int metadata) {
-		IMachineBlock machineBlock = (IMachineBlock)world.getTileEntity(x, y, z);
+		IMachinePart machineBlock = (IMachinePart)world.getTileEntity(x, y, z);
 		if(machineBlock == null) {
 			return;
 		}

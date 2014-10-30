@@ -1,9 +1,8 @@
 package net.ocine.minefluence.blocks.tileentities;
 
-import net.ocine.minefluence.blocks.MachineBlocks.Machines;
+import net.minecraft.tileentity.TileEntity;
 
-public class TileEntityCore extends TileEntityMachineBlock {
-		
+public class TileEntityCore extends TileEntity implements Machine {
 	private int counter = 0;
 	@Override
 	public void updateEntity() {
@@ -14,8 +13,32 @@ public class TileEntityCore extends TileEntityMachineBlock {
 		counter++;
 	}
 	
-	@Override
-	public Machines getType() {
-		return Machines.CORE;
-	}
+	public Machine getMachine(){
+        return this;
+    }
+
+    @Override
+    public void addPart(IMachinePart machinePart) {
+
+    }
+
+    @Override
+    public void removePart(IMachinePart machinePart) {
+
+    }
+
+    @Override
+    public int getX() {
+        return xCoord;
+    }
+
+    @Override
+    public int getY() {
+        return yCoord;
+    }
+
+    @Override
+    public int getZ() {
+        return zCoord;
+    }
 }
