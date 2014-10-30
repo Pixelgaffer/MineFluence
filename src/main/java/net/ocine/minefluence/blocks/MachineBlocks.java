@@ -7,6 +7,9 @@ import net.minecraft.world.World;
 import net.ocine.minefluence.blocks.tileentities.IMachineBlock;
 import net.ocine.minefluence.blocks.tileentities.InventoryTileEntity;
 import net.ocine.minefluence.blocks.tileentities.TileEntityCore;
+import net.ocine.minefluence.blocks.tileentities.TileEntityDisplay;
+import net.ocine.minefluence.blocks.tileentities.TileEntityInput;
+import net.ocine.minefluence.blocks.tileentities.TileEntityOutput;
 import net.ocine.minefluence.blocks.tileentities.TileEntityWorker;
 
 public class MachineBlocks extends BlockContainer {
@@ -37,13 +40,13 @@ public class MachineBlocks extends BlockContainer {
 			return new TileEntityCore();
 		}
 		if(metadata == Machines.DISPLAY.ordinal()) {
-			return new TileEntity();
+			return new TileEntityDisplay();
 		}
 		if(metadata == Machines.INPUT.ordinal()) {
-			return new TileEntity();
+			return new TileEntityInput();
 		}
 		if(metadata == Machines.OUTPUT.ordinal()) {
-			return new TileEntity();
+			return new TileEntityOutput();
 		}
 		if(metadata == Machines.WORKER.ordinal()) {
 			return new TileEntityWorker();

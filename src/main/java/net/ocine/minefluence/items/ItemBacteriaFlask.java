@@ -18,7 +18,7 @@ public class ItemBacteriaFlask extends Item {
 		setHasSubtypes(true);
 		//setMaxDamage(0);
 		setCreativeTab(tab);
-		bacterias.add(new Bacteria(0xff0000, "redk"));
+		bacterias.add(new Bacteria(0xff0000, "red"));
 		bacterias.add(new Bacteria(0x00ff00, "green"));
 		bacterias.add(new Bacteria(0x0000ff, "blue"));
 		System.out.println("Registering Item");
