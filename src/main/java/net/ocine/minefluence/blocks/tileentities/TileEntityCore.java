@@ -41,6 +41,10 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
         }
 	}
 
+    private void startNewProcess() {
+        throw new ExplosionExeption();
+    }
+
     private void finishProcess() {
         throw new ExplosionExeption();
     }
