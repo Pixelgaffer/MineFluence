@@ -10,3 +10,9 @@ eclipse/
 .idea/
 .metadata/
 *.iml
+
+# minecraft files
+saves/
+options.txt
+usernamecache.json
+bin/
