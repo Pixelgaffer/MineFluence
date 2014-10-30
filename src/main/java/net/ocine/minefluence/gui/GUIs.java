@@ -3,6 +3,7 @@ package net.ocine.minefluence.gui;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.ocine.minefluence.blocks.containers.ContainerInput;
+import net.ocine.minefluence.blocks.containers.ContainerOutput;
 import net.ocine.minefluence.blocks.tileentities.InventoryTileEntity;
 
 public enum GUIs {
@@ -14,6 +15,15 @@ public enum GUIs {
 	}, new ContainerCreator() {
 		public Object getContainer(World world, EntityPlayer player, int x, int y, int z) {
 			return new ContainerInput(player.inventory, (InventoryTileEntity) world.getTileEntity(x, y, z));
+		}
+	}), 
+	OUTPUT(new GuiCreator() {
+		public Object getGuiScreen(World world, EntityPlayer player, int x, int y, int z) {
+			return new GuiOutput(player.inventory, (InventoryTileEntity) world.getTileEntity(x, y, z));
+		}
+	}, new ContainerCreator() {
+		public Object getContainer(World world, EntityPlayer player, int x, int y, int z) {
+			return new ContainerOutput(player.inventory, (InventoryTileEntity) world.getTileEntity(x, y, z));
 		}
 	});
 	
