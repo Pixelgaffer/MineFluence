@@ -7,7 +7,7 @@ import net.ocine.minefluence.blocks.MachineBlocks;
 public class TileEntityOutput extends TileEntityGuiMachinePart {
 	
 	public TileEntityOutput() {
-		super(1);
+		super(1, "tileEntityOutput");
 	}
 
     @Override
