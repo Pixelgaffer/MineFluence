@@ -11,14 +11,17 @@ public abstract class AbstractMachineLogic {
 
     String name;
 
-    public AbstractMachineLogic(String name) {
+    int processTime;
+
+    protected AbstractMachineLogic(String name, int processTime) {
         this.name = name;
+        this.processTime = processTime;
     }
 
     /**
      * Hi
      * @param items items in the input blocks
-     * @return items to be transfered into the core
+     * @return items to be transferred into the core
      */
     public abstract Collection<ItemStack> getInput(Collection<ItemStack> items);
 
