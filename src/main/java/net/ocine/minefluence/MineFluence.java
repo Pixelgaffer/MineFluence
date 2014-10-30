@@ -2,6 +2,7 @@ package net.ocine.minefluence;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.ocine.minefluence.blocks.Blocks;
 import net.ocine.minefluence.gui.GuiHandler;
 import net.ocine.minefluence.items.Items;
 import net.ocine.minefluence.proxys.CommonProxy;
@@ -36,6 +37,7 @@ public class MineFluence {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		Items.initItems(minefluenceTab);
+		Blocks.initBlocks(minefluenceTab);
 	}
 	
 	@EventHandler
