@@ -1,12 +1,13 @@
 package net.ocine.minefluence.blocks;
 
+import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
 public class MachineBlocksItemBlock extends ItemBlock {
 	
-	public MachineBlocksItemBlock() {
-		super(Blocks.machineBlocks);
+	public MachineBlocksItemBlock(Block block) {
+		super(block);
 		setHasSubtypes(true);
 	}
 	
