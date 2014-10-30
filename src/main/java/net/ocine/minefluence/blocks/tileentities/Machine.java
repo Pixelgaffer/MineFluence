@@ -1,5 +1,7 @@
 package net.ocine.minefluence.blocks.tileentities;
 
+import net.minecraft.item.ItemStack;
+
 import java.util.Collection;
 
 public interface Machine {
@@ -29,4 +31,12 @@ public interface Machine {
     public int getRemainingTime();
 
     public int getProcessTime();
+
+    public ItemStack[] getInputInventory();
+
+    public void setInputInventory(ItemStack[] inv);
+
+    public ItemStack[] getOutputInventory();
+
+    public void setOutputInventory(ItemStack[] inv);
 }
