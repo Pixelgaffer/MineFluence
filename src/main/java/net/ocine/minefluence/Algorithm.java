@@ -73,6 +73,7 @@ public class Algorithm {
             result.addLast(stack == null ? null : stack.copy());
 
         // subtract lists
+<<<<<<< HEAD
         for (ItemStack del : toRemove) {
             if (del == null)
                 continue;
@@ -90,6 +91,33 @@ public class Algorithm {
                 if (rm.stackSize <= 0)
                     break;
             }
+=======
+        for (ItemStack del : toRemove)
+        {
+	    if (del == null)
+		continue;
+	    ItemStack rm = del.copy();
+	    
+	    // remove items from inventory
+	    for (ItemStack in : result)
+	    {
+		if (in == null)
+		    continue;
+		
+		if (areItemsSame(rm, in))
+		{
+		    int subtract = Math.min(in.stackSize, rm.stackSize);
+		    in.stackSize -= subtract;
+		    rm.stackSize -= subtract;
+		}
+		if (rm.stackSize <= 0)
+		    break;
+	    }
+	    
+	    // if not all required items found in the inventory, return null
+	    if (rm.stackSize > 0)
+		return null;
+>>>>>>> origin/master
         }
 
         // finished
