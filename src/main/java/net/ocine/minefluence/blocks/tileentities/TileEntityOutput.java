@@ -8,9 +8,4 @@ public class TileEntityOutput extends TileEntityGuiMachinePart {
 		super(1);
 	}
 
-	@Override
-	public Machines getType() {
-		return Machines.OUTPUT;
-	}
-
 }
