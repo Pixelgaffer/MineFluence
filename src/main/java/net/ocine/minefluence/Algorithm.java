@@ -66,7 +66,7 @@ public class Algorithm {
      */
     public static List<ItemStack> getRemaining (List<ItemStack> input, Collection<ItemStack> toRemove)
     {
-        LinkedList<ItemStack> result = new LinkedList(input);
+        LinkedList<ItemStack> result = new LinkedList();
         
         // clone objects
         for (ItemStack stack : input)
@@ -94,13 +94,52 @@ public class Algorithm {
     }
 
     /**
-     * adds a collection of items into an inventory represented by a Itemstack array
+     * Adds a Collection of items into an inventory represented by a ItemStack array.
      * @param inv the inventory
      * @param toMerge items to add
      * @return the same array as inv or null if unable to merge
      */
-    public static ItemStack[] mergeItems(ItemStack[] inv, Collection<ItemStack> toMerge){
-        throw new ExplosionExeption();
+    public static ItemStack[] mergeItems (ItemStack[] inv, Collection<ItemStack> toMerge)
+    {
+	// deep clone inventory
+	ItemStack[] result = new ItemStack[inv.length];
+	for (int i = 0; i < inv.length; i++)
+	    result[i] = inv[i].copy();
+	
+	for (ItemStack stack : toMerge)
+	{
+	    ItemStack add = stack.copy();
+	    
+	    // try to add all elements from the stack to existing stacks in the inventory
+	    for (int i = 0; i < result.length; i++)
+	    {
+		ItemStack s = result[i];
+		int cap = stack.getMaxStackSize() - stack.stackSize;
+		int addition = Math.min(add.stackSize, stack.stackSize);
+		add.stackSize -= addition;
+		s.stackSize += addition;
+	    }
+	    
+	    // if there are still elements in the stack, try to create a new stack in the inventory
+	    if (add.stackSize > 0)
+	    {
+		for (int i = 0; i < result.length; i++)
+		{
+		    if (result[i] == null)
+		    {
+			result[i] = add.copy();
+			add.stackSize = 0;
+		    }
+		}
+	    }
+	    
+	    // if there are still elements in the stack, with means that no place in the inventory is
+	    // empty, return null
+	    if (add.stackSize > 0)
+		return null;
+	}
+	
+	return result;
     }
 
     public static boolean areItemsSame(ItemStack item1, ItemStack item2){
