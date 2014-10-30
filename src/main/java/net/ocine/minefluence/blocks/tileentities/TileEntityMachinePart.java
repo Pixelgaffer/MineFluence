@@ -35,29 +35,14 @@ public abstract class TileEntityMachinePart extends TileEntity implements IMachi
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound) {
-        super.readFromNBT(compound);
-        if(!compound.hasKey("magic"))return;
-        NBTTagCompound magic = compound.getCompoundTag("magic");
-        int x = magic.getInteger("x");
-        int y = magic.getInteger("y");
-        int z = magic.getInteger("z");
-        TileEntity core = worldObj.getTileEntity(x,y,z);
-        if(core instanceof TileEntityCore){
-            Machine machine = ((TileEntityCore) core).getMachine();
-            machinePartBase.assignToMachine(machine, true);
-        }
+    public void readFromNBT(NBTTagCompound p_145839_1_) {
+        super.readFromNBT(p_145839_1_);
+        machinePartBase.readFromNBT(p_145839_1_);
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound) {
-        super.writeToNBT(compound);
-        if(machinePartBase.isPartOfMachine()){
-            NBTTagCompound magic = new NBTTagCompound();
-            magic.setInteger("x", machinePartBase.getMachine().getX());
-            magic.setInteger("y", machinePartBase.getMachine().getY());
-            magic.setInteger("z", machinePartBase.getMachine().getZ());
-            compound.setTag("magic", magic);
-        }
+    public void writeToNBT(NBTTagCompound p_145841_1_) {
+        super.writeToNBT(p_145841_1_);
+        machinePartBase.writeToNBT(p_145841_1_);
     }
 }
