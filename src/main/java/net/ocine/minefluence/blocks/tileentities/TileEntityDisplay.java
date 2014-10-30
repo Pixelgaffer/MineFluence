@@ -2,15 +2,11 @@ package net.ocine.minefluence.blocks.tileentities;
 
 import net.ocine.minefluence.blocks.MachineBlocks.Machines;
 
-public class TileEntityOutput extends TileEntityGuiMachineBlock {
-	
-	public TileEntityOutput() {
-		super(1);
-	}
+public class TileEntityDisplay extends TileEntityMachineBlock {
 
 	@Override
 	public Machines getType() {
-		return Machines.OUTPUT;
-	}
+		return Machines.DISPLAY;
+	}	
 
 }
