@@ -70,19 +70,19 @@ public class Algorithm {
         
         // clone objects
         for (ItemStack stack : input)
-	    result.addLast(new ItemStack(stack));
+	    result.addLast(stack.copy());
         
         // subtract lists
         for (ItemStack del : toRemove)
         {
-	    ItemStack rm = new ItemStack(del);
+	    ItemStack rm = del.copy();
 	    for (ItemStack in : result)
 	    {
 		if (areItemsSame(rm, in))
 		{
 		    int subtract = Math.min(in.stackSize, rm.stackSize);
 		    in.stackSize -= subtract;
-		    rm.stackSize -
+		    rm.stackSize -= subtract;
 		}
 		if (rm.stackSize <= 0)
 		    break;
