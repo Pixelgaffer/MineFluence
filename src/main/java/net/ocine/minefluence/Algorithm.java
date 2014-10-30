@@ -79,6 +79,7 @@ public class Algorithm {
 		continue;
 	    ItemStack rm = del.copy();
 	    
+	    // remove items from inventory
 	    for (ItemStack in : result)
 	    {
 		if (in == null)
@@ -93,6 +94,10 @@ public class Algorithm {
 		if (rm.stackSize <= 0)
 		    break;
 	    }
+	    
+	    // if not all required items found in the inventory, return null
+	    if (rm.stackSize > 0)
+		return null;
         }
         
         // finished
