@@ -3,3 +3,7 @@
 **/*.log
 **/*.jar
 **/*~
+saves/
+options.txt
+usernamecache.json
+bin/
