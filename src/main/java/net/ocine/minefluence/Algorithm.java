@@ -117,11 +117,10 @@ public class Algorithm {
                 if (s == null)
                     continue;
 
-                if (areItemsSame(s, add))
-                {
-		    int addition = Math.min(add.stackSize, s.getMaxStackSize() - s.stackSize);
-		    add.stackSize -= addition;
-		    s.stackSize += addition;
+                if (areItemsSame(s, add)) {
+                    int addition = Math.min(add.stackSize, s.getMaxStackSize() - s.stackSize);
+                    add.stackSize -= addition;
+                    s.stackSize += addition;
                 }
             }
 
