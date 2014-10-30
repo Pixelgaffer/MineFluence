@@ -5,6 +5,7 @@ import net.minecraft.world.World;
 import net.ocine.minefluence.blocks.containers.ContainerInput;
 import net.ocine.minefluence.blocks.containers.ContainerOutput;
 import net.ocine.minefluence.blocks.tileentities.InventoryTileEntity;
+import net.ocine.minefluence.blocks.tileentities.TileEntityDisplay;
 
 public enum GUIs {
 	
@@ -25,13 +26,19 @@ public enum GUIs {
 		public Object getContainer(World world, EntityPlayer player, int x, int y, int z) {
 			return new ContainerOutput(player.inventory, (InventoryTileEntity) world.getTileEntity(x, y, z));
 		}
-	});
-	
-	private static final ContainerCreator ITEM_GUI_CONTAINER_CREATOR = new ContainerCreator() {
-		public Object getContainer(World world, EntityPlayer player, int x, int y, int z) {
-			return new Object();
+	}), DISPLAY(new GuiCreator() {
+		public Object getGuiScreen(World world, EntityPlayer player, int x, int y, int z) {
+			return new GuiDisplay((TileEntityDisplay) world.getTileEntity(x, y, z));
 		}
-	};
+	}, getEmptyContainerCreator());
+	
+	public static final ContainerCreator getEmptyContainerCreator() {
+		return new ContainerCreator() {
+			public Object getContainer(World world, EntityPlayer player, int x, int y, int z) {
+				return null;
+			}
+		};
+	}
 	
 	private GuiCreator guiCreator;
 	private ContainerCreator containerCreator;

@@ -70,6 +70,10 @@ public class MachineBlocks extends BlockContainer {
 			player.openGui(MineFluence.instance, GUIs.OUTPUT.ordinal(), world, x, y, z);
 			return true;
 		}
+		if (tileEntity instanceof TileEntityDisplay) {
+			player.openGui(MineFluence.instance, GUIs.DISPLAY.ordinal(), world, x, y, z);
+			return true;
+		}
 		return false;
 	}
 
