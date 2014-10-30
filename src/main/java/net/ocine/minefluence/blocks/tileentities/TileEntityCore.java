@@ -11,7 +11,7 @@ import java.util.List;
 public class TileEntityCore extends TileEntity implements Machine, IMachinePart {
     List<IMachinePart> parts = new ArrayList<IMachinePart>();
 	private int counter = 0;
-    private AbstractMaschineLogic logic;
+    private AbstractMachineLogic logic;
 
 	@Override
 	public void updateEntity() {
@@ -86,7 +86,7 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
     }
 
     @Override
-    public AbstractMaschineLogic getLogic() {
+    public AbstractMachineLogic getLogic() {
         return logic;
     }
 

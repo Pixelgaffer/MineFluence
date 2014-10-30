@@ -18,5 +18,5 @@ public interface Machine {
 
     public boolean isActive();
 
-    public AbstractMaschineLogic getLogic();
+    public AbstractMachineLogic getLogic();
 }
