@@ -4,7 +4,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.ocine.minefluence.Algorithm;
-import net.ocine.minefluence.ExplosionExeption;
 import net.ocine.minefluence.blocks.MachineBlocks;
 import scala.actors.threadpool.Arrays;
 
@@ -81,7 +80,9 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
     public boolean assignToMachine(Machine machine, boolean force) {
         if(machine == this)return true;
         // NO THIS CAN'T BE
-        throw new ExplosionExeption();
+        TileEntityCore core2 = (TileEntityCore) machine;
+        core2.worldObj.setBlockToAir(getX(), getY(), getZ());
+        return false;
     }
 
     @Override

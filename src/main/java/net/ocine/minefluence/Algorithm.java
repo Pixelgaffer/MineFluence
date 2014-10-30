@@ -66,18 +66,24 @@ public class Algorithm {
      */
     public static List<ItemStack> getRemaining (List<ItemStack> input, Collection<ItemStack> toRemove)
     {
-        LinkedList<ItemStack> result = new LinkedList();
+        LinkedList<ItemStack> result = new LinkedList<ItemStack>();
         
         // clone objects
         for (ItemStack stack : input)
-	    result.addLast(stack.copy());
+	    result.addLast(stack==null ? null : stack.copy());
         
         // subtract lists
         for (ItemStack del : toRemove)
         {
+	    if (del == null)
+		continue;
 	    ItemStack rm = del.copy();
+	    
 	    for (ItemStack in : result)
 	    {
+		if (in == null)
+		    continue;
+		
 		if (areItemsSame(rm, in))
 		{
 		    int subtract = Math.min(in.stackSize, rm.stackSize);
@@ -104,7 +110,7 @@ public class Algorithm {
 	// deep clone inventory
 	ItemStack[] result = new ItemStack[inv.length];
 	for (int i = 0; i < inv.length; i++)
-	    result[i] = inv[i].copy();
+	    result[i] = (inv[i]==null ? null : inv[i].copy());
 	
 	for (ItemStack stack : toMerge)
 	{
@@ -114,6 +120,9 @@ public class Algorithm {
 	    for (int i = 0; i < result.length; i++)
 	    {
 		ItemStack s = result[i];
+		if (s == null)
+		    continue;
+		
 		int cap = stack.getMaxStackSize() - stack.stackSize;
 		int addition = Math.min(add.stackSize, stack.stackSize);
 		add.stackSize -= addition;
@@ -143,6 +152,6 @@ public class Algorithm {
     }
 
     public static boolean areItemsSame(ItemStack item1, ItemStack item2){
-        return item1.isItemEqual(item2);
+        return ((item1 != null) && item1.isItemEqual(item2));
     }
 }
