@@ -20,13 +20,6 @@ public class InventoryContainer extends Container {
 
 	public InventoryContainer(InventoryPlayer inventoryPlayer, InventoryTileEntity tileEntity) {
 		this.tileEntity = tileEntity;
-
-		for (int i = 0; i < 3; i++) {
-			for (int j = 0; j < 3; j++) {
-				addSlotToContainer(new Slot(tileEntity, j + i * 3, 62 + j * 18, 17 + i * 18));
-			}
-		}
-
 		bindPlayerInventory(inventoryPlayer);
 	}
 

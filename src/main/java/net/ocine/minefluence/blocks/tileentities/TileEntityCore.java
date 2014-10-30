@@ -6,6 +6,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.ocine.minefluence.Algorithm;
 import net.ocine.minefluence.ExplosionExeption;
 import net.ocine.minefluence.blocks.MachineBlocks;
+import scala.actors.threadpool.Arrays;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -42,11 +43,28 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
 	}
 
     private void startNewProcess() {
-        throw new ExplosionExeption();
+        List<ItemStack> newInv = Algorithm.getRemaining(Arrays.asList(getInputInventory()), logic.getInput(Arrays.asList(getInputInventory())));
+        if(newInv != null){
+            // can start - check whether we have place for output
+            if(Algorithm.mergeItems(getOutputInventory(), logic.getInput(Arrays.asList(getInputInventory()))) != null){
+                // yes we can
+                remainingTime = getProcessTime();
+                items = logic.getInput(Arrays.asList(getInputInventory()));
+                ItemStack arr[] = new ItemStack[getInputs()];
+                for(int i = 0; i < getInputs(); i++){
+                    arr[i] = newInv.get(i);
+                    if(arr[i].stackSize <= 0)arr[i] = null;
+                }
+                setInputInventory(arr);
+            }
+        }
     }
 
     private void finishProcess() {
-        throw new ExplosionExeption();
+        Collection<ItemStack> result = getLogic().getOutput(items);
+        setOutputInventory(Algorithm.mergeItems(getOutputInventory(), result));
+        items = null;
+        remainingTime = 0;
     }
 
     public Machine getMachine(){
@@ -159,6 +177,58 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
     @Override
     public int getProcessTime() {
         return logic.processTime/getWorkers();
+    }
+
+    @Override
+    public ItemStack[] getInputInventory() {
+        ItemStack[] inv = new ItemStack[getInputs()];
+        int i = 0;
+        for(IMachinePart part: parts){
+            if(part instanceof TileEntityInput){
+                TileEntityInput input = (TileEntityInput) part;
+                inv[i] = input.getStackInSlot(0);
+                i++;
+            }
+        }
+        return inv;
+    }
+
+    @Override
+    public void setInputInventory(ItemStack[] inv) {
+        int i = 0;
+        for(IMachinePart part: parts){
+            if(part instanceof TileEntityInput){
+                TileEntityInput input = (TileEntityInput) part;
+                input.setInventorySlotContents(0, inv[i]);
+                i++;
+            }
+        }
+    }
+
+    @Override
+    public ItemStack[] getOutputInventory() {
+        ItemStack[] inv = new ItemStack[getInputs()];
+        int i = 0;
+        for(IMachinePart part: parts){
+            if(part instanceof TileEntityOutput){
+                TileEntityOutput input = (TileEntityOutput) part;
+                inv[i] = input.getStackInSlot(0);
+                i++;
+            }
+        }
+        return inv;
+    }
+
+    @Override
+    public void setOutputInventory(ItemStack[] inv) {
+        int i = 0;
+        for(IMachinePart part: parts){
+            if(part instanceof TileEntityOutput){
+                TileEntityOutput input = (TileEntityOutput) part;
+                input.setInventorySlotContents(0, inv[i]);
+                i++;
+            }
+        }
     }
 
     @Override
