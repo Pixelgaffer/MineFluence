@@ -1,5 +1,6 @@
 package net.ocine.minefluence;
 
+import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.ocine.minefluence.blocks.tileentities.IMachinePart;
 
@@ -56,4 +57,18 @@ public class Algorithm {
         s.add(pos);
 		for (Vector opos : pos.getNeighbors()) f(opos, w, s);
 	}
+
+    /**
+     * does magic
+     * @param input
+     * @param toRemove
+     * @return list of remaining items or null if not applicable
+     */
+    public List<ItemStack> getRemaining(ItemStack input, ItemStack toRemove){
+        throw new ExplosionExeption();
+    }
+
+    public boolean areItemsSame(ItemStack item1, ItemStack item2){
+        return item1.isItemEqual(item2);
+    }
 }
