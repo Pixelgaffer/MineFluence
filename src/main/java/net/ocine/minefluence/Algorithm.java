@@ -109,31 +109,24 @@ public class Algorithm {
      * @return the same array as inv or null if unable to merge
      */
     public static ItemStack[] mergeItems(ItemStack[] inv, Collection<ItemStack> toMerge) {
-        // deep clone inventory
-        ItemStack[] result = new ItemStack[inv.length];
-        for (int i = 0; i < inv.length; i++)
-            result[i] = (inv[i] == null ? null : inv[i].copy());
-
         for (ItemStack stack : toMerge) {
             ItemStack add = stack.copy();
 
             // try to add all elements from the stack to existing stacks in the inventory
-            for (int i = 0; i < result.length; i++) {
-                ItemStack s = result[i];
+            for (ItemStack s : inv) {
                 if (s == null)
                     continue;
 
-                int cap = stack.getMaxStackSize() - stack.stackSize;
-                int addition = Math.min(add.stackSize, stack.stackSize);
+                int addition = Math.min(add.stackSize, stack.getMaxStackSize() - stack.stackSize);
                 add.stackSize -= addition;
                 s.stackSize += addition;
             }
 
             // if there are still elements in the stack, try to create a new stack in the inventory
             if (add.stackSize > 0) {
-                for (int i = 0; i < result.length; i++) {
-                    if (result[i] == null) {
-                        result[i] = add.copy();
+                for (int i = 0; i < inv.length; i++) {
+                    if (inv[i] == null) {
+                        inv[i] = add.copy();
                         add.stackSize = 0;
                     }
                 }
@@ -145,7 +138,7 @@ public class Algorithm {
                 return null;
         }
 
-        return result;
+        return inv;
     }
 
     public static boolean areItemsSame(ItemStack item1, ItemStack item2) {
