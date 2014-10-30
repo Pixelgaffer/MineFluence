@@ -65,7 +65,7 @@ public class MachineBlocks extends BlockContainer {
 			if(side == 2) {
 				return coreFront;
 			}
-			if(side == 4) {
+			if(side == 3) {
 				return coreBack;
 			}
 			return coreSide;
@@ -79,7 +79,7 @@ public class MachineBlocks extends BlockContainer {
 			}if(side == 2) {
 				return displayFront;
 			}
-			if(side == 4) {
+			if(side == 3) {
 				return displayBack;
 			}
 			return displaySide;
@@ -109,7 +109,7 @@ public class MachineBlocks extends BlockContainer {
 			if(side == 2) {
 				return outputFront;
 			}
-			if(side == 4) {
+			if(side == 3) {
 				return outputBack;
 			}
 			return outputSide;
@@ -123,7 +123,7 @@ public class MachineBlocks extends BlockContainer {
 		if(side == 2) {
 			return workerFront;
 		}
-		if(side == 4) {
+		if(side == 3) {
 			return workerBack;
 		}
 		return workerSide;
