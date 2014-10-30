@@ -1,5 +1,7 @@
 package net.ocine.minefluence.blocks.tileentities;
 
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.relauncher.Side;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -20,23 +22,25 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
 
 	@Override
 	public void updateEntity() {
-        if(!isActive()) {
-            if (counter >= 20) {
-                counter = 0;
-                for(Algorithm.Vector vector: Algorithm.doMagic(new Algorithm.Vector(getX(), getY(), getZ()), getWorldObj())){
-                    ((IMachinePart) worldObj.getTileEntity(vector.x, vector.y, vector.z)).assignToMachine(this, true);
+        if(FMLCommonHandler.instance().getEffectiveSide() == Side.SERVER) {
+            if (!isActive()) {
+                if (counter >= 20) {
+                    counter = 0;
+                    for (Algorithm.Vector vector : Algorithm.doMagic(new Algorithm.Vector(getX(), getY(), getZ()), getWorldObj())) {
+                        ((IMachinePart) worldObj.getTileEntity(vector.x, vector.y, vector.z)).assignToMachine(this, true);
+                    }
+                    logic = MachineLogicManager.getApplicatableLogic(this);
                 }
-                logic = MachineLogicManager.getApplicatableLogic(this);
-            }
-            counter++;
-        } else {
-            if(isTransformationInProgress()){
-                remainingTime--;
-                if(remainingTime <= 0){
-                    finishProcess();
-                }
+                counter++;
             } else {
-                startNewProcess();
+                if (isTransformationInProgress()) {
+                    remainingTime--;
+                    if (remainingTime <= 0) {
+                        finishProcess();
+                    }
+                } else {
+                    startNewProcess();
+                }
             }
         }
 	}
@@ -87,7 +91,7 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
 
     @Override
     public boolean removeFromMachine() {
-        for(IMachinePart part: parts){
+        for(IMachinePart part: new ArrayList<IMachinePart>(parts)){
             part.removeFromMachine();
         }
         return true;
