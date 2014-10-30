@@ -41,4 +41,6 @@ public class TileEntityCore extends TileEntity implements Machine {
     public int getZ() {
         return zCoord;
     }
+
+
 }

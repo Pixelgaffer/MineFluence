@@ -1,22 +1,16 @@
 package net.ocine.minefluence.blocks;
 
-import java.util.List;
-
+import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.common.registry.LanguageRegistry;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import net.ocine.minefluence.blocks.tileentities.IMachinePart;
-import net.ocine.minefluence.blocks.tileentities.InventoryTileEntity;
-import net.ocine.minefluence.blocks.tileentities.TileEntityCore;
-import net.ocine.minefluence.blocks.tileentities.TileEntityDisplay;
-import net.ocine.minefluence.blocks.tileentities.TileEntityInput;
-import net.ocine.minefluence.blocks.tileentities.TileEntityOutput;
-import net.ocine.minefluence.blocks.tileentities.TileEntityWorker;
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
+import net.ocine.minefluence.blocks.tileentities.*;
+
+import java.util.List;
 
 public class MachineBlocks extends BlockContainer {
 	
@@ -40,7 +34,7 @@ public class MachineBlocks extends BlockContainer {
 		if(machineBlock == null) {
 			return;
 		}
-		machineBlock.destroyStructure(true);
+		machineBlock.removeFromMachine();
 		if(world.getTileEntity(x, y, z) instanceof InventoryTileEntity) {
 			((InventoryTileEntity)world.getTileEntity(x, y, z)).dropItems(world, x, y, z);
 		}
