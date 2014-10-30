@@ -29,11 +29,11 @@ public class MachineBlocks extends BlockContainer {
 		CORE, DISPLAY, INPUT, OUTPUT, WORKER;
 	}
 	
-	private IIcon coreFront, coreSide, coreBottom;
-	private IIcon displayFront, displaySide, displayBottom;
-	private IIcon inputFront, inputSide, inputBottom;
-	private IIcon outputFront, outputSide, outputBottom;
-	private IIcon workerFront, workerSide, workerBottom;
+	private IIcon coreTop, coreSide, coreBottom;
+	private IIcon displayTop, displaySide, displayBottom;
+	private IIcon inputTop, inputSide, inputBottom;
+	private IIcon outputTop, outputSide, outputBottom;
+	private IIcon workerTop, workerSide, workerBottom;
 	
 	public MachineBlocks(CreativeTabs tab) {
 		super(Material.iron);
@@ -56,13 +56,71 @@ public class MachineBlocks extends BlockContainer {
 	@Override
 	public IIcon getIcon(int side, int meta) {
 		if(meta == Machines.CORE.ordinal()) {
-			
+			if(side == 0) {
+				return coreBottom;
+			}
+			if(side == 1) {
+				return coreTop;
+			}
+			return coreSide;
 		}
+		if(meta == Machines.DISPLAY.ordinal()) {
+			if(side == 0) {
+				return displayBottom;
+			}
+			if(side == 1) {
+				return displayTop;
+			}
+			return displaySide;
+		}
+		if(meta == Machines.INPUT.ordinal()) {
+			if(side == 0) {
+				return inputBottom;
+			}
+			if(side == 1) {
+				return inputTop;
+			}
+			return inputSide;
+		}
+		if(meta == Machines.OUTPUT.ordinal()) {
+			if(side == 0) {
+				return outputBottom;
+			}
+			if(side == 1) {
+				return outputTop;
+			}
+			return outputSide;
+		}
+		if(side == 0) {
+			return workerBottom;
+		}
+		if(side == 1) {
+			return workerTop;
+		}
+		return workerSide;
 	}
 	
 	@Override
 	public void registerBlockIcons(IIconRegister iconRegister) {
+		coreTop = iconRegister.registerIcon("minelfuence:mblock_core_top");
+		coreBottom = iconRegister.registerIcon("minelfuence:mblock_core_bottom");
+		coreSide = iconRegister.registerIcon("minelfuence:mblock_core_side");
 		
+		displayTop = iconRegister.registerIcon("minelfuence:mblock_display_top");
+		displayBottom = iconRegister.registerIcon("minelfuence:mblock_display_bottom");
+		displaySide = iconRegister.registerIcon("minelfuence:mblock_display_side");
+		
+		inputTop = iconRegister.registerIcon("minelfuence:mblock_input_top");
+		inputBottom = iconRegister.registerIcon("minelfuence:mblock_input_bottom");
+		inputSide = iconRegister.registerIcon("minelfuence:mblock_input_side");
+		
+		outputTop = iconRegister.registerIcon("minelfuence:mblock_output_top");
+		outputBottom = iconRegister.registerIcon("minelfuence:mblock_output_bottom");
+		outputSide = iconRegister.registerIcon("minelfuence:mblock_output_side");
+		
+		workerTop = iconRegister.registerIcon("minelfuence:mblock_worker_top");
+		workerBottom = iconRegister.registerIcon("minelfuence:mblock_worker_bottom");
+		workerSide = iconRegister.registerIcon("minelfuence:mblock_worker_side");
 	}
 	
 	@Override
