@@ -1,5 +1,7 @@
 package net.ocine.minefluence.blocks.tileentities;
 
+import net.ocine.minefluence.blocks.MachineBlocks;
+
 import javax.annotation.Nullable;
 
 public interface IMachinePart {
@@ -24,4 +26,6 @@ public interface IMachinePart {
      * @return true on success
      */
     public boolean removeFromMachine();
+
+    public MachineBlocks.Machines getType();
 }

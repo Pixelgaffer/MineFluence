@@ -1,5 +1,6 @@
 package net.ocine.minefluence;
 
+import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.ocine.minefluence.blocks.tileentities.IMachinePart;
 
@@ -56,4 +57,43 @@ public class Algorithm {
         s.add(pos);
 		for (Vector opos : pos.getNeighbors()) f(opos, w, s);
 	}
+
+    /**
+     * Subtracts the elements from input with toRemove.
+     * @param input
+     * @param toRemove
+     * @return list of remaining items or null if not applicable
+     */
+    public static List<ItemStack> getRemaining (List<ItemStack> input, Collection<ItemStack> toRemove)
+    {
+        LinkedList<ItemStack> result = new LinkedList(input);
+        
+        // clone objects
+        for (ItemStack stack : input)
+	    result.addLast(new ItemStack(stack));
+        
+        // subtract lists
+        for (ItemStack del : toRemove)
+        {
+	    ItemStack rm = new ItemStack(del);
+	    for (ItemStack in : result)
+	    {
+		if (areItemsSame(rm, in))
+		{
+		    int subtract = Math.min(in.stackSize, rm.stackSize);
+		    in.stackSize -= subtract;
+		    rm.stackSize -
+		}
+		if (rm.stackSize <= 0)
+		    break;
+	    }
+        }
+        
+        // finished
+        return result;
+    }
+
+    public static boolean areItemsSame(ItemStack item1, ItemStack item2){
+        return item1.isItemEqual(item2);
+    }
 }
