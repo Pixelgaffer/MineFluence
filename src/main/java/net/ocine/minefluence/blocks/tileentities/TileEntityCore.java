@@ -52,7 +52,7 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
                 ItemStack arr[] = new ItemStack[getInputs()];
                 for(int i = 0; i < getInputs(); i++){
                     arr[i] = newInv.get(i);
-                    if(arr[i].stackSize <= 0)arr[i] = null;
+                    if(arr[i] != null && arr[i].stackSize <= 0)arr[i] = null;
                 }
                 setInputInventory(arr);
             }

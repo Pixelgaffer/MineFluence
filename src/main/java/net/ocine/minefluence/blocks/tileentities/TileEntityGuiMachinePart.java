@@ -9,10 +9,9 @@ public abstract class TileEntityGuiMachinePart extends InventoryTileEntity imple
 
 	public TileEntityGuiMachinePart(int inventorySize) {
 		super(inventorySize);
-        machinePartBase = new MachinePartBase(this);
     }
 
-	MachinePartBase machinePartBase;
+	MachinePartBase machinePartBase = new MachinePartBase(this);
 
     @Nullable
     @Override
