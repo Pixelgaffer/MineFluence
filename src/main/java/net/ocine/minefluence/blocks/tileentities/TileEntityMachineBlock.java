@@ -13,7 +13,7 @@ public abstract class TileEntityMachineBlock extends TileEntity implements IMach
 
 	@Override
 	public void destroyStructure(boolean callStructure) {
-		if(callStructure) {
+		if(callStructure && structure != null) {
 			structure.destroyStructure();
 			return;
 		}
