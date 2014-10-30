@@ -14,7 +14,7 @@ public class MachineLogicManager {
             Arrays.asList(new Object[]{new ItemStack(Blocks.dirt)}), Arrays.asList(new Object[]{new ItemStack(Items.diamond)}));
 
     public static AbstractMachineLogic magicIron = new TransformationLogic("Magie Mit Erde 2", 800,
-            Arrays.asList(new Object[]{new ItemStack(Blocks.dirt, 5), new ItemStack(Blocks.stone)}),
+            Arrays.asList(new Object[]{new ItemStack(Blocks.dirt), new ItemStack(Blocks.stone)}),
             Arrays.asList(new Object[]{new ItemStack(Blocks.diamond_block), new ItemStack(Blocks.iron_bars)}));
 
     public static AbstractMachineLogic getApplicatableLogic(Machine machine){
