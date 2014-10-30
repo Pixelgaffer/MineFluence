@@ -29,11 +29,11 @@ public class MachineBlocks extends BlockContainer {
 		CORE, DISPLAY, INPUT, OUTPUT, WORKER;
 	}
 	
-	private IIcon coreTop, coreSide, coreBottom;
-	private IIcon displayTop, displaySide, displayBottom;
-	private IIcon inputTop, inputSide, inputBottom;
-	private IIcon outputTop, outputSide, outputBottom;
-	private IIcon workerTop, workerSide, workerBottom;
+	private IIcon coreTop, coreSide, coreBottom, coreFront, coreBack;
+	private IIcon displayTop, displaySide, displayBottom, displayFront, displayBack;
+	private IIcon inputTop, inputSide, inputBottom, inputFront, inputBack;
+	private IIcon outputTop, outputSide, outputBottom, outputFront, outputBack;
+	private IIcon workerTop, workerSide, workerBottom, workerFront, workerBack;
 	
 	public MachineBlocks(CreativeTabs tab) {
 		super(Material.iron);
@@ -62,6 +62,12 @@ public class MachineBlocks extends BlockContainer {
 			if(side == 1) {
 				return coreTop;
 			}
+			if(side == 2) {
+				return coreFront;
+			}
+			if(side == 4) {
+				return coreBack;
+			}
 			return coreSide;
 		}
 		if(meta == Machines.DISPLAY.ordinal()) {
@@ -70,6 +76,11 @@ public class MachineBlocks extends BlockContainer {
 			}
 			if(side == 1) {
 				return displayTop;
+			}if(side == 2) {
+				return displayFront;
+			}
+			if(side == 4) {
+				return displayBack;
 			}
 			return displaySide;
 		}
@@ -80,6 +91,12 @@ public class MachineBlocks extends BlockContainer {
 			if(side == 1) {
 				return inputTop;
 			}
+			if(side == 2) {
+				return inputFront;
+			}
+			if(side == 4) {
+				return inputBack;
+			}
 			return inputSide;
 		}
 		if(meta == Machines.OUTPUT.ordinal()) {
@@ -89,6 +106,12 @@ public class MachineBlocks extends BlockContainer {
 			if(side == 1) {
 				return outputTop;
 			}
+			if(side == 2) {
+				return outputFront;
+			}
+			if(side == 4) {
+				return outputBack;
+			}
 			return outputSide;
 		}
 		if(side == 0) {
@@ -96,6 +119,12 @@ public class MachineBlocks extends BlockContainer {
 		}
 		if(side == 1) {
 			return workerTop;
+		}
+		if(side == 2) {
+			return workerFront;
+		}
+		if(side == 4) {
+			return workerBack;
 		}
 		return workerSide;
 	}
@@ -105,22 +134,32 @@ public class MachineBlocks extends BlockContainer {
 		coreTop = iconRegister.registerIcon("minefluence:mblock_core_top");
 		coreBottom = iconRegister.registerIcon("minefluence:mblock_core_bottom");
 		coreSide = iconRegister.registerIcon("minefluence:mblock_core_side");
+		coreFront = iconRegister.registerIcon("minefluence:mblock_core_front");
+		coreBack = iconRegister.registerIcon("minefluence:mblock_core_back");
 		
 		displayTop = iconRegister.registerIcon("minefluence:mblock_display_top");
 		displayBottom = iconRegister.registerIcon("minefluence:mblock_display_bottom");
 		displaySide = iconRegister.registerIcon("minefluence:mblock_display_side");
+		displayFront = iconRegister.registerIcon("minefluence:mblock_display_front");
+		displayBack = iconRegister.registerIcon("minefluence:mblock_display_back");
 		
 		inputTop = iconRegister.registerIcon("minefluence:mblock_input_top");
 		inputBottom = iconRegister.registerIcon("minefluence:mblock_input_bottom");
 		inputSide = iconRegister.registerIcon("minefluence:mblock_input_side");
+		inputFront = iconRegister.registerIcon("minefluence:mblock_input_front");
+		inputBack = iconRegister.registerIcon("minefluence:mblock_input_back");
 		
 		outputTop = iconRegister.registerIcon("minefluence:mblock_output_top");
 		outputBottom = iconRegister.registerIcon("minefluence:mblock_output_bottom");
 		outputSide = iconRegister.registerIcon("minefluence:mblock_output_side");
+		outputFront = iconRegister.registerIcon("minefluence:mblock_output_front");
+		outputBack = iconRegister.registerIcon("minefluence:mblock_output_back");
 		
 		workerTop = iconRegister.registerIcon("minefluence:mblock_worker_top");
 		workerBottom = iconRegister.registerIcon("minefluence:mblock_worker_bottom");
 		workerSide = iconRegister.registerIcon("minefluence:mblock_worker_side");
+		workerFront = iconRegister.registerIcon("minefluence:mblock_output_front");
+		workerBack = iconRegister.registerIcon("minefluence:mblock_output_back");
 	}
 	
 	@Override
