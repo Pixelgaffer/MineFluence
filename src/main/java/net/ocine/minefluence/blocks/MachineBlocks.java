@@ -102,25 +102,25 @@ public class MachineBlocks extends BlockContainer {
 	
 	@Override
 	public void registerBlockIcons(IIconRegister iconRegister) {
-		coreTop = iconRegister.registerIcon("minelfuence:mblock_core_top");
-		coreBottom = iconRegister.registerIcon("minelfuence:mblock_core_bottom");
-		coreSide = iconRegister.registerIcon("minelfuence:mblock_core_side");
+		coreTop = iconRegister.registerIcon("minefluence:mblock_core_top");
+		coreBottom = iconRegister.registerIcon("minefluence:mblock_core_bottom");
+		coreSide = iconRegister.registerIcon("minefluence:mblock_core_side");
 		
-		displayTop = iconRegister.registerIcon("minelfuence:mblock_display_top");
-		displayBottom = iconRegister.registerIcon("minelfuence:mblock_display_bottom");
-		displaySide = iconRegister.registerIcon("minelfuence:mblock_display_side");
+		displayTop = iconRegister.registerIcon("minefluence:mblock_display_top");
+		displayBottom = iconRegister.registerIcon("minefluence:mblock_display_bottom");
+		displaySide = iconRegister.registerIcon("minefluence:mblock_display_side");
 		
-		inputTop = iconRegister.registerIcon("minelfuence:mblock_input_top");
-		inputBottom = iconRegister.registerIcon("minelfuence:mblock_input_bottom");
-		inputSide = iconRegister.registerIcon("minelfuence:mblock_input_side");
+		inputTop = iconRegister.registerIcon("minefluence:mblock_input_top");
+		inputBottom = iconRegister.registerIcon("minefluence:mblock_input_bottom");
+		inputSide = iconRegister.registerIcon("minefluence:mblock_input_side");
 		
-		outputTop = iconRegister.registerIcon("minelfuence:mblock_output_top");
-		outputBottom = iconRegister.registerIcon("minelfuence:mblock_output_bottom");
-		outputSide = iconRegister.registerIcon("minelfuence:mblock_output_side");
+		outputTop = iconRegister.registerIcon("minefluence:mblock_output_top");
+		outputBottom = iconRegister.registerIcon("minefluence:mblock_output_bottom");
+		outputSide = iconRegister.registerIcon("minefluence:mblock_output_side");
 		
-		workerTop = iconRegister.registerIcon("minelfuence:mblock_worker_top");
-		workerBottom = iconRegister.registerIcon("minelfuence:mblock_worker_bottom");
-		workerSide = iconRegister.registerIcon("minelfuence:mblock_worker_side");
+		workerTop = iconRegister.registerIcon("minefluence:mblock_worker_top");
+		workerBottom = iconRegister.registerIcon("minefluence:mblock_worker_bottom");
+		workerSide = iconRegister.registerIcon("minefluence:mblock_worker_side");
 	}
 	
 	@Override
