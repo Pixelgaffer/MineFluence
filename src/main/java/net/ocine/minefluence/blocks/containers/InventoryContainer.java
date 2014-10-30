@@ -13,7 +13,8 @@ public class InventoryContainer extends Container {
 	protected TileEntity tileEntity;
 
 	
-	public InventoryContainer() {
+	public InventoryContainer(InventoryTileEntity tileEntity) {
+		this.tileEntity = tileEntity;
 	}
 
 
