@@ -1,16 +1,13 @@
 package net.ocine.minefluence;
 
-import net.minecraft.World;
+import net.minecraft.world.World;
+import net.ocine.minefluence.blocks.tileentities.IMachinePart;
 
-import java.util.List;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.ArrayList;
-import java.util.Set;
+import java.util.*;
 
-class Algorithm {
-	static class Vector {
-		int x, y, z;
+public class Algorithm {
+	static public class Vector {
+		public int x, y, z;
 
 		public Vector(int x, int y, int z) {
 			this.x = x;
@@ -44,6 +41,7 @@ class Algorithm {
 
 	private static void f(Vector pos, World w, Set<Vector> s) {
 		if (s.contains(pos) || !pos.check(w)) return;
+        s.add(pos);
 		for (Vector opos : pos.getNeighbors()) f(opos, w, s);
 	}
 }
