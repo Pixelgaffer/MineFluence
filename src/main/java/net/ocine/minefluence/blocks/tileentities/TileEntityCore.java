@@ -1,9 +1,6 @@
 package net.ocine.minefluence.blocks.tileentities;
 
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.util.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,27 +64,5 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
     @Override
     public int getZ() {
         return zCoord;
-    }
-
-    @Override
-    public void readFromNBT(NBTTagCompound compound) {
-        parts.clear();
-        super.readFromNBT(compound);
-        NBTTagList list = compound.getTagList("parts", Constants.NBT.TAG_COMPOUND);
-        for(int i = 0; i < list.tagCount(); i++){
-            NBTTagCompound part = list.getCompoundTagAt(i);
-            int x = part.getInteger("x");
-            int y = part.getInteger("y");
-            int z = part.getInteger("z");
-            TileEntity entity = worldObj.getTileEntity(x,y,z);
-            if(entity instanceof IMachinePart){
-                parts.add((IMachinePart) entity);
-            }
-        }
-    }
-
-    @Override
-    public void writeToNBT(NBTTagCompound compound) {
-        super.writeToNBT(compound);
     }
 }
