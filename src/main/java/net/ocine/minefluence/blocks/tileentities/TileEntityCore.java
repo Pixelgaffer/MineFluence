@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TileEntityCore extends TileEntity implements Machine, IMachinePart {
-    List<IMachinePart> parts = new ArrayList<>();
+    List<IMachinePart> parts = new ArrayList<IMachinePart>();
 	private int counter = 0;
 	@Override
 	public void updateEntity() {
