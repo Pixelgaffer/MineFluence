@@ -2,7 +2,11 @@ package net.ocine.minefluence.blocks.tileentities;
 
 import net.minecraft.tileentity.TileEntity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TileEntityCore extends TileEntity implements Machine, IMachinePart {
+    List<IMachinePart> parts = new ArrayList<>();
 	private int counter = 0;
 	@Override
 	public void updateEntity() {
@@ -36,12 +40,12 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
 
     @Override
     public void addPart(IMachinePart machinePart) {
-
+        parts.add(machinePart);
     }
 
     @Override
     public void removePart(IMachinePart machinePart) {
-
+        parts.remove(machinePart);
     }
 
     @Override

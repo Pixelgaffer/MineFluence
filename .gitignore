@@ -1,6 +1,7 @@
 **/.directory
 **/.desktop
 **/*.log
+**/*.log.gz
 **/*.jar
 **/*~
 .gradle/
@@ -16,3 +17,4 @@ saves/
 options.txt
 usernamecache.json
 bin/
+crash-reports/
