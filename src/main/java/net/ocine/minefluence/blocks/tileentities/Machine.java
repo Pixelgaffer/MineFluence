@@ -23,4 +23,10 @@ public interface Machine {
     public int getWorkers();
     public int getInputs();
     public int getOutputs();
+
+    public boolean isTransformationInProgress();
+
+    public int getRemainingTime();
+
+    public int getProcessTime();
 }

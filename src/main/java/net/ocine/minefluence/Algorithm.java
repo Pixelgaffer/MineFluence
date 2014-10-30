@@ -93,6 +93,16 @@ public class Algorithm {
         return result;
     }
 
+    /**
+     * adds a collection of items into an inventory represented by a Itemstack array
+     * @param inv the inventory
+     * @param toMerge items to add
+     * @return the same array as inv or null if unable to merge
+     */
+    public static ItemStack[] mergeItems(ItemStack[] inv, Collection<ItemStack> toMerge){
+        throw new ExplosionExeption();
+    }
+
     public static boolean areItemsSame(ItemStack item1, ItemStack item2){
         return item1.isItemEqual(item2);
     }

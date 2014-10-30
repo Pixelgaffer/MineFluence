@@ -14,7 +14,7 @@ public class MachineLogicManager {
             Arrays.asList(new Object[]{new ItemStack(Blocks.dirt)}), Arrays.asList(new Object[]{new ItemStack(Items.diamond)}));
 
     public static AbstractMachineLogic getApplicatableLogic(Machine machine){
-        if(machine.getInputs() == 1 && machine.getOutputs() == 1)return dirtToDiamond;
+        if(machine.getInputs() == 1 && machine.getOutputs() == 1 && machine.getWorkers() >= 1)return dirtToDiamond;
         return null;
     }
 }
