@@ -31,7 +31,19 @@ public class Algorithm {
 			res.add(new Vector(x, y, z-1));
 			return res;
 		}
-	}
+
+        @Override
+        public boolean equals(Object obj) {
+            if(!(obj instanceof Vector))return false;
+            Vector that = (Vector) obj;
+            return that.x == x && that.y == y && that.z == z;
+        }
+
+        @Override
+        public int hashCode() {
+            return x*256 + y + z*2048;
+        }
+    }
 
 	public static Collection<Vector> doMagic(Vector pos, World w) {
 		HashSet<Vector> res = new HashSet<Vector>();
