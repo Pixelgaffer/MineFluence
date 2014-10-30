@@ -1,5 +1,6 @@
 package net.ocine.minefluence;
 
+import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.ocine.minefluence.blocks.tileentities.IMachinePart;
 
@@ -56,4 +57,53 @@ public class Algorithm {
         s.add(pos);
 		for (Vector opos : pos.getNeighbors()) f(opos, w, s);
 	}
+
+    /**
+     * Subtracts the elements from input with toRemove.
+     * @param input
+     * @param toRemove
+     * @return list of remaining items or null if not applicable
+     */
+    public static List<ItemStack> getRemaining (List<ItemStack> input, Collection<ItemStack> toRemove)
+    {
+        LinkedList<ItemStack> result = new LinkedList(input);
+        
+        // clone objects
+        for (ItemStack stack : input)
+	    result.addLast(stack.copy());
+        
+        // subtract lists
+        for (ItemStack del : toRemove)
+        {
+	    ItemStack rm = del.copy();
+	    for (ItemStack in : result)
+	    {
+		if (areItemsSame(rm, in))
+		{
+		    int subtract = Math.min(in.stackSize, rm.stackSize);
+		    in.stackSize -= subtract;
+		    rm.stackSize -= subtract;
+		}
+		if (rm.stackSize <= 0)
+		    break;
+	    }
+        }
+        
+        // finished
+        return result;
+    }
+
+    /**
+     * adds a collection of items into an inventory represented by a Itemstack array
+     * @param inv the inventory
+     * @param toMerge items to add
+     * @return the same array as inv or null if unable to merge
+     */
+    public static ItemStack[] mergeItems(ItemStack[] inv, Collection<ItemStack> toMerge){
+        throw new ExplosionExeption();
+    }
+
+    public static boolean areItemsSame(ItemStack item1, ItemStack item2){
+        return item1.isItemEqual(item2);
+    }
 }

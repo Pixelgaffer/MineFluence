@@ -19,4 +19,14 @@ public interface Machine {
     public boolean isActive();
 
     public AbstractMachineLogic getLogic();
+
+    public int getWorkers();
+    public int getInputs();
+    public int getOutputs();
+
+    public boolean isTransformationInProgress();
+
+    public int getRemainingTime();
+
+    public int getProcessTime();
 }

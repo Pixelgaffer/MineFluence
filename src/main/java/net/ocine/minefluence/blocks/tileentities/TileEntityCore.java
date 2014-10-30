@@ -1,8 +1,11 @@
 package net.ocine.minefluence.blocks.tileentities;
 
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.ocine.minefluence.Algorithm;
+import net.ocine.minefluence.ExplosionExeption;
+import net.ocine.minefluence.blocks.MachineBlocks;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,6 +15,8 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
     List<IMachinePart> parts = new ArrayList<IMachinePart>();
 	private int counter = 0;
     private AbstractMachineLogic logic;
+    Collection<ItemStack> items;
+    int remainingTime;
 
 	@Override
 	public void updateEntity() {
@@ -19,27 +24,42 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
             if (counter >= 20) {
                 counter = 0;
                 for(Algorithm.Vector vector: Algorithm.doMagic(new Algorithm.Vector(getX(), getY(), getZ()), getWorldObj())){
-                    parts.add((IMachinePart) worldObj.getTileEntity(vector.x, vector.y, vector.z));
+                    ((IMachinePart) worldObj.getTileEntity(vector.x, vector.y, vector.z)).assignToMachine(this, true);
                 }
+                logic = MachineLogicManager.getApplicatableLogic(this);
             }
             counter++;
+        } else {
+            if(isTransformationInProgress()){
+                remainingTime--;
+                if(remainingTime <= 0){
+                    finishProcess();
+                }
+            } else {
+                startNewProcess();
+            }
         }
 	}
-	
-	public Machine getMachine(){
+
+    private void finishProcess() {
+        throw new ExplosionExeption();
+    }
+
+    public Machine getMachine(){
         return this;
     }
 
     @Override
     public boolean isPartOfMachine() {
-        // of cause it is - we are the machine
+        // WE ARE THE MACHINE
         return true;
     }
 
     @Override
     public boolean assignToMachine(Machine machine, boolean force) {
-        // NO THIS CAN'T BE - CRY
-        throw new RuntimeException("cry");
+        if(machine == this)return true;
+        // NO THIS CAN'T BE
+        throw new ExplosionExeption();
     }
 
     @Override
@@ -48,6 +68,11 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
             part.removeFromMachine();
         }
         return true;
+    }
+
+    @Override
+    public MachineBlocks.Machines getType() {
+        return MachineBlocks.Machines.CORE;
     }
 
     @Override
@@ -88,6 +113,48 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
     @Override
     public AbstractMachineLogic getLogic() {
         return logic;
+    }
+
+    @Override
+    public int getWorkers() {
+        int i = 0;
+        for(IMachinePart part: getParts()){
+            if(part.getType() == MachineBlocks.Machines.WORKER)i++;
+        }
+        return i;
+    }
+
+    @Override
+    public int getInputs() {
+        int i = 0;
+        for(IMachinePart part: getParts()){
+            if(part.getType() == MachineBlocks.Machines.INPUT)i++;
+        }
+        return i;
+    }
+
+    @Override
+    public int getOutputs() {
+        int i = 0;
+        for(IMachinePart part: getParts()){
+            if(part.getType() == MachineBlocks.Machines.OUTPUT)i++;
+        }
+        return i;
+    }
+
+    @Override
+    public boolean isTransformationInProgress() {
+        return remainingTime != 0 && items != null;
+    }
+
+    @Override
+    public int getRemainingTime() {
+        return remainingTime;
+    }
+
+    @Override
+    public int getProcessTime() {
+        return logic.processTime/getWorkers();
     }
 
     @Override
