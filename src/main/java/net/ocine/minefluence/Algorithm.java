@@ -117,9 +117,12 @@ public class Algorithm {
                 if (s == null)
                     continue;
 
-                int addition = Math.min(add.stackSize, stack.getMaxStackSize() - stack.stackSize);
-                add.stackSize -= addition;
-                s.stackSize += addition;
+                if (areItemsSame(s, add))
+                {
+		    int addition = Math.min(add.stackSize, s.getMaxStackSize() - s.stackSize);
+		    add.stackSize -= addition;
+		    s.stackSize += addition;
+                }
             }
 
             // if there are still elements in the stack, try to create a new stack in the inventory
