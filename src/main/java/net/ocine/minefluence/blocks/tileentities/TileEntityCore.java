@@ -2,9 +2,13 @@ package net.ocine.minefluence.blocks.tileentities;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+import net.minecraftforge.common.util.Constants;
 import net.ocine.minefluence.Algorithm;
 import net.ocine.minefluence.blocks.MachineBlocks;
 import scala.actors.threadpool.Arrays;
@@ -12,6 +16,7 @@ import scala.actors.threadpool.Arrays;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Random;
 
 public class TileEntityCore extends TileEntity implements Machine, IMachinePart {
     List<IMachinePart> parts = new ArrayList<IMachinePart>();
@@ -30,11 +35,13 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
                         ((IMachinePart) worldObj.getTileEntity(vector.x, vector.y, vector.z)).assignToMachine(this, true);
                     }
                     logic = MachineLogicManager.getApplicatableLogic(this);
+                    super.markDirty();
                 }
                 counter++;
             } else {
                 if (isTransformationInProgress()) {
                     remainingTime--;
+                    super.markDirty();
                     if (remainingTime <= 0) {
                         finishProcess();
                     }
@@ -68,6 +75,7 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
         setOutputInventory(Algorithm.mergeItems(getOutputInventory(), result));
         items = null;
         remainingTime = 0;
+        super.markDirty();
     }
 
     public Machine getMachine(){
@@ -94,6 +102,7 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
         for(IMachinePart part: new ArrayList<IMachinePart>(parts)){
             part.removeFromMachine();
         }
+        dropItems(worldObj, getX(), getY(), getZ());
         return true;
     }
 
@@ -208,6 +217,7 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
                 i++;
             }
         }
+        super.markDirty();
     }
 
     @Override
@@ -234,15 +244,63 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
                 i++;
             }
         }
+        super.markDirty();
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound p_145839_1_) {
-        super.readFromNBT(p_145839_1_);
+    public void readFromNBT(NBTTagCompound compound) {
+        super.readFromNBT(compound);
+        remainingTime = compound.getInteger("remaining");
+        if(compound.hasKey("items")) {
+            items = new ArrayList<ItemStack>();
+            NBTTagList list = compound.getTagList("items", Constants.NBT.TAG_COMPOUND);
+            for (int i = 0; i < list.tagCount(); i++) {
+                NBTTagCompound stack = list.getCompoundTagAt(i);
+                items.add(ItemStack.loadItemStackFromNBT(stack));
+            }
+        } else {
+            items = null;
+        }
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound p_145841_1_) {
-        super.writeToNBT(p_145841_1_);
+    public void writeToNBT(NBTTagCompound compound) {
+        super.writeToNBT(compound);
+        compound.setInteger("remaining", remainingTime);
+        if(items != null) {
+            NBTTagList list = new NBTTagList();
+            for (ItemStack is : items) {
+                list.appendTag(is.writeToNBT(new NBTTagCompound()));
+            }
+            compound.setTag("items", list);
+        }
+    }
+
+    public void dropItems(World world, int x, int y, int z) {
+        if(items == null)return;
+
+        Random rand = new Random();
+
+        for (ItemStack item: items) {
+
+            if (item != null && item.stackSize > 0) {
+                float rx = rand.nextFloat() * 0.8F + 0.1F;
+                float ry = rand.nextFloat() * 0.8F + 0.1F;
+                float rz = rand.nextFloat() * 0.8F + 0.1F;
+
+                EntityItem entityItem = new EntityItem(world, x + rx, y + ry, z + rz, item.copy());
+
+                if (item.hasTagCompound()) {
+                    entityItem.getEntityItem().setTagCompound((NBTTagCompound) item.getTagCompound().copy());
+                }
+
+                float factor = 0.05F;
+                entityItem.motionX = rand.nextGaussian() * factor;
+                entityItem.motionY = rand.nextGaussian() * factor + 0.2F;
+                entityItem.motionZ = rand.nextGaussian() * factor;
+                world.spawnEntityInWorld(entityItem);
+                item.stackSize = 0;
+            }
+        }
     }
 }
