@@ -1,0 +1,5 @@
+bacteriaFlask.name=Bakterienflasche
+bacteriaFlask.red.name=Rote Bakterienflasche
+bacteriaFlask.green.name=Grüne Bakterienflasche
+bacteriaFlask.blue.name=Blaue Bakterienflasche
+itemGroup.tabMineFluence=MineFluence
