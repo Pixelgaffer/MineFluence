@@ -214,7 +214,7 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
         for(IMachinePart part: parts){
             if(part instanceof TileEntityInput){
                 TileEntityInput input = (TileEntityInput) part;
-                inv[i] = input.getStackInSlot(0).copy();
+                inv[i] = input.getStackInSlot(0);
                 i++;
             }
         }
