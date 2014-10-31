@@ -11,6 +11,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import net.ocine.minefluence.Algorithm;
 import net.ocine.minefluence.blocks.MachineBlocks;
+import net.ocine.minefluence.machines.AbstractMachineLogic;
+import net.ocine.minefluence.machines.Machine;
+import net.ocine.minefluence.machines.MachineLogicManager;
 import scala.actors.threadpool.Arrays;
 
 import java.util.ArrayList;
@@ -52,11 +55,12 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
         }
 	}
 
-    private void startNewProcess() {
+    @SuppressWarnings("unchecked")
+	private void startNewProcess() {
         List<ItemStack> newInv = Algorithm.getRemaining(Arrays.asList(getInputInventory()), logic.getInput(Arrays.asList(getInputInventory())));
         if(newInv != null){
             // can start - check whether we have place for output
-            if(Algorithm.mergeItems(getOutputInventory(), logic.getInput(Arrays.asList(getInputInventory()))) != null){
+            if(Algorithm.mergeItems(getOutputInventory(), logic.getInput(Arrays.asList(getInputInventory()))) != null) {
                 // yes we can
                 remainingTime = getProcessTime();
                 items = logic.getInput(Arrays.asList(getInputInventory()));
@@ -78,129 +82,7 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
             if(inv1 != null)
             setInputInventory(inv1);
             else{
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM_");
-                System.out.print("DELETE_ITEM");
+
             }
         } else {
             setOutputInventory(inv);
@@ -332,7 +214,7 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
         for(IMachinePart part: parts){
             if(part instanceof TileEntityInput){
                 TileEntityInput input = (TileEntityInput) part;
-                inv[i] = input.getStackInSlot(0);
+                inv[i] = input.getStackInSlot(0).copy();
                 i++;
             }
         }
@@ -359,7 +241,10 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
         for(IMachinePart part: parts){
             if(part instanceof TileEntityOutput){
                 TileEntityOutput input = (TileEntityOutput) part;
-                inv[i] = input.getStackInSlot(0);
+                if(input.getStackInSlot(0) == null) {
+                	continue;
+                }
+                inv[i] = input.getStackInSlot(0).copy();
                 i++;
             }
         }

@@ -77,24 +77,27 @@ public class Algorithm {
             if (del == null)
                 continue;
             ItemStack rm = del.copy();
-
+            boolean foundStack = false;
             // remove items from inventory
             for (ItemStack in : result) {
                 if (in == null)
                     continue;
 
                 if (areItemsSame(rm, in)) {
-                    int subtract = Math.min(in.stackSize, rm.stackSize);
-                    in.stackSize -= subtract;
-                    rm.stackSize -= subtract;
+                    if(rm.stackSize > in.stackSize) {
+                    	return null;
+                    }
+                    foundStack = true;
+                    in.stackSize -= rm.stackSize;
+                    break;
                 }
                 if (rm.stackSize <= 0)
                     break;
             }
-
-            // if not all required items found in the inventory, return null
-            if (rm.stackSize > 0)
-                return null;
+            
+            if(!foundStack) {
+            	return null;
+            }
         }
 
         // finished
@@ -112,38 +115,44 @@ public class Algorithm {
         for (ItemStack stack : toMerge) {
             ItemStack add = stack.copy();
 
+            boolean couldAdd = false;
+            
             // try to add all elements from the stack to existing stacks in the inventory
             for (ItemStack s : inv) {
                 if (s == null)
                     continue;
 
                 if (areItemsSame(s, add)) {
-                    int addition = Math.min(add.stackSize, s.getMaxStackSize() - s.stackSize);
-                    add.stackSize -= addition;
-                    s.stackSize += addition;
+                	if(s.stackSize + add.stackSize > s.getMaxStackSize()) {
+                		return null;
+                	}
+                	couldAdd = true;
+                    s.stackSize += add.stackSize;
+                }
+                if(!couldAdd) {
+                	return null;
                 }
             }
 
             // if there are still elements in the stack, try to create a new stack in the inventory
-            if (add.stackSize > 0) {
+            if (!couldAdd) {
                 for (int i = 0; i < inv.length; i++) {
-                    if (inv[i] == null) {
-                        inv[i] = add.copy();
-                        add.stackSize = 0;
+                    if (inv[i] == null || inv[i].stackSize == 0) {
+                        inv[i] = add;
+                        couldAdd = true;
+                        break;
                     }
                 }
+                if(!couldAdd) {
+                	return null;
+                }
             }
-
-            // if there are still elements in the stack, with means that no place in the inventory is
-            // empty, return null
-            if (add.stackSize > 0)
-                return null;
         }
 
         return inv;
     }
 
     public static boolean areItemsSame(ItemStack item1, ItemStack item2) {
-        return ((item1 != null) && item1.isItemEqual(item2));
+        return ((item1 != null) && item1.isItemEqual(item2) && item1.getItemDamage() == item2.getItemDamage());
     }
 }

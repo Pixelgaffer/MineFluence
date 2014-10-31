@@ -1,6 +1,7 @@
 package net.ocine.minefluence.blocks.tileentities;
 
 import net.ocine.minefluence.blocks.MachineBlocks;
+import net.ocine.minefluence.machines.Machine;
 
 import javax.annotation.Nullable;
 

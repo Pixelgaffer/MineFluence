@@ -3,7 +3,7 @@ package net.ocine.minefluence.gui;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.ocine.minefluence.blocks.containers.ContainerInput;
+import net.ocine.minefluence.blocks.containers.ContainerOutput;
 import net.ocine.minefluence.blocks.tileentities.InventoryTileEntity;
 
 import org.lwjgl.opengl.GL11;
@@ -11,7 +11,7 @@ import org.lwjgl.opengl.GL11;
 public class GuiOutput extends GuiContainer {
 
 	public GuiOutput(InventoryPlayer inventory, InventoryTileEntity tileEntity) {
-		super(new ContainerInput(inventory, tileEntity));
+		super(new ContainerOutput(inventory, tileEntity));
 	}
 
 	@Override

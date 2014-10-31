@@ -2,6 +2,7 @@ package net.ocine.minefluence.blocks.tileentities;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.ocine.minefluence.machines.Machine;
 
 import javax.annotation.Nullable;
 

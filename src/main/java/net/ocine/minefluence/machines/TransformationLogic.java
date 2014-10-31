@@ -1,4 +1,4 @@
-package net.ocine.minefluence.blocks.tileentities;
+package net.ocine.minefluence.machines;
 
 import net.minecraft.item.ItemStack;
 

@@ -1,6 +1,7 @@
-package net.ocine.minefluence.blocks.tileentities;
+package net.ocine.minefluence.machines;
 
 import net.minecraft.item.ItemStack;
+import net.ocine.minefluence.blocks.tileentities.IMachinePart;
 
 import java.util.Collection;
 

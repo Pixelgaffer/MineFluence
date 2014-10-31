@@ -1,4 +1,4 @@
-package net.ocine.minefluence.blocks.tileentities;
+package net.ocine.minefluence.machines;
 
 import net.minecraft.item.ItemStack;
 
@@ -11,7 +11,7 @@ public abstract class AbstractMachineLogic {
 
     String name;
 
-    int processTime;
+    public int processTime;
 
     protected AbstractMachineLogic(String name, int processTime) {
         this.name = name;
