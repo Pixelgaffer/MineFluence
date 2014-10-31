@@ -111,9 +111,12 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
     @Override
     public boolean removeFromMachine() {
         for (IMachinePart part : new ArrayList<IMachinePart>(parts)) {
-            part.removeFromMachine();
+            if(part != this && !(part instanceof TileEntityCore))part.removeFromMachine();
         }
         dropItems(worldObj, getX(), getY(), getZ());
+        logic = null;
+        remainingTime = 0;
+        items = null;
         return true;
     }
 
@@ -310,7 +313,6 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
                 entityItem.motionY = rand.nextGaussian() * factor + 0.2F;
                 entityItem.motionZ = rand.nextGaussian() * factor;
                 world.spawnEntityInWorld(entityItem);
-                item.stackSize = 0;
             }
         }
     }
