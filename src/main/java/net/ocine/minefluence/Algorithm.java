@@ -114,11 +114,14 @@ public class Algorithm {
     public static ItemStack[] mergeItems(ItemStack[] inv, Collection<ItemStack> toMerge) {
         for (ItemStack stack : toMerge) {
             ItemStack add = stack.copy();
+            System.out.println("add: " + add);
 
             boolean couldAdd = false;
             
             // try to add all elements from the stack to existing stacks in the inventory
             for (ItemStack s : inv) {
+            	System.out.println("s: " + s);
+            	System.out.println("equals: " + areItemsSame(s, add));
                 if (s == null)
                     continue;
 
@@ -128,9 +131,7 @@ public class Algorithm {
                 	}
                 	couldAdd = true;
                     s.stackSize += add.stackSize;
-                }
-                if(!couldAdd) {
-                	return null;
+                    break;
                 }
             }
 

@@ -60,8 +60,8 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
         List<ItemStack> newInv = Algorithm.getRemaining(Arrays.asList(getInputInventory()), logic.getInput(Arrays.asList(getInputInventory())));
         if(newInv != null){
             // can start - check whether we have place for output
-            if(Algorithm.mergeItems(getOutputInventory(), logic.getInput(Arrays.asList(getInputInventory()))) != null) {
-                // yes we can
+            if(Algorithm.mergeItems(getOutputInventory(), logic.getOutput(Arrays.asList(getInputInventory()))) != null) {
+            	// yes we can
                 remainingTime = getProcessTime();
                 items = logic.getInput(Arrays.asList(getInputInventory()));
                 ItemStack arr[] = new ItemStack[getInputs()];
