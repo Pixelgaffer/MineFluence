@@ -181,6 +181,7 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
         int i = 0;
         for (IMachinePart part : getParts()) {
             if (part.getType() == MachineBlocks.Machines.WORKER) i++;
+            if (part.getType() == MachineBlocks.Machines.HYPERWORKER) i+=10; // this is awesome
         }
         return i;
     }

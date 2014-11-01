@@ -7,4 +7,5 @@ machineBlocks.display.name=Display Machine Block
 machineBlocks.input.name=Input Machine Block
 machineBlocks.output.name=Output Machine Block
 machineBlocks.worker.name=Worker Machine Block
+machineBlocks.hyperworker.name=Hyperworker Machine Block
 itemGroup.tabMineFluence=MineFluence

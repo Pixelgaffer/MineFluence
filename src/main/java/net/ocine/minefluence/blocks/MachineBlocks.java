@@ -21,10 +21,10 @@ public class MachineBlocks extends BlockContainer {
 
     public static final String UNLOCALIZED_NAME = "machineBlocks";
 
-    public static final String[] names = {"core", "display", "input", "output", "worker"};
+    public static final String[] names = {"core", "display", "input", "output", "worker", "hyperworker"};
 
     public static enum Machines {
-        CORE, DISPLAY, INPUT, OUTPUT, WORKER;
+        CORE, DISPLAY, INPUT, OUTPUT, WORKER, HYPERWORKER;
     }
 
     private IIcon coreTop, coreSide, coreBottom, coreFront, coreBack;
@@ -33,6 +33,7 @@ public class MachineBlocks extends BlockContainer {
     private IIcon outputTop, outputSide, outputBottom, outputFront, outputBack;
     private IIcon workerTop, workerSide, workerBottom, workerFront, workerBack;
     private IIcon display0, display1, display2, display3, display4, display5;
+    private IIcon hyperworker;
 
     public MachineBlocks(CreativeTabs tab) {
         super(Material.iron);
@@ -148,6 +149,9 @@ public class MachineBlocks extends BlockContainer {
             }
             return outputSide;
         }
+        if (meta == Machines.HYPERWORKER.ordinal()) {
+            return hyperworker;
+        }
         if (side == 0) {
             return workerBottom;
         }
@@ -225,6 +229,9 @@ public class MachineBlocks extends BlockContainer {
             }
             return outputSide;
         }
+        if (meta == Machines.HYPERWORKER.ordinal()) {
+            return hyperworker;
+        }
         if (side == 0) {
             return workerBottom;
         }
@@ -278,6 +285,8 @@ public class MachineBlocks extends BlockContainer {
         display3 = iconRegister.registerIcon("minefluence:mblock_display_front_frame3");
         display4 = iconRegister.registerIcon("minefluence:mblock_display_front_frame4");
         display5 = iconRegister.registerIcon("minefluence:mblock_display_front_frame5");
+
+        hyperworker = iconRegister.registerIcon("minefluence:mblock_hyperworker_alternative");
     }
 
     @Override
@@ -296,6 +305,9 @@ public class MachineBlocks extends BlockContainer {
         }
         if (metadata == Machines.WORKER.ordinal()) {
             return new TileEntityWorker();
+        }
+        if (metadata == Machines.HYPERWORKER.ordinal()) {
+            return new TileEntityHyperworker();
         }
         return null;
     }
