@@ -23,14 +23,14 @@ import java.util.Random;
 
 public class TileEntityCore extends TileEntity implements Machine, IMachinePart {
     List<IMachinePart> parts = new ArrayList<IMachinePart>();
-	private int counter = 0;
+    private int counter = 0;
     private AbstractMachineLogic logic;
     Collection<ItemStack> items;
     int remainingTime;
 
-	@Override
-	public void updateEntity() {
-        if(FMLCommonHandler.instance().getEffectiveSide() == Side.SERVER) {
+    @Override
+    public void updateEntity() {
+        if (FMLCommonHandler.instance().getEffectiveSide() == Side.SERVER) {
             if (!isActive()) {
                 if (counter >= 20) {
                     counter = 0;
@@ -53,21 +53,21 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
                 }
             }
         }
-	}
+    }
 
     @SuppressWarnings("unchecked")
-	private void startNewProcess() {
+    private void startNewProcess() {
         List<ItemStack> newInv = Algorithm.getRemaining(Arrays.asList(getInputInventory()), logic.getInput(Arrays.asList(getInputInventory())));
-        if(newInv != null){
+        if (newInv != null) {
             // can start - check whether we have place for output
-            if(Algorithm.mergeItems(getOutputInventory(), logic.getOutput(Arrays.asList(getInputInventory()))) != null) {
-            	// yes we can
+            if (Algorithm.mergeItems(getOutputInventory(), logic.getOutput(newInv)) != null) {
+                // yes we can
                 remainingTime = getProcessTime();
                 items = logic.getInput(Arrays.asList(getInputInventory()));
                 ItemStack arr[] = new ItemStack[getInputs()];
-                for(int i = 0; i < getInputs(); i++){
+                for (int i = 0; i < getInputs(); i++) {
                     arr[i] = newInv.get(i);
-                    if(arr[i] != null && arr[i].stackSize <= 0)arr[i] = null;
+                    if (arr[i] != null && arr[i].stackSize <= 0) arr[i] = null;
                 }
                 setInputInventory(arr);
             }
@@ -77,22 +77,19 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
     private void finishProcess() {
         Collection<ItemStack> result = getLogic().getOutput(items);
         ItemStack[] inv = Algorithm.mergeItems(getOutputInventory(), result);
-        if(inv == null){
+        if (inv == null) {
             ItemStack[] inv1 = Algorithm.mergeItems(getOutputInventory(), items);
-            if(inv1 != null)
             setInputInventory(inv1);
-            else{
-
-            }
+            System.out.println("THIS SHOULD NOT HAPPEN");
         } else {
             setOutputInventory(inv);
         }
         items = null;
         remainingTime = 0;
-        super.markDirty();
+        // super.markDirty();
     }
 
-    public Machine getMachine(){
+    public Machine getMachine() {
         return this;
     }
 
@@ -104,7 +101,7 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
 
     @Override
     public boolean assignToMachine(Machine machine, boolean force) {
-        if(machine == this)return true;
+        if (machine == this) return true;
         // NO THIS CAN'T BE
         TileEntityCore core2 = (TileEntityCore) machine;
         core2.worldObj.setBlockToAir(getX(), getY(), getZ());
@@ -113,10 +110,13 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
 
     @Override
     public boolean removeFromMachine() {
-        for(IMachinePart part: new ArrayList<IMachinePart>(parts)){
-            part.removeFromMachine();
+        for (IMachinePart part : new ArrayList<IMachinePart>(parts)) {
+            if(part != this && !(part instanceof TileEntityCore))part.removeFromMachine();
         }
         dropItems(worldObj, getX(), getY(), getZ());
+        logic = null;
+        remainingTime = 0;
+        items = null;
         return true;
     }
 
@@ -168,8 +168,8 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
     @Override
     public int getWorkers() {
         int i = 0;
-        for(IMachinePart part: getParts()){
-            if(part.getType() == MachineBlocks.Machines.WORKER)i++;
+        for (IMachinePart part : getParts()) {
+            if (part.getType() == MachineBlocks.Machines.WORKER) i++;
         }
         return i;
     }
@@ -177,8 +177,8 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
     @Override
     public int getInputs() {
         int i = 0;
-        for(IMachinePart part: getParts()){
-            if(part.getType() == MachineBlocks.Machines.INPUT)i++;
+        for (IMachinePart part : getParts()) {
+            if (part.getType() == MachineBlocks.Machines.INPUT) i++;
         }
         return i;
     }
@@ -186,15 +186,15 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
     @Override
     public int getOutputs() {
         int i = 0;
-        for(IMachinePart part: getParts()){
-            if(part.getType() == MachineBlocks.Machines.OUTPUT)i++;
+        for (IMachinePart part : getParts()) {
+            if (part.getType() == MachineBlocks.Machines.OUTPUT) i++;
         }
         return i;
     }
 
     @Override
     public boolean isTransformationInProgress() {
-        return remainingTime != 0 && items != null;
+        return remainingTime > 0 && items != null;
     }
 
     @Override
@@ -204,17 +204,17 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
 
     @Override
     public int getProcessTime() {
-        return logic.processTime/getWorkers();
+        return logic.processTime / getWorkers();
     }
 
     @Override
     public ItemStack[] getInputInventory() {
         ItemStack[] inv = new ItemStack[getInputs()];
         int i = 0;
-        for(IMachinePart part: parts){
-            if(part instanceof TileEntityInput){
+        for (IMachinePart part : parts) {
+            if (part instanceof TileEntityInput) {
                 TileEntityInput input = (TileEntityInput) part;
-                inv[i] = input.getStackInSlot(0);
+                inv[i] = input.getStackInSlot(0) == null ? null : input.getStackInSlot(0).copy();
                 i++;
             }
         }
@@ -224,8 +224,8 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
     @Override
     public void setInputInventory(ItemStack[] inv) {
         int i = 0;
-        for(IMachinePart part: parts){
-            if(part instanceof TileEntityInput){
+        for (IMachinePart part : parts) {
+            if (part instanceof TileEntityInput) {
                 TileEntityInput input = (TileEntityInput) part;
                 input.setInventorySlotContents(0, inv[i]);
                 i++;
@@ -238,13 +238,10 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
     public ItemStack[] getOutputInventory() {
         ItemStack[] inv = new ItemStack[getInputs()];
         int i = 0;
-        for(IMachinePart part: parts){
-            if(part instanceof TileEntityOutput){
+        for (IMachinePart part : parts) {
+            if (part instanceof TileEntityOutput) {
                 TileEntityOutput input = (TileEntityOutput) part;
-                if(input.getStackInSlot(0) == null) {
-                	continue;
-                }
-                inv[i] = input.getStackInSlot(0);
+                inv[i] = input.getStackInSlot(0) == null ? null : input.getStackInSlot(0).copy();
                 i++;
             }
         }
@@ -254,8 +251,8 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
     @Override
     public void setOutputInventory(ItemStack[] inv) {
         int i = 0;
-        for(IMachinePart part: parts){
-            if(part instanceof TileEntityOutput){
+        for (IMachinePart part : parts) {
+            if (part instanceof TileEntityOutput) {
                 TileEntityOutput input = (TileEntityOutput) part;
                 input.setInventorySlotContents(0, inv[i]);
                 i++;
@@ -268,7 +265,7 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
         remainingTime = compound.getInteger("remaining");
-        if(compound.hasKey("items")) {
+        if (compound.hasKey("items")) {
             items = new ArrayList<ItemStack>();
             NBTTagList list = compound.getTagList("items", Constants.NBT.TAG_COMPOUND);
             for (int i = 0; i < list.tagCount(); i++) {
@@ -284,7 +281,7 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
     public void writeToNBT(NBTTagCompound compound) {
         super.writeToNBT(compound);
         compound.setInteger("remaining", remainingTime);
-        if(items != null) {
+        if (items != null) {
             NBTTagList list = new NBTTagList();
             for (ItemStack is : items) {
                 list.appendTag(is.writeToNBT(new NBTTagCompound()));
@@ -294,11 +291,11 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
     }
 
     public void dropItems(World world, int x, int y, int z) {
-        if(items == null)return;
+        if (items == null) return;
 
         Random rand = new Random();
 
-        for (ItemStack item: items) {
+        for (ItemStack item : items) {
 
             if (item != null && item.stackSize > 0) {
                 float rx = rand.nextFloat() * 0.8F + 0.1F;
@@ -316,7 +313,6 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
                 entityItem.motionY = rand.nextGaussian() * factor + 0.2F;
                 entityItem.motionZ = rand.nextGaussian() * factor;
                 world.spawnEntityInWorld(entityItem);
-                item.stackSize = 0;
             }
         }
     }
