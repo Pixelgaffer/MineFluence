@@ -40,4 +40,10 @@ public interface Machine {
     public ItemStack[] getOutputInventory();
 
     public void setOutputInventory(ItemStack[] inv);
+
+    /**
+     * percentage  progress for display
+     * @return int from 0 to 100 indicating progress
+     */
+    public int getProgressForDisplay();
 }

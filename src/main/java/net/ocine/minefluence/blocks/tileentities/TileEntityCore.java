@@ -51,6 +51,17 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
                 } else {
                     startNewProcess();
                 }
+                updateDisplays();
+            }
+        }
+    }
+
+    private void updateDisplays() {
+        for(IMachinePart part: parts){
+            if(part instanceof TileEntityDisplay){
+                TileEntityDisplay tileEntityDisplay = (TileEntityDisplay) part;
+                tileEntityDisplay.progress = getProgressForDisplay();
+                worldObj.markBlockForUpdate(tileEntityDisplay.xCoord, tileEntityDisplay.yCoord, tileEntityDisplay.zCoord);
             }
         }
     }
@@ -259,6 +270,15 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
             }
         }
         super.markDirty();
+    }
+
+    @Override
+    public int getProgressForDisplay() {
+        if(!isActive())return 0;
+        if(isTransformationInProgress()){
+            return (getProcessTime()-getRemainingTime())*100/getProcessTime();
+        }
+        return 100;
     }
 
     @Override
