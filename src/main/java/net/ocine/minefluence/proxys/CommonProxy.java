@@ -12,5 +12,5 @@ public class CommonProxy {
         GameRegistry.registerTileEntity(TileEntityOutput.class, "TileEntityOutput");
         GameRegistry.registerTileEntity(TileEntityWorker.class, "TileEntityWorker");
 	}
-	
+
 }
