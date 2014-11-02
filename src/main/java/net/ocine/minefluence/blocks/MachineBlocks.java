@@ -47,7 +47,9 @@ public class MachineBlocks extends BlockContainer {
         if (machineBlock == null) {
             return;
         }
-        machineBlock.removeFromMachine();
+        if(machineBlock.isPartOfMachine()){
+            machineBlock.getMachine().removePart(machineBlock);
+        }
         if (world.getTileEntity(x, y, z) instanceof InventoryTileEntity) {
             ((InventoryTileEntity) world.getTileEntity(x, y, z)).dropItems(world, x, y, z);
         }

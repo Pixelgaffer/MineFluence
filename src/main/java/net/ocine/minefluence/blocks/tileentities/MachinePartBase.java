@@ -35,14 +35,12 @@ public class MachinePartBase {
         x = machine.getX();
         y = machine.getY();
         z = machine.getZ();
-        machine.addPart(part);
         ((TileEntity)part).markDirty();
         return true;
     }
 
     public boolean removeFromMachine() {
         if (!isPartOfMachine()) return false;
-        getMachine().removePart(part);
         hasCore = false;
         ((TileEntity)part).markDirty();
         return true;
