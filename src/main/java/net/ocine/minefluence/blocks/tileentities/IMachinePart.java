@@ -27,6 +27,9 @@ public interface IMachinePart {
      * @return true on success
      */
     public boolean removeFromMachine();
+    
+    public String getTextureName();
+    public String getBorder();
 
     public MachineBlocks.Machines getType();
 }

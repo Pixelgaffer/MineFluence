@@ -14,4 +14,16 @@ public class TileEntityInput extends TileEntityGuiMachinePart {
     public MachineBlocks.Machines getType() {
         return MachineBlocks.Machines.INPUT;
     }
+
+
+	@Override
+	public String getTextureName() {
+		return "machineblock_input.png";
+	}
+	
+	@Override
+	public String getBorder() {
+		//TODO Implement
+		return "";
+	}
 }

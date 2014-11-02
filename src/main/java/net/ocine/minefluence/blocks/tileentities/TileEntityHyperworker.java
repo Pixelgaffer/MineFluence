@@ -9,4 +9,15 @@ public class TileEntityHyperworker extends TileEntityMachinePart {
     public MachineBlocks.Machines getType() {
         return MachineBlocks.Machines.HYPERWORKER;
     }
+
+	@Override
+	public String getTextureName() {
+		return "machineblock_hyperworker";
+	}
+	
+	@Override
+	public String getBorder() {
+		//TODO Implement
+		return "";
+	}
 }

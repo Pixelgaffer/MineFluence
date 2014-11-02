@@ -20,4 +20,14 @@ public class TileEntityOutput extends TileEntityGuiMachinePart {
     	return false;
     }
     
+    @Override
+    public String getTextureName() {
+    	return "machineblock_output.png";
+    }
+    
+    @Override
+	public String getBorder() {
+		//TODO Implement
+		return "";
+	}
 }

@@ -5,6 +5,7 @@ import net.minecraft.item.Item;
 import net.ocine.minefluence.blocks.Blocks;
 import net.ocine.minefluence.gui.GuiHandler;
 import net.ocine.minefluence.items.Items;
+import net.ocine.minefluence.proxys.ClientProxy;
 import net.ocine.minefluence.proxys.CommonProxy;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -43,6 +44,7 @@ public class MineFluence {
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		proxy.registerTileEntities();
+		proxy.registerRenderThings();
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
 	}
 	

@@ -35,4 +35,15 @@ public class TileEntityDisplay extends TileEntityMachinePart {
         worldObj.scheduleBlockUpdate(xCoord, yCoord, zCoord, getBlockType(), 0);
         worldObj.markBlockRangeForRenderUpdate(xCoord,yCoord,zCoord,xCoord,yCoord,zCoord);
     }
+
+	@Override
+	public String getTextureName() {
+		return "machineblock_display.png";
+	}
+	
+	@Override
+	public String getBorder() {
+		//TODO Implement
+		return "";
+	}
 }

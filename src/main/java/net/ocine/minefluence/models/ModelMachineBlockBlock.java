@@ -13,7 +13,7 @@ public class ModelMachineBlockBlock extends ModelBase {
 
 		shape1 = new ModelRenderer(this, 0, 0);
 		shape1.addBox(0F, 0F, 0F, 14, 14, 14);
-		shape1.setRotationPoint(-7F, 8F, -7F);
+		shape1.setRotationPoint(-7F, 9F, -7F);
 		shape1.setTextureSize(64, 32);
 		shape1.mirror = true;
 		setRotation(shape1, 0F, 0F, 0F);

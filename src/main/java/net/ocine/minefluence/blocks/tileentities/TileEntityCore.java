@@ -378,4 +378,15 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
             }
         }
     }
+
+	@Override
+	public String getTextureName() {
+		return "machineblock_core.png";
+	}
+	
+	@Override
+	public String getBorder() {
+		//TODO Implement
+		return "";
+	}
 }
