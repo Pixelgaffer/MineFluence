@@ -22,6 +22,7 @@ public class TileEntityDisplay extends TileEntityMachinePart {
     {
         NBTTagCompound syncData = new NBTTagCompound();
         writeToNBT(syncData);
+        if(!isPartOfMachine())progress = -1;
         syncData.setInteger("progress", progress);
         return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 1, syncData);
     }

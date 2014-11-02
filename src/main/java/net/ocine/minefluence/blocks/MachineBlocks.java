@@ -47,7 +47,9 @@ public class MachineBlocks extends BlockContainer {
         if (machineBlock == null) {
             return;
         }
-        machineBlock.removeFromMachine();
+        if(machineBlock.isPartOfMachine()){
+            machineBlock.getMachine().removePart(machineBlock);
+        }
         if (world.getTileEntity(x, y, z) instanceof InventoryTileEntity) {
             ((InventoryTileEntity) world.getTileEntity(x, y, z)).dropItems(world, x, y, z);
         }
@@ -104,6 +106,7 @@ public class MachineBlocks extends BlockContainer {
                 if (tileEntity != null) {
                     if (tileEntity instanceof TileEntityDisplay) {
                         int progress = ((TileEntityDisplay) tileEntity).progress;
+                        if (progress == -1) return displayFront;
                         if (progress < 20) return display0;
                         if (progress < 40) return display1;
                         if (progress < 70) return display2;
