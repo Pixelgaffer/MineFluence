@@ -5,7 +5,7 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
 public class ModelMachineBlockBorder extends ModelBase {
-	
+
 	private ModelRenderer shape1;
 	private ModelRenderer shape2;
 	private ModelRenderer shape3;

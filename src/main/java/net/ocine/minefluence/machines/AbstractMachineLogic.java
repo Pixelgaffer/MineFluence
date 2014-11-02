@@ -9,31 +9,30 @@ import java.util.Collection;
  */
 public abstract class AbstractMachineLogic {
 
-    String name;
+	String name;
 
-    public int processTime;
+	public int processTime;
 
-    protected AbstractMachineLogic(String name, int processTime) {
-        this.name = name;
-        this.processTime = processTime;
-    }
+	protected AbstractMachineLogic(String name, int processTime) {
+		this.name = name;
+		this.processTime = processTime;
+	}
 
-    /**
-     * Hi
-     * @param items items in the input blocks
-     * @return items to be transferred into the core
-     */
-    public abstract Collection<ItemStack> getInput(Collection<ItemStack> items);
+	/**
+	 * Hi
+	 *
+	 * @param items items in the input blocks
+	 * @return items to be transferred into the core
+	 */
+	public abstract Collection<ItemStack> getInput(Collection<ItemStack> items);
 
-    /**
-     *
-     * @param items items in the core
-     * @return items to be placed in the output blocks
-     */
-    public abstract Collection<ItemStack> getOutput(Collection<ItemStack> items);
+	/**
+	 * @param items items in the core
+	 * @return items to be placed in the output blocks
+	 */
+	public abstract Collection<ItemStack> getOutput(Collection<ItemStack> items);
 
-
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 }

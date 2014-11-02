@@ -1,7 +1,5 @@
 package net.ocine.minefluence.blocks.tileentities;
 
-import java.util.Random;
-
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -10,6 +8,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class InventoryTileEntity extends TileEntity implements IInventory {
 
@@ -41,7 +41,8 @@ public class InventoryTileEntity extends TileEntity implements IInventory {
 		if (stack != null) {
 			if (stack.stackSize <= amt) {
 				setInventorySlotContents(slot, null);
-			} else {
+			}
+			else {
 				stack = stack.splitStack(amt);
 				if (stack.stackSize == 0) {
 					setInventorySlotContents(slot, null);

@@ -1,18 +1,13 @@
 package net.ocine.minefluence.proxys;
 
-import net.ocine.minefluence.blocks.tileentities.TileEntityCore;
-import net.ocine.minefluence.blocks.tileentities.TileEntityDisplay;
-import net.ocine.minefluence.blocks.tileentities.TileEntityHyperworker;
-import net.ocine.minefluence.blocks.tileentities.TileEntityInput;
-import net.ocine.minefluence.blocks.tileentities.TileEntityOutput;
-import net.ocine.minefluence.blocks.tileentities.TileEntityWorker;
-import net.ocine.minefluence.renderer.blocks.MachineBlockRenderer;
 import cpw.mods.fml.client.registry.ClientRegistry;
+import net.ocine.minefluence.blocks.tileentities.*;
+import net.ocine.minefluence.renderer.blocks.MachineBlockRenderer;
 
 public class ClientProxy extends CommonProxy {
-	
+
 	public static int MACHINE_BLOCK_RENDER_ID;
-	
+
 	@Override
 	public void registerRenderThings() {
 		MachineBlockRenderer renderer = new MachineBlockRenderer();
@@ -23,5 +18,5 @@ public class ClientProxy extends CommonProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityWorker.class, renderer);
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHyperworker.class, renderer);
 	}
-	
+
 }

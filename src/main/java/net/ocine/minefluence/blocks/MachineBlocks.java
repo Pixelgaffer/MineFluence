@@ -114,18 +114,24 @@ public class MachineBlocks extends BlockContainer {
 				if (tileEntity != null) {
 					if (tileEntity instanceof TileEntityDisplay) {
 						int progress = ((TileEntityDisplay) tileEntity).progress;
-						if (progress == -1)
+						if (progress == -1) {
 							return displayFront;
-						if (progress < 20)
+						}
+						if (progress < 20) {
 							return display0;
-						if (progress < 40)
+						}
+						if (progress < 40) {
 							return display1;
-						if (progress < 70)
+						}
+						if (progress < 70) {
 							return display2;
-						if (progress < 90)
+						}
+						if (progress < 90) {
 							return display3;
-						if (progress < 100)
+						}
+						if (progress < 100) {
 							return display4;
+						}
 						return display5;
 					}
 				}

@@ -10,5 +10,5 @@ public class ContainerInput extends InventoryContainer {
 		super(inventoryPlayer, tileEntity);
 		addSlotToContainer(new Slot(tileEntity, 0, 80, 32));
 	}
-	
+
 }

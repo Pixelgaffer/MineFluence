@@ -1,6 +1,5 @@
 package net.ocine.minefluence.blocks.tileentities;
 
-
 import net.minecraft.nbt.NBTTagCompound;
 import net.ocine.minefluence.machines.Machine;
 
@@ -10,44 +9,44 @@ public abstract class TileEntityGuiMachinePart extends InventoryTileEntity imple
 
 	public TileEntityGuiMachinePart(int inventorySize) {
 		super(inventorySize);
-    }
-	
+	}
+
 	public TileEntityGuiMachinePart(int inventorySize, String name) {
 		super(inventorySize, name);
-    }
+	}
 
 	MachinePartBase machinePartBase = new MachinePartBase(this);
 
-    @Nullable
-    @Override
-    public Machine getMachine() {
-        return machinePartBase.getMachine();
-    }
+	@Nullable
+	@Override
+	public Machine getMachine() {
+		return machinePartBase.getMachine();
+	}
 
-    @Override
-    public boolean isPartOfMachine() {
-        return machinePartBase.isPartOfMachine();
-    }
+	@Override
+	public boolean isPartOfMachine() {
+		return machinePartBase.isPartOfMachine();
+	}
 
-    @Override
-    public boolean assignToMachine(Machine machine, boolean force) {
-        return machinePartBase.assignToMachine(machine, force);
-    }
+	@Override
+	public boolean assignToMachine(Machine machine, boolean force) {
+		return machinePartBase.assignToMachine(machine, force);
+	}
 
-    @Override
-    public boolean removeFromMachine() {
-        return machinePartBase.removeFromMachine();
-    }
+	@Override
+	public boolean removeFromMachine() {
+		return machinePartBase.removeFromMachine();
+	}
 
-    @Override
-    public void readFromNBT(NBTTagCompound tagCompound) {
-        super.readFromNBT(tagCompound);
-        machinePartBase.readFromNBT(tagCompound);
-    }
+	@Override
+	public void readFromNBT(NBTTagCompound tagCompound) {
+		super.readFromNBT(tagCompound);
+		machinePartBase.readFromNBT(tagCompound);
+	}
 
-    @Override
-    public void writeToNBT(NBTTagCompound tagCompound) {
-        super.writeToNBT(tagCompound);
-        machinePartBase.writeToNBT(tagCompound);
-    }
+	@Override
+	public void writeToNBT(NBTTagCompound tagCompound) {
+		super.writeToNBT(tagCompound);
+		machinePartBase.writeToNBT(tagCompound);
+	}
 }

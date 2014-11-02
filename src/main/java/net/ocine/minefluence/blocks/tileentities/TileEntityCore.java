@@ -16,374 +16,401 @@ import net.ocine.minefluence.machines.Machine;
 import net.ocine.minefluence.machines.MachineLogicManager;
 import scala.actors.threadpool.Arrays;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Random;
 
 public class TileEntityCore extends TileEntity implements Machine, IMachinePart {
-    Collection<Algorithm.Vector> parts = new ArrayList<Algorithm.Vector>();
-    private int counter = 0;
-    private AbstractMachineLogic logic;
-    Collection<ItemStack> items;
-    int remainingTime;
-    int numWorkers;
+	Collection<Algorithm.Vector> parts = new ArrayList<Algorithm.Vector>();
+	private int counter = 0;
+	private AbstractMachineLogic logic;
+	Collection<ItemStack> items;
+	int remainingTime;
+	int numWorkers;
 
-    @Override
-    public void updateEntity() {
-        if (FMLCommonHandler.instance().getEffectiveSide() == Side.SERVER) {
-            if (!isActive()) {
-                if (counter >= 20) {
-                    counter = 0;
-                    parts = Algorithm.doMagic(new Algorithm.Vector(getX(), getY(), getZ()), getWorldObj());
-                    calcWorkers();
-                    logic = MachineLogicManager.getApplicatableLogic(this);
-                    if(logic == null){
-                        parts.clear();
-                        numWorkers = 0;
-                        return;
-                    }
-                    for (Algorithm.Vector vector : parts) {
-                        ((IMachinePart) worldObj.getTileEntity(vector.x, vector.y, vector.z)).assignToMachine(this, true);
-                    }
-                    super.markDirty();
-                }
-                counter++;
-            } else {
-                if (isTransformationInProgress()) {
-                    remainingTime--;
-                    super.markDirty();
-                    if (remainingTime <= 0) {
-                        finishProcess();
-                    }
-                } else {
-                    startNewProcess();
-                }
-                updateDisplays();
-            }
-        }
-    }
+	@Override
+	public void updateEntity() {
+		if (FMLCommonHandler.instance().getEffectiveSide() == Side.SERVER) {
+			if (!isActive()) {
+				if (counter >= 20) {
+					counter = 0;
+					parts = Algorithm.doMagic(new Algorithm.Vector(getX(), getY(), getZ()), getWorldObj());
+					calcWorkers();
+					logic = MachineLogicManager.getApplicatableLogic(this);
+					if (logic == null) {
+						parts.clear();
+						numWorkers = 0;
+						return;
+					}
+					for (Algorithm.Vector vector : parts) {
+						((IMachinePart) worldObj.getTileEntity(vector.x, vector.y, vector.z)).assignToMachine(this, true);
+					}
+					super.markDirty();
+				}
+				counter++;
+			}
+			else {
+				if (isTransformationInProgress()) {
+					remainingTime--;
+					super.markDirty();
+					if (remainingTime <= 0) {
+						finishProcess();
+					}
+				}
+				else {
+					startNewProcess();
+				}
+				updateDisplays();
+			}
+		}
+	}
 
-    private void updateDisplays() {
-        for(Algorithm.Vector vec: parts){
-            TileEntity part = worldObj.getTileEntity(vec.x, vec.y, vec.z);
-            if(part instanceof TileEntityDisplay){
-                TileEntityDisplay tileEntityDisplay = (TileEntityDisplay) part;
-                tileEntityDisplay.progress = getProgressForDisplay();
-                worldObj.markBlockForUpdate(tileEntityDisplay.xCoord, tileEntityDisplay.yCoord, tileEntityDisplay.zCoord);
-            }
-        }
-    }
+	private void updateDisplays() {
+		for (Algorithm.Vector vec : parts) {
+			TileEntity part = worldObj.getTileEntity(vec.x, vec.y, vec.z);
+			if (part instanceof TileEntityDisplay) {
+				TileEntityDisplay tileEntityDisplay = (TileEntityDisplay) part;
+				tileEntityDisplay.progress = getProgressForDisplay();
+				worldObj.markBlockForUpdate(tileEntityDisplay.xCoord, tileEntityDisplay.yCoord, tileEntityDisplay.zCoord);
+			}
+		}
+	}
 
-    @SuppressWarnings("unchecked")
-    private void startNewProcess() {
-        List<ItemStack> newInv = Algorithm.getRemaining(Arrays.asList(getInputInventory()), logic.getInput(Arrays.asList(getInputInventory())));
-        if (newInv != null) {
-            // can start - check whether we have place for output
-            if (Algorithm.mergeItems(getOutputInventory(), logic.getOutput(newInv)) != null) {
-                // yes we can
-                remainingTime = getProcessTime();
-                items = logic.getInput(Arrays.asList(getInputInventory()));
-                ItemStack arr[] = new ItemStack[getInputs()];
-                for (int i = 0; i < getInputs(); i++) {
-                    arr[i] = newInv.get(i);
-                    if (arr[i] != null && arr[i].stackSize <= 0) arr[i] = null;
-                }
-                setInputInventory(arr);
-            }
-        }
-    }
+	@SuppressWarnings("unchecked")
+	private void startNewProcess() {
+		List<ItemStack> newInv = Algorithm.getRemaining(Arrays.asList(getInputInventory()), logic.getInput(Arrays.asList(getInputInventory())));
+		if (newInv != null) {
+			// can start - check whether we have place for output
+			if (Algorithm.mergeItems(getOutputInventory(), logic.getOutput(newInv)) != null) {
+				// yes we can
+				remainingTime = getProcessTime();
+				items = logic.getInput(Arrays.asList(getInputInventory()));
+				ItemStack arr[] = new ItemStack[getInputs()];
+				for (int i = 0; i < getInputs(); i++) {
+					arr[i] = newInv.get(i);
+					if (arr[i] != null && arr[i].stackSize <= 0) {
+						arr[i] = null;
+					}
+				}
+				setInputInventory(arr);
+			}
+		}
+	}
 
-    private void finishProcess() {
-        Collection<ItemStack> result = getLogic().getOutput(items);
-        ItemStack[] inv = Algorithm.mergeItems(getOutputInventory(), result);
-        if (inv == null) {
-            ItemStack[] inv1 = Algorithm.mergeItems(getOutputInventory(), items);
-            setInputInventory(inv1);
-            System.out.println("THIS SHOULD NOT HAPPEN");
-        } else {
-            setOutputInventory(inv);
-        }
-        items = null;
-        remainingTime = 0;
-        // super.markDirty();
-    }
+	private void finishProcess() {
+		Collection<ItemStack> result = getLogic().getOutput(items);
+		ItemStack[] inv = Algorithm.mergeItems(getOutputInventory(), result);
+		if (inv == null) {
+			ItemStack[] inv1 = Algorithm.mergeItems(getOutputInventory(), items);
+			setInputInventory(inv1);
+			System.out.println("THIS SHOULD NOT HAPPEN");
+		}
+		else {
+			setOutputInventory(inv);
+		}
+		items = null;
+		remainingTime = 0;
+		// super.markDirty();
+	}
 
-    public Machine getMachine() {
-        return this;
-    }
+	public Machine getMachine() {
+		return this;
+	}
 
-    @Override
-    public boolean isPartOfMachine() {
-        // WE ARE THE MACHINE
-        return true;
-    }
+	@Override
+	public boolean isPartOfMachine() {
+		// WE ARE THE MACHINE
+		return true;
+	}
 
-    @Override
-    public boolean assignToMachine(Machine machine, boolean force) {
-        if (machine == this) return true;
-        // NO THIS CAN'T BE
-        TileEntityCore core2 = (TileEntityCore) machine;
-        core2.worldObj.setBlockToAir(getX(), getY(), getZ());
-        return false;
-    }
+	@Override
+	public boolean assignToMachine(Machine machine, boolean force) {
+		if (machine == this) {
+			return true;
+		}
+		// NO THIS CAN'T BE
+		TileEntityCore core2 = (TileEntityCore) machine;
+		core2.worldObj.setBlockToAir(getX(), getY(), getZ());
+		return false;
+	}
 
-    @Override
-    public boolean removeFromMachine() {
-        for (IMachinePart part : new ArrayList<IMachinePart>(getParts())) {
-            if(part != this && !(part instanceof TileEntityCore))part.removeFromMachine();
-        }
-        parts.clear();
-        dropItems(worldObj, getX(), getY(), getZ());
-        logic = null;
-        remainingTime = 0;
-        items = null;
-        return true;
-    }
+	@Override
+	public boolean removeFromMachine() {
+		for (IMachinePart part : new ArrayList<IMachinePart>(getParts())) {
+			if (part != this && !(part instanceof TileEntityCore)) {
+				part.removeFromMachine();
+			}
+		}
+		parts.clear();
+		dropItems(worldObj, getX(), getY(), getZ());
+		logic = null;
+		remainingTime = 0;
+		items = null;
+		return true;
+	}
 
-    @Override
-    public MachineBlocks.Machines getType() {
-        return MachineBlocks.Machines.CORE;
-    }
+	@Override
+	public MachineBlocks.Machines getType() {
+		return MachineBlocks.Machines.CORE;
+	}
 
-    @Override
-    public void addPart(IMachinePart machinePart) {
-        parts.add(new Algorithm.Vector(((TileEntity)machinePart).xCoord, ((TileEntity)machinePart).yCoord, ((TileEntity)machinePart).zCoord));
-    }
+	@Override
+	public void addPart(IMachinePart machinePart) {
+		parts.add(new Algorithm.Vector(((TileEntity) machinePart).xCoord, ((TileEntity) machinePart).yCoord, ((TileEntity) machinePart).zCoord));
+	}
 
-    @Override
-    public void removePart(IMachinePart machinePart) {
-        for (IMachinePart part : new ArrayList<IMachinePart>(getParts())) {
-            if(part != this && !(part instanceof TileEntityCore))part.removeFromMachine();
-        }
-        parts.clear();
-        logic = null;
-    }
+	@Override
+	public void removePart(IMachinePart machinePart) {
+		for (IMachinePart part : new ArrayList<IMachinePart>(getParts())) {
+			if (part != this && !(part instanceof TileEntityCore)) {
+				part.removeFromMachine();
+			}
+		}
+		parts.clear();
+		logic = null;
+	}
 
-    @Override
-    public int getX() {
-        return xCoord;
-    }
+	@Override
+	public int getX() {
+		return xCoord;
+	}
 
-    @Override
-    public int getY() {
-        return yCoord;
-    }
+	@Override
+	public int getY() {
+		return yCoord;
+	}
 
-    @Override
-    public int getZ() {
-        return zCoord;
-    }
+	@Override
+	public int getZ() {
+		return zCoord;
+	}
 
-    @Override
-    public Collection<IMachinePart> getParts() {
-        ArrayList<IMachinePart> parts1 = new ArrayList<IMachinePart>(parts.size());
-        for(Algorithm.Vector vec: parts){
-            TileEntity entity = worldObj.getTileEntity(vec.x, vec.y, vec.z);
-            if(entity instanceof IMachinePart){
-                parts1.add((IMachinePart) entity);
-            }
-        }
-        return new ArrayList<IMachinePart>(parts1);
-    }
+	@Override
+	public Collection<IMachinePart> getParts() {
+		ArrayList<IMachinePart> parts1 = new ArrayList<IMachinePart>(parts.size());
+		for (Algorithm.Vector vec : parts) {
+			TileEntity entity = worldObj.getTileEntity(vec.x, vec.y, vec.z);
+			if (entity instanceof IMachinePart) {
+				parts1.add((IMachinePart) entity);
+			}
+		}
+		return new ArrayList<IMachinePart>(parts1);
+	}
 
-    @Override
-    public boolean isActive() {
-        return logic != null;
-    }
+	@Override
+	public boolean isActive() {
+		return logic != null;
+	}
 
-    @Override
-    public AbstractMachineLogic getLogic() {
-        return logic;
-    }
+	@Override
+	public AbstractMachineLogic getLogic() {
+		return logic;
+	}
 
-    @Override
-    public int getWorkers() {
-        return numWorkers;
-    }
+	@Override
+	public int getWorkers() {
+		return numWorkers;
+	}
 
-    public void calcWorkers() {
-        int i = 0;
-        for (IMachinePart part : getParts()) {
-            if (part.getType() == MachineBlocks.Machines.WORKER) i++;
-            if (part.getType() == MachineBlocks.Machines.HYPERWORKER) i+=10; // this is awesome
-        }
-        numWorkers = i;
-    }
+	public void calcWorkers() {
+		int i = 0;
+		for (IMachinePart part : getParts()) {
+			if (part.getType() == MachineBlocks.Machines.WORKER) {
+				i++;
+			}
+			if (part.getType() == MachineBlocks.Machines.HYPERWORKER) {
+				i += 10; // this is awesome
+			}
+		}
+		numWorkers = i;
+	}
 
-    @Override
-    public int getInputs() {
-        int i = 0;
-        for (IMachinePart part : getParts()) {
-            if (part.getType() == MachineBlocks.Machines.INPUT) i++;
-        }
-        return i;
-    }
+	@Override
+	public int getInputs() {
+		int i = 0;
+		for (IMachinePart part : getParts()) {
+			if (part.getType() == MachineBlocks.Machines.INPUT) {
+				i++;
+			}
+		}
+		return i;
+	}
 
-    @Override
-    public int getOutputs() {
-        int i = 0;
-        for (IMachinePart part : getParts()) {
-            if (part.getType() == MachineBlocks.Machines.OUTPUT) i++;
-        }
-        return i;
-    }
+	@Override
+	public int getOutputs() {
+		int i = 0;
+		for (IMachinePart part : getParts()) {
+			if (part.getType() == MachineBlocks.Machines.OUTPUT) {
+				i++;
+			}
+		}
+		return i;
+	}
 
-    @Override
-    public boolean isTransformationInProgress() {
-        return remainingTime > 0 && items != null;
-    }
+	@Override
+	public boolean isTransformationInProgress() {
+		return remainingTime > 0 && items != null;
+	}
 
-    @Override
-    public int getRemainingTime() {
-        return remainingTime;
-    }
+	@Override
+	public int getRemainingTime() {
+		return remainingTime;
+	}
 
-    @Override
-    public int getProcessTime() {
-        return logic.processTime / getWorkers();
-    }
+	@Override
+	public int getProcessTime() {
+		return logic.processTime / getWorkers();
+	}
 
-    @Override
-    public ItemStack[] getInputInventory() {
-        ItemStack[] inv = new ItemStack[getInputs()];
-        int i = 0;
-        for (IMachinePart part : getParts()) {
-            if (part instanceof TileEntityInput) {
-                TileEntityInput input = (TileEntityInput) part;
-                inv[i] = input.getStackInSlot(0) == null ? null : input.getStackInSlot(0).copy();
-                i++;
-            }
-        }
-        return inv;
-    }
+	@Override
+	public ItemStack[] getInputInventory() {
+		ItemStack[] inv = new ItemStack[getInputs()];
+		int i = 0;
+		for (IMachinePart part : getParts()) {
+			if (part instanceof TileEntityInput) {
+				TileEntityInput input = (TileEntityInput) part;
+				inv[i] = input.getStackInSlot(0) == null ? null : input.getStackInSlot(0).copy();
+				i++;
+			}
+		}
+		return inv;
+	}
 
-    @Override
-    public void setInputInventory(ItemStack[] inv) {
-        int i = 0;
-        for (IMachinePart part : getParts()) {
-            if (part instanceof TileEntityInput) {
-                TileEntityInput input = (TileEntityInput) part;
-                input.setInventorySlotContents(0, inv[i]);
-                i++;
-            }
-        }
-        super.markDirty();
-    }
+	@Override
+	public void setInputInventory(ItemStack[] inv) {
+		int i = 0;
+		for (IMachinePart part : getParts()) {
+			if (part instanceof TileEntityInput) {
+				TileEntityInput input = (TileEntityInput) part;
+				input.setInventorySlotContents(0, inv[i]);
+				i++;
+			}
+		}
+		super.markDirty();
+	}
 
-    @Override
-    public ItemStack[] getOutputInventory() {
-        ItemStack[] inv = new ItemStack[getInputs()];
-        int i = 0;
-        for (IMachinePart part : getParts()) {
-            if (part instanceof TileEntityOutput) {
-                TileEntityOutput output = (TileEntityOutput) part;
-                inv[i] = output.getStackInSlot(0) == null ? null : output.getStackInSlot(0).copy();
-                i++;
-            }
-        }
-        return inv;
-    }
+	@Override
+	public ItemStack[] getOutputInventory() {
+		ItemStack[] inv = new ItemStack[getInputs()];
+		int i = 0;
+		for (IMachinePart part : getParts()) {
+			if (part instanceof TileEntityOutput) {
+				TileEntityOutput output = (TileEntityOutput) part;
+				inv[i] = output.getStackInSlot(0) == null ? null : output.getStackInSlot(0).copy();
+				i++;
+			}
+		}
+		return inv;
+	}
 
-    @Override
-    public void setOutputInventory(ItemStack[] inv) {
-        int i = 0;
-        for (IMachinePart part : getParts()) {
-            if (part instanceof TileEntityOutput) {
-                TileEntityOutput output = (TileEntityOutput) part;
-                output.setInventorySlotContents(0, inv[i]);
-                i++;
-            }
-        }
-        super.markDirty();
-    }
+	@Override
+	public void setOutputInventory(ItemStack[] inv) {
+		int i = 0;
+		for (IMachinePart part : getParts()) {
+			if (part instanceof TileEntityOutput) {
+				TileEntityOutput output = (TileEntityOutput) part;
+				output.setInventorySlotContents(0, inv[i]);
+				i++;
+			}
+		}
+		super.markDirty();
+	}
 
-    @Override
-    public int getProgressForDisplay() {
-        if(!isActive())return 0;
-        if(isTransformationInProgress()){
-            return (getProcessTime()-getRemainingTime())*100/getProcessTime();
-        }
-        return 100;
-    }
+	@Override
+	public int getProgressForDisplay() {
+		if (!isActive()) {
+			return 0;
+		}
+		if (isTransformationInProgress()) {
+			return (getProcessTime() - getRemainingTime()) * 100 / getProcessTime();
+		}
+		return 100;
+	}
 
-    @Override
-    public void readFromNBT(NBTTagCompound compound) {
-        super.readFromNBT(compound);
-        remainingTime = compound.getInteger("remaining");
-        numWorkers = compound.getInteger("numWorkers");
-        if (compound.hasKey("items")) {
-            items = new ArrayList<ItemStack>();
-            NBTTagList list = compound.getTagList("items", Constants.NBT.TAG_COMPOUND);
-            for (int i = 0; i < list.tagCount(); i++) {
-                NBTTagCompound stack = list.getCompoundTagAt(i);
-                items.add(ItemStack.loadItemStackFromNBT(stack));
-            }
-        } else {
-            items = null;
-        }
-        if (compound.hasKey("parts")) {
-            parts = new ArrayList<Algorithm.Vector>();
-            NBTTagList list = compound.getTagList("parts", Constants.NBT.TAG_COMPOUND);
-            for (int i = 0; i < list.tagCount(); i++) {
-                NBTTagCompound part = list.getCompoundTagAt(i);
-                parts.add(new Algorithm.Vector(part.getInteger("x"), part.getInteger("y"), part.getInteger("z")));
-            }
-        }
-    }
+	@Override
+	public void readFromNBT(NBTTagCompound compound) {
+		super.readFromNBT(compound);
+		remainingTime = compound.getInteger("remaining");
+		numWorkers = compound.getInteger("numWorkers");
+		if (compound.hasKey("items")) {
+			items = new ArrayList<ItemStack>();
+			NBTTagList list = compound.getTagList("items", Constants.NBT.TAG_COMPOUND);
+			for (int i = 0; i < list.tagCount(); i++) {
+				NBTTagCompound stack = list.getCompoundTagAt(i);
+				items.add(ItemStack.loadItemStackFromNBT(stack));
+			}
+		}
+		else {
+			items = null;
+		}
+		if (compound.hasKey("parts")) {
+			parts = new ArrayList<Algorithm.Vector>();
+			NBTTagList list = compound.getTagList("parts", Constants.NBT.TAG_COMPOUND);
+			for (int i = 0; i < list.tagCount(); i++) {
+				NBTTagCompound part = list.getCompoundTagAt(i);
+				parts.add(new Algorithm.Vector(part.getInteger("x"), part.getInteger("y"), part.getInteger("z")));
+			}
+		}
+	}
 
-    @Override
-    public void writeToNBT(NBTTagCompound compound) {
-        super.writeToNBT(compound);
-        compound.setInteger("remaining", remainingTime);
-        compound.setInteger("numWorkers", numWorkers);
-        if (items != null) {
-            NBTTagList list = new NBTTagList();
-            for (ItemStack is : items) {
-                list.appendTag(is.writeToNBT(new NBTTagCompound()));
-            }
-            compound.setTag("items", list);
-        }
-        NBTTagList list = new NBTTagList();
-        for (Algorithm.Vector vec : parts) {
-            NBTTagCompound f = new NBTTagCompound();
-            f.setInteger("x", vec.x);
-            f.setInteger("y", vec.y);
-            f.setInteger("z", vec.z);
-            list.appendTag(f);
-        }
-        compound.setTag("parts", list);
-    }
+	@Override
+	public void writeToNBT(NBTTagCompound compound) {
+		super.writeToNBT(compound);
+		compound.setInteger("remaining", remainingTime);
+		compound.setInteger("numWorkers", numWorkers);
+		if (items != null) {
+			NBTTagList list = new NBTTagList();
+			for (ItemStack is : items) {
+				list.appendTag(is.writeToNBT(new NBTTagCompound()));
+			}
+			compound.setTag("items", list);
+		}
+		NBTTagList list = new NBTTagList();
+		for (Algorithm.Vector vec : parts) {
+			NBTTagCompound f = new NBTTagCompound();
+			f.setInteger("x", vec.x);
+			f.setInteger("y", vec.y);
+			f.setInteger("z", vec.z);
+			list.appendTag(f);
+		}
+		compound.setTag("parts", list);
+	}
 
-    public void dropItems(World world, int x, int y, int z) {
-        if (items == null) return;
+	public void dropItems(World world, int x, int y, int z) {
+		if (items == null) {
+			return;
+		}
 
-        Random rand = new Random();
+		Random rand = new Random();
 
-        for (ItemStack item : items) {
+		for (ItemStack item : items) {
 
-            if (item != null && item.stackSize > 0) {
-                float rx = rand.nextFloat() * 0.8F + 0.1F;
-                float ry = rand.nextFloat() * 0.8F + 0.1F;
-                float rz = rand.nextFloat() * 0.8F + 0.1F;
+			if (item != null && item.stackSize > 0) {
+				float rx = rand.nextFloat() * 0.8F + 0.1F;
+				float ry = rand.nextFloat() * 0.8F + 0.1F;
+				float rz = rand.nextFloat() * 0.8F + 0.1F;
 
-                EntityItem entityItem = new EntityItem(world, x + rx, y + ry, z + rz, item.copy());
+				EntityItem entityItem = new EntityItem(world, x + rx, y + ry, z + rz, item.copy());
 
-                if (item.hasTagCompound()) {
-                    entityItem.getEntityItem().setTagCompound((NBTTagCompound) item.getTagCompound().copy());
-                }
+				if (item.hasTagCompound()) {
+					entityItem.getEntityItem().setTagCompound((NBTTagCompound) item.getTagCompound().copy());
+				}
 
-                float factor = 0.05F;
-                entityItem.motionX = rand.nextGaussian() * factor;
-                entityItem.motionY = rand.nextGaussian() * factor + 0.2F;
-                entityItem.motionZ = rand.nextGaussian() * factor;
-                world.spawnEntityInWorld(entityItem);
-            }
-        }
-    }
+				float factor = 0.05F;
+				entityItem.motionX = rand.nextGaussian() * factor;
+				entityItem.motionY = rand.nextGaussian() * factor + 0.2F;
+				entityItem.motionZ = rand.nextGaussian() * factor;
+				world.spawnEntityInWorld(entityItem);
+			}
+		}
+	}
 
 	@Override
 	public String getTextureName() {
 		return "machineblock_core.png";
 	}
-	
+
 	@Override
 	public String getBorder() {
 		//TODO Implement

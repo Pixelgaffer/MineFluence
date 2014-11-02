@@ -10,13 +10,13 @@ public class ContainerOutput extends InventoryContainer {
 		super(inventoryPlayer, tileEntity);
 		addSlotToContainer(new OutputSlot(tileEntity, 0, 80, 32));
 	}
-	
+
 	@Override
 	public boolean canDragIntoSlot(Slot slot) {
-		if(slot.getSlotIndex() == 2) {
+		if (slot.getSlotIndex() == 2) {
 			return false;
 		}
 		return true;
 	}
-	
+
 }
