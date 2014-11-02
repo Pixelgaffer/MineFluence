@@ -1,18 +1,16 @@
 package net.ocine.minefluence.renderer.blocks;
 
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
-import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.RenderBlocks;
+import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.IBlockAccess;
 import net.ocine.minefluence.blocks.tileentities.IMachinePart;
 import net.ocine.minefluence.models.ModelMachineBlockBlock;
 import net.ocine.minefluence.models.ModelMachineBlockBorder;
 import org.lwjgl.opengl.GL11;
 
-public class MachineBlockRenderer implements ISimpleBlockRenderingHandler {
+public class MachineBlockRenderer extends TileEntitySpecialRenderer{
 
 	public static final String NOT_IN_MACHINE = "border_standart.png";
 	public static final String IN_MACHINE = "border_inmachine.png";
@@ -45,27 +43,4 @@ public class MachineBlockRenderer implements ISimpleBlockRenderingHandler {
 		GL11.glPopMatrix();
 		GL11.glPopMatrix();
 	}
-
-	@Override
-	public int getRenderId() {
-		return 0;
-	}
-
-	@Override
-	public void renderInventoryBlock(Block block, int arg1, int arg2, RenderBlocks arg3) {
-
-	}
-
-	@Override
-	public boolean renderWorldBlock(IBlockAccess arg0, int arg1, int arg2,
-			int arg3, Block arg4, int arg5, RenderBlocks arg6) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean shouldRender3DInInventory(int arg0) {
-		return false;
-	}
-
 }
