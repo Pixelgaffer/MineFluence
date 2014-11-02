@@ -1,6 +1,5 @@
 package net.ocine.minefluence.renderer.blocks;
 
-import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
@@ -10,12 +9,10 @@ import net.ocine.minefluence.models.ModelMachineBlockBlock;
 import net.ocine.minefluence.models.ModelMachineBlockBorder;
 import org.lwjgl.opengl.GL11;
 
-public class MachineBlockRenderer extends TileEntitySpecialRenderer{
-
+public class MachineBlockRenderer extends TileEntitySpecialRenderer {
 	public static final String NOT_IN_MACHINE = "border_standart.png";
 	public static final String IN_MACHINE = "border_inmachine.png";
 	public static final String ACTIVATED = "border_activated.png";
-
 	private ModelMachineBlockBlock modelBase;
 	private ModelMachineBlockBorder modelBorder;
 
