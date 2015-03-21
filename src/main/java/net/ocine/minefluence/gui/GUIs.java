@@ -1,6 +1,7 @@
 package net.ocine.minefluence.gui;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.ocine.minefluence.blocks.containers.ContainerInput;
 import net.ocine.minefluence.blocks.containers.ContainerOutput;
@@ -11,24 +12,24 @@ public enum GUIs {
 
 	INPUT(new GuiCreator() {
 		public Object getGuiScreen(World world, EntityPlayer player, int x, int y, int z) {
-			return new GuiInput(player.inventory, (InventoryTileEntity) world.getTileEntity(x, y, z));
+			return new GuiInput(player.inventory, (InventoryTileEntity) world.getTileEntity(new BlockPos(x, y, z)));
 		}
 	}, new ContainerCreator() {
 		public Object getContainer(World world, EntityPlayer player, int x, int y, int z) {
-			return new ContainerInput(player.inventory, (InventoryTileEntity) world.getTileEntity(x, y, z));
+			return new ContainerInput(player.inventory, (InventoryTileEntity) world.getTileEntity(new BlockPos(x, y, z)));
 		}
 	}),
 	OUTPUT(new GuiCreator() {
 		public Object getGuiScreen(World world, EntityPlayer player, int x, int y, int z) {
-			return new GuiOutput(player.inventory, (InventoryTileEntity) world.getTileEntity(x, y, z));
+			return new GuiOutput(player.inventory, (InventoryTileEntity) world.getTileEntity(new BlockPos(x, y, z)));
 		}
 	}, new ContainerCreator() {
 		public Object getContainer(World world, EntityPlayer player, int x, int y, int z) {
-			return new ContainerOutput(player.inventory, (InventoryTileEntity) world.getTileEntity(x, y, z));
+			return new ContainerOutput(player.inventory, (InventoryTileEntity) world.getTileEntity(new BlockPos(x, y, z)));
 		}
 	}), DISPLAY(new GuiCreator() {
 		public Object getGuiScreen(World world, EntityPlayer player, int x, int y, int z) {
-			return new GuiDisplay((TileEntityDisplay) world.getTileEntity(x, y, z));
+			return new GuiDisplay((TileEntityDisplay) world.getTileEntity(new BlockPos(x, y, z)));
 		}
 	}, getEmptyContainerCreator());
 

@@ -1,12 +1,14 @@
 package net.ocine.minefluence.blocks.tileentities;
 
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.relauncher.Side;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.relauncher.Side;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import net.ocine.minefluence.Algorithm;
@@ -21,7 +23,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
-public class TileEntityCore extends TileEntity implements Machine, IMachinePart {
+public class TileEntityCore extends TileEntity implements Machine, IMachinePart, IUpdatePlayerListBox {
 	Collection<Algorithm.Vector> parts = new ArrayList<Algorithm.Vector>();
 	private int counter = 0;
 	private AbstractMachineLogic logic;
@@ -30,12 +32,12 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
 	int numWorkers;
 
 	@Override
-	public void updateEntity() {
+	public void update() {
 		if (FMLCommonHandler.instance().getEffectiveSide() == Side.SERVER) {
 			if (!isActive()) {
 				if (counter >= 20) {
 					counter = 0;
-					parts = Algorithm.doMagic(new Algorithm.Vector(getX(), getY(), getZ()), getWorldObj());
+					parts = Algorithm.doMagic(new Algorithm.Vector(getX(), getY(), getZ()), getWorld());
 					calcWorkers();
 					logic = MachineLogicManager.getApplicatableLogic(this);
 					if (logic == null) {
@@ -44,7 +46,7 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
 						return;
 					}
 					for (Algorithm.Vector vector : parts) {
-						((IMachinePart) worldObj.getTileEntity(vector.x, vector.y, vector.z)).assignToMachine(this, true);
+						((IMachinePart) worldObj.getTileEntity(new BlockPos(vector.x, vector.y, vector.z))).assignToMachine(this, true);
 					}
 					super.markDirty();
 				}
@@ -68,11 +70,11 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
 
 	private void updateDisplays() {
 		for (Algorithm.Vector vec : parts) {
-			TileEntity part = worldObj.getTileEntity(vec.x, vec.y, vec.z);
+			TileEntity part = worldObj.getTileEntity(new BlockPos(vec.x, vec.y, vec.z));
 			if (part instanceof TileEntityDisplay) {
 				TileEntityDisplay tileEntityDisplay = (TileEntityDisplay) part;
 				tileEntityDisplay.progress = getProgressForDisplay();
-				worldObj.markBlockForUpdate(tileEntityDisplay.xCoord, tileEntityDisplay.yCoord, tileEntityDisplay.zCoord);
+				worldObj.markBlockForUpdate(tileEntityDisplay.getPos());
 			}
 		}
 	}
@@ -131,7 +133,7 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
 		}
 		// NO THIS CAN'T BE
 		TileEntityCore core2 = (TileEntityCore) machine;
-		core2.worldObj.setBlockToAir(getX(), getY(), getZ());
+		core2.worldObj.setBlockToAir(new BlockPos(getX(), getY(), getZ()));
 		return false;
 	}
 
@@ -157,7 +159,7 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
 
 	@Override
 	public void addPart(IMachinePart machinePart) {
-		parts.add(new Algorithm.Vector(((TileEntity) machinePart).xCoord, ((TileEntity) machinePart).yCoord, ((TileEntity) machinePart).zCoord));
+		parts.add(new Algorithm.Vector(((TileEntity) machinePart).getPos().getX(), ((TileEntity) machinePart).getPos().getY(), ((TileEntity) machinePart).getPos().getZ()));
 	}
 
 	@Override
@@ -173,24 +175,24 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart 
 
 	@Override
 	public int getX() {
-		return xCoord;
+		return getPos().getX();
 	}
 
 	@Override
 	public int getY() {
-		return yCoord;
+		return getPos().getY();
 	}
 
 	@Override
 	public int getZ() {
-		return zCoord;
+		return getPos().getZ();
 	}
 
 	@Override
 	public Collection<IMachinePart> getParts() {
 		ArrayList<IMachinePart> parts1 = new ArrayList<IMachinePart>(parts.size());
 		for (Algorithm.Vector vec : parts) {
-			TileEntity entity = worldObj.getTileEntity(vec.x, vec.y, vec.z);
+			TileEntity entity = worldObj.getTileEntity(new BlockPos(vec.x, vec.y, vec.z));
 			if (entity instanceof IMachinePart) {
 				parts1.add((IMachinePart) entity);
 			}

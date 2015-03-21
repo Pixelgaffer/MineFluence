@@ -1,6 +1,6 @@
 package net.ocine.minefluence.items;
 
-import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -18,17 +18,19 @@ public class ItemBacteriaFlask extends Item {
 		setHasSubtypes(true);
 		setMaxDamage(0);
 		setCreativeTab(tab);
-		setTextureName("minefluence:bacteria");
+		// TODO
+		//setTextureName("minefluence:bacteria");
 		bacterias.add(new Bacteria(0xff0000, "red"));
 		bacterias.add(new Bacteria(0x00ff00, "green"));
 		bacterias.add(new Bacteria(0x0000ff, "blue"));
 		GameRegistry.registerItem(this, "minefluence." + name);
 	}
-
+// TODO
+	/*
 	@Override
 	public boolean requiresMultipleRenderPasses() {
 		return true;
-	}
+	}*/
 
 	@Override
 	public int getColorFromItemStack(ItemStack stack, int p_82790_2_) {

@@ -1,13 +1,16 @@
 package net.ocine.minefluence.blocks;
 
-import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -43,47 +46,49 @@ public class MachineBlocks extends BlockContainer {
 				UNLOCALIZED_NAME);
 		setCreativeTab(tab);
 	}
-
+// TODO
+	/*
 	@Override
-	public void onBlockPreDestroy(World world, int x, int y, int z, int metadata) {
-		IMachinePart machineBlock = (IMachinePart) world.getTileEntity(x, y, z);
+	public void onBlockPreDestroy(World world, BlockPos pos, IBlockState metadata) {
+		IMachinePart machineBlock = (IMachinePart) world.getTileEntity(pos);
 		if (machineBlock == null) {
 			return;
 		}
 		if (machineBlock.isPartOfMachine()) {
 			machineBlock.getMachine().removePart(machineBlock);
 		}
-		if (world.getTileEntity(x, y, z) instanceof InventoryTileEntity) {
-			((InventoryTileEntity) world.getTileEntity(x, y, z)).dropItems(
-					world, x, y, z);
+		if (world.getTileEntity(pos) instanceof InventoryTileEntity) {
+			((InventoryTileEntity) world.getTileEntity(pos)).dropItems(
+					world, pos.getX(), pos.getY(), pos.getZ());
 		}
 	}
+	*/
 
 	@Override
-	public boolean onBlockActivated(World world, int x, int y, int z,
-			EntityPlayer player, int metadata, float dx, float dy, float dz) {
-		TileEntity tileEntity = world.getTileEntity(x, y, z);
+	public boolean onBlockActivated(World world, BlockPos pos, IBlockState iBlockState,
+			EntityPlayer player, EnumFacing side, float dx, float dy, float dz) {
+		TileEntity tileEntity = world.getTileEntity(pos);
 		if (tileEntity == null || player.isSneaking()) {
 			return false;
 		}
 		if (tileEntity instanceof TileEntityInput) {
 			player.openGui(MineFluence.instance, GUIs.INPUT.ordinal(), world,
-					x, y, z);
+					pos.getX(), pos.getY(), pos.getZ());
 			return true;
 		}
 		if (tileEntity instanceof TileEntityOutput) {
 			player.openGui(MineFluence.instance, GUIs.OUTPUT.ordinal(), world,
-					x, y, z);
+					pos.getX(), pos.getY(), pos.getZ());
 			return true;
 		}
 		if (tileEntity instanceof TileEntityDisplay) {
 			player.openGui(MineFluence.instance, GUIs.DISPLAY.ordinal(), world,
-					x, y, z);
+					pos.getX(), pos.getY(), pos.getZ());
 			return true;
 		}
 		return false;
 	}
-
+/* // TODO
 	@Override
 	public IIcon getIcon(IBlockAccess blockAccess, int x, int y, int z, int side) {
 		int meta = blockAccess.getBlockMetadata(x, y, z);
@@ -333,7 +338,7 @@ public class MachineBlocks extends BlockContainer {
 
 		hyperworker = iconRegister
 				.registerIcon("minefluence:mblock_hyperworker_alternative");
-	}
+	}*/
 
 	@Override
 	public TileEntity createNewTileEntity(World world, int metadata) {

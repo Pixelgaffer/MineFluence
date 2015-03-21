@@ -2,6 +2,7 @@ package net.ocine.minefluence.blocks.tileentities;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
 import net.ocine.minefluence.machines.Machine;
 
 public class MachinePartBase {
@@ -19,7 +20,7 @@ public class MachinePartBase {
 		if (!hasCore) {
 			return null;
 		}
-		TileEntity core = ((TileEntity) part).getWorldObj().getTileEntity(x, y, z);
+		TileEntity core = ((TileEntity) part).getWorld().getTileEntity(new BlockPos(x, y, z));
 		if (core == null) {
 			return null;
 		}

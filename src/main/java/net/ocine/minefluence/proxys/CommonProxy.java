@@ -1,6 +1,6 @@
 package net.ocine.minefluence.proxys;
 
-import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.ocine.minefluence.blocks.tileentities.*;
 
 public class CommonProxy {

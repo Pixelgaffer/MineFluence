@@ -1,6 +1,7 @@
 package net.ocine.minefluence;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.ocine.minefluence.blocks.tileentities.IMachinePart;
 
@@ -17,7 +18,7 @@ public class Algorithm {
 		}
 
 		private boolean check(World w) {
-			Object entity = w.getTileEntity(x, y, z);
+			Object entity = w.getTileEntity(new BlockPos(x, y, z));
 			if (entity == null) {
 				return false;
 			}

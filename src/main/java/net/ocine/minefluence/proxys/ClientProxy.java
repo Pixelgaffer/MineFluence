@@ -1,6 +1,6 @@
 package net.ocine.minefluence.proxys;
 
-import cpw.mods.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.ocine.minefluence.blocks.tileentities.*;
 import net.ocine.minefluence.renderer.blocks.MachineBlockRenderer;
 

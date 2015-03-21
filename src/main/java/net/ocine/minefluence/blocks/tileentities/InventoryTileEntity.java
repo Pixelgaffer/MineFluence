@@ -7,6 +7,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.IChatComponent;
 import net.minecraft.world.World;
 
 import java.util.Random;
@@ -74,17 +76,33 @@ public class InventoryTileEntity extends TileEntity implements IInventory {
 		return true;
 	}
 
-	@Override
-	public void openInventory() {
+	@Override public void openInventory(EntityPlayer playerIn) {
+
 	}
 
-	@Override
-	public void closeInventory() {
+	@Override public void closeInventory(EntityPlayer playerIn) {
+
 	}
 
 	@Override
 	public boolean isItemValidForSlot(int slot, ItemStack stack) {
 		return true;
+	}
+
+	@Override public int getField(int id) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override public void setField(int id, int value) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override public int getFieldCount() {
+		return getSizeInventory();
+	}
+
+	@Override public void clear() {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -119,16 +137,6 @@ public class InventoryTileEntity extends TileEntity implements IInventory {
 	}
 
 	@Override
-	public String getInventoryName() {
-		return name;
-	}
-
-	@Override
-	public boolean hasCustomInventoryName() {
-		return name != null;
-	}
-
-	@Override
 	public int getInventoryStackLimit() {
 		return 64;
 	}
@@ -160,4 +168,15 @@ public class InventoryTileEntity extends TileEntity implements IInventory {
 		}
 	}
 
+	@Override public String getName() {
+		return name;
+	}
+
+	@Override public boolean hasCustomName() {
+		return name != null;
+	}
+
+	@Override public IChatComponent getDisplayName() {
+		return new ChatComponentText(name);
+	}
 }

@@ -23,15 +23,15 @@ public class TileEntityDisplay extends TileEntityMachinePart {
 			progress = -1;
 		}
 		syncData.setInteger("progress", progress);
-		return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 1, syncData);
+		return new S35PacketUpdateTileEntity(this.getPos(), 1, syncData);
 	}
 
 	@Override
 	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
-		readFromNBT(pkt.func_148857_g());
-		progress = pkt.func_148857_g().getInteger("progress");
-		worldObj.scheduleBlockUpdate(xCoord, yCoord, zCoord, getBlockType(), 0);
-		worldObj.markBlockRangeForRenderUpdate(xCoord, yCoord, zCoord, xCoord, yCoord, zCoord);
+		readFromNBT(pkt.getNbtCompound());
+		progress = pkt.getNbtCompound().getInteger("progress");
+		worldObj.scheduleUpdate(getPos(), getBlockType(), 0);
+		worldObj.markBlockRangeForRenderUpdate(getPos().getX(), getPos().getY(), getPos().getZ(), getPos().getX(), getPos().getY(), getPos().getZ());
 	}
 
 	@Override
