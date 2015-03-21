@@ -2,10 +2,12 @@
 **/.desktop
 **/*.log
 **/*.log.gz
-**/*.jar
 **/*~
 .gradle/
 eclipse/
+.classpath
+.settings/
+.project
 
 # IntelliJ
 .idea/
@@ -18,3 +20,4 @@ options.txt
 usernamecache.json
 bin/
 crash-reports/
+config/
