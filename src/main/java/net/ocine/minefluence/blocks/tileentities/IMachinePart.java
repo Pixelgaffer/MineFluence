@@ -1,5 +1,8 @@
 package net.ocine.minefluence.blocks.tileentities;
 
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.ocine.minefluence.blocks.MachineBlocks;
 import net.ocine.minefluence.machines.Machine;
 
@@ -31,9 +34,16 @@ public interface IMachinePart {
 	 */
 	public boolean removeFromMachine();
 
-	public String getTextureName();
-
-	public String getBorder();
+	@SideOnly(Side.CLIENT)
+	public BorderType getBorderType();
 
 	public MachineBlocks.Machines getType();
+
+	@SideOnly(Side.CLIENT)
+	public ResourceLocation getTexture();
+
+	@SideOnly(Side.CLIENT)
+	public enum BorderType{
+		DEFAULT;
+	}
 }

@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class InventoryTileEntity extends TileEntity implements IInventory {
+public abstract class InventoryTileEntity extends TileEntity implements IInventory {
 
 	protected ItemStack[] inventory;
 	protected String name;

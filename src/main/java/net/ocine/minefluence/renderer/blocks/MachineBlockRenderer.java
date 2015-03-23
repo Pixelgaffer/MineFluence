@@ -1,5 +1,6 @@
 package net.ocine.minefluence.renderer.blocks;
 
+import com.google.common.collect.Maps;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
@@ -9,10 +10,10 @@ import net.ocine.minefluence.models.ModelMachineBlockBlock;
 import net.ocine.minefluence.models.ModelMachineBlockBorder;
 import org.lwjgl.opengl.GL11;
 
+import java.util.Map;
+
 public class MachineBlockRenderer extends TileEntitySpecialRenderer {
-	public static final String NOT_IN_MACHINE = "border_standart.png";
-	public static final String IN_MACHINE = "border_inmachine.png";
-	public static final String ACTIVATED = "border_activated.png";
+	private static final Map<IMachinePart.BorderType, ResourceLocation> borders = Maps.newHashMap();
 	private ModelMachineBlockBlock modelBase;
 	private ModelMachineBlockBorder modelBorder;
 
@@ -26,18 +27,20 @@ public class MachineBlockRenderer extends TileEntitySpecialRenderer {
 		IMachinePart machinePart = (IMachinePart) tileEntity;
 		GL11.glPushMatrix();
 		GL11.glTranslatef((float) x + 0.5F, (float) y + 1.5F, (float) z + 0.5F);
-		ResourceLocation locationBase = new ResourceLocation("minefluence:textures/blocks/machineblocks/" + machinePart.getTextureName());
-		Minecraft.getMinecraft().renderEngine.bindTexture(locationBase);
 		GL11.glPushMatrix();
 		GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
+		Minecraft.getMinecraft().renderEngine.bindTexture(machinePart.getTexture());
 		modelBase.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
 		GL11.glPopMatrix();
-		ResourceLocation locationBorder = new ResourceLocation("minefluence:textures/blocks/machineblocks/" + machinePart.getBorder());
-		Minecraft.getMinecraft().renderEngine.bindTexture(locationBorder);
 		GL11.glPushMatrix();
 		GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
+		Minecraft.getMinecraft().renderEngine.bindTexture(borders.get(machinePart.getBorderType()));
 		modelBorder.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
 		GL11.glPopMatrix();
 		GL11.glPopMatrix();
+	}
+
+	static {
+		borders.put(IMachinePart.BorderType.DEFAULT, new ResourceLocation("minefluence", "textures/blocks/machineblocks/machineblock_border.png"));
 	}
 }

@@ -1,19 +1,21 @@
 package net.ocine.minefluence.blocks;
 
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyEnum;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.IStringSerializable;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.ocine.minefluence.MineFluence;
 import net.ocine.minefluence.blocks.tileentities.*;
 import net.ocine.minefluence.gui.GUIs;
@@ -27,21 +29,20 @@ public class MachineBlocks extends BlockContainer {
 	public static final String[] names = { "core", "display", "input",
 			"output", "worker", "hyperworker" };
 
-	public static enum Machines {
+	public static enum Machines implements IStringSerializable {
 		CORE, DISPLAY, INPUT, OUTPUT, WORKER, HYPERWORKER;
+
+		@Override public String getName() {
+			return name();
+		}
+
 	}
 
-	private IIcon coreTop, coreSide, coreBottom, coreFront, coreBack;
-	private IIcon displayTop, displaySide, displayBottom, displayFront,
-			displayBack;
-	private IIcon inputTop, inputSide, inputBottom, inputFront, inputBack;
-	private IIcon outputTop, outputSide, outputBottom, outputFront, outputBack;
-	private IIcon workerTop, workerSide, workerBottom, workerFront, workerBack;
-	private IIcon display0, display1, display2, display3, display4, display5;
-	private IIcon hyperworker;
+	public static final PropertyEnum TYPE = PropertyEnum.create("type", Machines.class);
 
 	public MachineBlocks(CreativeTabs tab) {
 		super(Material.iron);
+		setDefaultState(blockState.getBaseState().withProperty(TYPE, Machines.CORE));
 		GameRegistry.registerBlock(this, MachineBlocksItemBlock.class,
 				UNLOCALIZED_NAME);
 		setCreativeTab(tab);
@@ -88,257 +89,6 @@ public class MachineBlocks extends BlockContainer {
 		}
 		return false;
 	}
-/* // TODO
-	@Override
-	public IIcon getIcon(IBlockAccess blockAccess, int x, int y, int z, int side) {
-		int meta = blockAccess.getBlockMetadata(x, y, z);
-		if (meta == Machines.CORE.ordinal()) {
-			if (side == 0) {
-				return coreBottom;
-			}
-			if (side == 1) {
-				return coreTop;
-			}
-			if (side == 2) {
-				return coreFront;
-			}
-			if (side == 3) {
-				return coreBack;
-			}
-			return coreSide;
-		}
-		if (meta == Machines.DISPLAY.ordinal()) {
-			if (side == 0) {
-				return displayBottom;
-			}
-			if (side == 1) {
-				return displayTop;
-			}
-			if (side == 2) {
-				TileEntity tileEntity = blockAccess.getTileEntity(x, y, z);
-				if (tileEntity != null) {
-					if (tileEntity instanceof TileEntityDisplay) {
-						int progress = ((TileEntityDisplay) tileEntity).progress;
-						if (progress == -1) {
-							return displayFront;
-						}
-						if (progress < 20) {
-							return display0;
-						}
-						if (progress < 40) {
-							return display1;
-						}
-						if (progress < 70) {
-							return display2;
-						}
-						if (progress < 90) {
-							return display3;
-						}
-						if (progress < 100) {
-							return display4;
-						}
-						return display5;
-					}
-				}
-				return displayFront;
-			}
-			if (side == 3) {
-				return displayBack;
-			}
-			return displaySide;
-		}
-		if (meta == Machines.INPUT.ordinal()) {
-			if (side == 0) {
-				return inputBottom;
-			}
-			if (side == 1) {
-				return inputTop;
-			}
-			if (side == 2) {
-				return inputFront;
-			}
-			if (side == 3) {
-				return inputBack;
-			}
-			return inputSide;
-		}
-		if (meta == Machines.OUTPUT.ordinal()) {
-			if (side == 0) {
-				return outputBottom;
-			}
-			if (side == 1) {
-				return outputTop;
-			}
-			if (side == 2) {
-				return outputFront;
-			}
-			if (side == 3) {
-				return outputBack;
-			}
-			return outputSide;
-		}
-		if (meta == Machines.HYPERWORKER.ordinal()) {
-			return hyperworker;
-		}
-		if (side == 0) {
-			return workerBottom;
-		}
-		if (side == 1) {
-			return workerTop;
-		}
-		if (side == 2) {
-			return workerFront;
-		}
-		if (side == 3) {
-			return workerBack;
-		}
-		return workerSide;
-	}
-
-	@Override
-	public IIcon getIcon(int side, int meta) {
-		if (meta == Machines.CORE.ordinal()) {
-			if (side == 0) {
-				return coreBottom;
-			}
-			if (side == 1) {
-				return coreTop;
-			}
-			if (side == 2) {
-				return coreFront;
-			}
-			if (side == 3) {
-				return coreBack;
-			}
-			return coreSide;
-		}
-		if (meta == Machines.DISPLAY.ordinal()) {
-			if (side == 0) {
-				return displayBottom;
-			}
-			if (side == 1) {
-				return displayTop;
-			}
-			if (side == 2) {
-				return displayFront;
-			}
-			if (side == 3) {
-				return displayBack;
-			}
-			return displaySide;
-		}
-		if (meta == Machines.INPUT.ordinal()) {
-			if (side == 0) {
-				return inputBottom;
-			}
-			if (side == 1) {
-				return inputTop;
-			}
-			if (side == 2) {
-				return inputFront;
-			}
-			if (side == 3) {
-				return inputBack;
-			}
-			return inputSide;
-		}
-		if (meta == Machines.OUTPUT.ordinal()) {
-			if (side == 0) {
-				return outputBottom;
-			}
-			if (side == 1) {
-				return outputTop;
-			}
-			if (side == 2) {
-				return outputFront;
-			}
-			if (side == 3) {
-				return outputBack;
-			}
-			return outputSide;
-		}
-		if (meta == Machines.HYPERWORKER.ordinal()) {
-			return hyperworker;
-		}
-		if (side == 0) {
-			return workerBottom;
-		}
-		if (side == 1) {
-			return workerTop;
-		}
-		if (side == 2) {
-			return workerFront;
-		}
-		if (side == 3) {
-			return workerBack;
-		}
-		return workerSide;
-	}
-
-	@Override
-	public void registerBlockIcons(IIconRegister iconRegister) {
-		coreTop = iconRegister.registerIcon("minefluence:mblock_core_top");
-		coreBottom = iconRegister
-				.registerIcon("minefluence:mblock_core_bottom");
-		coreSide = iconRegister.registerIcon("minefluence:mblock_core_side");
-		coreFront = iconRegister.registerIcon("minefluence:mblock_core_front");
-		coreBack = iconRegister.registerIcon("minefluence:mblock_core_back");
-
-		displayTop = iconRegister
-				.registerIcon("minefluence:mblock_display_top");
-		displayBottom = iconRegister
-				.registerIcon("minefluence:mblock_display_bottom");
-		displaySide = iconRegister
-				.registerIcon("minefluence:mblock_display_side");
-		displayFront = iconRegister
-				.registerIcon("minefluence:mblock_display_front");
-		displayBack = iconRegister
-				.registerIcon("minefluence:mblock_display_back");
-
-		inputTop = iconRegister.registerIcon("minefluence:mblock_input_top");
-		inputBottom = iconRegister
-				.registerIcon("minefluence:mblock_input_bottom");
-		inputSide = iconRegister.registerIcon("minefluence:mblock_input_side");
-		inputFront = iconRegister
-				.registerIcon("minefluence:mblock_input_front");
-		inputBack = iconRegister.registerIcon("minefluence:mblock_input_back");
-
-		outputTop = iconRegister.registerIcon("minefluence:mblock_output_top");
-		outputBottom = iconRegister
-				.registerIcon("minefluence:mblock_output_bottom");
-		outputSide = iconRegister
-				.registerIcon("minefluence:mblock_output_side");
-		outputFront = iconRegister
-				.registerIcon("minefluence:mblock_output_front");
-		outputBack = iconRegister
-				.registerIcon("minefluence:mblock_output_back");
-
-		workerTop = iconRegister.registerIcon("minefluence:mblock_worker_top");
-		workerBottom = iconRegister
-				.registerIcon("minefluence:mblock_worker_bottom");
-		workerSide = iconRegister
-				.registerIcon("minefluence:mblock_worker_side");
-		workerFront = iconRegister
-				.registerIcon("minefluence:mblock_worker_front");
-		workerBack = iconRegister
-				.registerIcon("minefluence:mblock_worker_back");
-
-		display0 = iconRegister
-				.registerIcon("minefluence:mblock_display_front_frame0");
-		display1 = iconRegister
-				.registerIcon("minefluence:mblock_display_front_frame1");
-		display2 = iconRegister
-				.registerIcon("minefluence:mblock_display_front_frame2");
-		display3 = iconRegister
-				.registerIcon("minefluence:mblock_display_front_frame3");
-		display4 = iconRegister
-				.registerIcon("minefluence:mblock_display_front_frame4");
-		display5 = iconRegister
-				.registerIcon("minefluence:mblock_display_front_frame5");
-
-		hyperworker = iconRegister
-				.registerIcon("minefluence:mblock_hyperworker_alternative");
-	}*/
 
 	@Override
 	public TileEntity createNewTileEntity(World world, int metadata) {
@@ -363,15 +113,26 @@ public class MachineBlocks extends BlockContainer {
 		return null;
 	}
 
-	public int damagedDropped(int metadata) {
-		return metadata;
-	}
-
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public void getSubBlocks(int par1, CreativeTabs tab, List subItems) {
+	@Override public void getSubBlocks(Item itemIn, CreativeTabs tab, List subItems) {
 		for (int i = 0; i < Machines.values().length; i++) {
 			subItems.add(new ItemStack(this, 1, i));
 		}
+	}
+
+	@Override public int damageDropped(IBlockState state) {
+		return ((Machines)state.getValue(TYPE)).ordinal();
+	}
+
+	@Override public IBlockState getStateFromMeta(int meta) {
+		return getDefaultState().withProperty(TYPE, Machines.values()[meta]);
+	}
+
+	@Override public int getMetaFromState(IBlockState state) {
+		return ((Machines)state.getValue(TYPE)).ordinal();
+	}
+
+	@Override protected BlockState createBlockState() {
+		return new BlockState(this, TYPE);
 	}
 
 	@Override
@@ -379,12 +140,12 @@ public class MachineBlocks extends BlockContainer {
 		return -1;
 	}
 
-	@Override
-	public boolean isOpaqueCube() {
-		return true;
+	@Override public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side) {
+		// we render it our selves
+		return false;
 	}
 
-	public boolean renderAsNormalBlock() {
+	@Override public boolean isOpaqueCube() {
 		return false;
 	}
 }

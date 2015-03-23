@@ -1,5 +1,6 @@
 package net.ocine.minefluence.blocks.tileentities;
 
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraft.entity.item.EntityItem;
@@ -11,7 +12,9 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.ocine.minefluence.Algorithm;
+import net.ocine.minefluence.MineFluence;
 import net.ocine.minefluence.blocks.MachineBlocks;
 import net.ocine.minefluence.machines.AbstractMachineLogic;
 import net.ocine.minefluence.machines.Machine;
@@ -30,6 +33,8 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart,
 	Collection<ItemStack> items;
 	int remainingTime;
 	int numWorkers;
+	@SideOnly(Side.CLIENT)
+	private static ResourceLocation texture = new ResourceLocation(MineFluence.MODID, "textures/blocks/machineblocks/machineblock_core.png");
 
 	@Override
 	public void update() {
@@ -152,9 +157,19 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart,
 		return true;
 	}
 
+	@SideOnly(Side.CLIENT)
+	@Override public BorderType getBorderType() {
+		return BorderType.DEFAULT;
+	}
+
 	@Override
 	public MachineBlocks.Machines getType() {
 		return MachineBlocks.Machines.CORE;
+	}
+
+	@SideOnly(Side.CLIENT)
+	@Override public ResourceLocation getTexture() {
+		return texture;
 	}
 
 	@Override
@@ -406,16 +421,5 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart,
 				world.spawnEntityInWorld(entityItem);
 			}
 		}
-	}
-
-	@Override
-	public String getTextureName() {
-		return "machineblock_core.png";
-	}
-
-	@Override
-	public String getBorder() {
-		//TODO Implement
-		return "";
 	}
 }

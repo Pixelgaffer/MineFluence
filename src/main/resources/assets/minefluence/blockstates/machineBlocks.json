@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "type=core": { "model": "minefluence:machineBlocks.core" },
+    "type=display": { "model": "minefluence:machineBlocks_display" },
+    "type=input": { "model": "minefluence:machineBlocks_input" },
+    "type=output": { "model": "minefluence:machineBlocks_output" },
+    "type=worker": { "model": "minefluence:machineBlocks_worker" },
+    "type=hyperworker": { "model": "minefluence:machineBlocks_hyperworker" }
+  }
+}

@@ -1,7 +1,7 @@
-bacteriaFlask.name=Bacteria Flask
-bacteriaFlask.red.name=Red Bacteria Flask
-bacteriaFlask.green.name=Green Bacteria Flask
-bacteriaFlask.blue.name=Blue Bacteria Flask
+minefluence_bacteriaflask.name=Bacteria Flask
+minefluence_bacteriaflask.red.name=Red Bacteria Flask
+minefluence_bacteriaflask.green.name=Green Bacteria Flask
+minefluence_bacteriaflask.blue.name=Blue Bacteria Flask
 machineBlocks.core.name=Core Machine Block
 machineBlocks.display.name=Display Machine Block
 machineBlocks.input.name=Input Machine Block
