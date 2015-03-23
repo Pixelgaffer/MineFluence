@@ -36,6 +36,7 @@ public class ItemBacteriaFlask extends Item {
 	@Override
 	public int getColorFromItemStack(ItemStack stack, int p_82790_2_) {
 		if(p_82790_2_ == 0)return super.getColorFromItemStack(stack, p_82790_2_);
+		// only change color for layer1 / the thing in the bottle
 		return bacterias.get(stack.getItemDamage()).color;
 	}
 
