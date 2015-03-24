@@ -37,6 +37,10 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart,
 	@Override
 	public void update() {
 		if (!worldObj.isRemote) {
+			//Wenn das Redstonesignal aus ist
+			if(!worldObj.isBlockPowered(getPos())) {
+				return;
+			}
 			if (logic == null) {
 				if (counter >= 20) {
 					counter = 0;
