@@ -87,7 +87,5 @@ public class TileEntityDisplay extends TileEntityMachinePart {
 		readFromNBT(pkt.getNbtCompound());
 		progress = pkt.getNbtCompound().getInteger("progress");
 		facing = EnumFacing.byName(pkt.getNbtCompound().getString("facing"));
-		//worldObj.scheduleUpdate(getPos(), getBlockType(), 0);
-		//worldObj.markBlockRangeForRenderUpdate(getPos().getX(), getPos().getY(), getPos().getZ(), getPos().getX(), getPos().getY(), getPos().getZ());
 	}
 }

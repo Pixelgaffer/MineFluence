@@ -117,7 +117,6 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart,
 		}
 		items = null;
 		remainingTime = 0;
-		// super.markDirty();
 	}
 
 	public Machine getMachine() {
@@ -479,7 +478,5 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart,
 				parts.add(new Algorithm.Vector(part.getInteger("x"), part.getInteger("y"), part.getInteger("z")));
 			}
 		}
-		//worldObj.scheduleUpdate(getPos(), getBlockType(), 0);
-		//worldObj.markBlockRangeForRenderUpdate(getPos().getX(), getPos().getY(), getPos().getZ(), getPos().getX(), getPos().getY(), getPos().getZ());
 	}
 }

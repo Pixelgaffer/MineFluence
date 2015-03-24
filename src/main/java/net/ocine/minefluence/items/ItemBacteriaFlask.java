@@ -19,19 +19,11 @@ public class ItemBacteriaFlask extends Item {
 		setHasSubtypes(true);
 		setMaxDamage(0);
 		setCreativeTab(tab);
-		// TODO
-		//setTextureName("minefluence:bacteria");
 		bacterias.add(new Bacteria(0xff0000, "red"));
 		bacterias.add(new Bacteria(0x00ff00, "green"));
 		bacterias.add(new Bacteria(0x0000ff, "blue"));
 		GameRegistry.registerItem(this, name);
 	}
-// TODO
-	/*
-	@Override
-	public boolean requiresMultipleRenderPasses() {
-		return true;
-	}*/
 
 	@Override
 	public int getColorFromItemStack(ItemStack stack, int p_82790_2_) {
