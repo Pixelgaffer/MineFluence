@@ -1,8 +1,8 @@
 {
   "parent": "block/cube",
   "textures": {
-    "south": "minefluence:blocks/mblock_display_front",
-    "north": "minefluence:blocks/mblock_display_back",
+    "north": "minefluence:blocks/mblock_display_front",
+    "south": "minefluence:blocks/mblock_display_back",
     "east": "minefluence:blocks/mblock_display_side",
     "west": "minefluence:blocks/mblock_display_side",
     "down": "minefluence:blocks/mblock_display_bottom",
