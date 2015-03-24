@@ -14,11 +14,6 @@ public class TileEntityInput extends TileEntityGuiMachinePart {
 		super(1);
 	}
 
-	@SideOnly(Side.CLIENT)
-	@Override public BorderType getBorderType() {
-		return BorderType.DEFAULT;
-	}
-
 	@Override
 	public MachineBlocks.Machines getType() {
 		return MachineBlocks.Machines.INPUT;

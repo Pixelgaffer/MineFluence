@@ -1,5 +1,8 @@
 package net.ocine.minefluence.blocks.tileentities;
 
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
@@ -39,7 +42,7 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart,
 	@Override
 	public void update() {
 		if (FMLCommonHandler.instance().getEffectiveSide() == Side.SERVER) {
-			if (!isActive()) {
+			if (logic == null) {
 				if (counter >= 20) {
 					counter = 0;
 					parts = Algorithm.doMagic(new Algorithm.Vector(getX(), getY(), getZ()), getWorld());
@@ -65,7 +68,7 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart,
 						finishProcess();
 					}
 				}
-				else {
+				if (!isTransformationInProgress()) {
 					startNewProcess();
 				}
 				updateDisplays();
@@ -82,6 +85,7 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart,
 				worldObj.markBlockForUpdate(tileEntityDisplay.getPos());
 			}
 		}
+		worldObj.markBlockForUpdate(getPos());
 	}
 
 	@SuppressWarnings("unchecked")
@@ -159,6 +163,13 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart,
 
 	@SideOnly(Side.CLIENT)
 	@Override public BorderType getBorderType() {
+		if(isActive()){
+			if(isTransformationInProgress()){
+				return BorderType.RED;
+			} else {
+				return BorderType.GREEN;
+			}
+		}
 		return BorderType.DEFAULT;
 	}
 
@@ -217,7 +228,7 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart,
 
 	@Override
 	public boolean isActive() {
-		return logic != null;
+		return !parts.isEmpty();
 	}
 
 	@Override
@@ -421,5 +432,59 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart,
 				world.spawnEntityInWorld(entityItem);
 			}
 		}
+	}
+
+	@Override
+	public Packet getDescriptionPacket() {
+		NBTTagCompound compound = new NBTTagCompound();
+		writeToNBT(compound);
+		compound.setInteger("remaining", remainingTime);
+		compound.setInteger("numWorkers", numWorkers);
+		if (items != null) {
+			NBTTagList list = new NBTTagList();
+			for (ItemStack is : items) {
+				list.appendTag(is.writeToNBT(new NBTTagCompound()));
+			}
+			compound.setTag("items", list);
+		}
+		NBTTagList list = new NBTTagList();
+		for (Algorithm.Vector vec : parts) {
+			NBTTagCompound f = new NBTTagCompound();
+			f.setInteger("x", vec.x);
+			f.setInteger("y", vec.y);
+			f.setInteger("z", vec.z);
+			list.appendTag(f);
+		}
+		compound.setTag("parts", list);
+		return new S35PacketUpdateTileEntity(this.getPos(), 1, compound);
+	}
+
+	@Override
+	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
+		NBTTagCompound compound = pkt.getNbtCompound();
+		readFromNBT(compound);
+		remainingTime = compound.getInteger("remaining");
+		numWorkers = compound.getInteger("numWorkers");
+		if (compound.hasKey("items")) {
+			items = new ArrayList<ItemStack>();
+			NBTTagList list = compound.getTagList("items", Constants.NBT.TAG_COMPOUND);
+			for (int i = 0; i < list.tagCount(); i++) {
+				NBTTagCompound stack = list.getCompoundTagAt(i);
+				items.add(ItemStack.loadItemStackFromNBT(stack));
+			}
+		}
+		else {
+			items = null;
+		}
+		if (compound.hasKey("parts")) {
+			parts = new ArrayList<Algorithm.Vector>();
+			NBTTagList list = compound.getTagList("parts", Constants.NBT.TAG_COMPOUND);
+			for (int i = 0; i < list.tagCount(); i++) {
+				NBTTagCompound part = list.getCompoundTagAt(i);
+				parts.add(new Algorithm.Vector(part.getInteger("x"), part.getInteger("y"), part.getInteger("z")));
+			}
+		}
+		//worldObj.scheduleUpdate(getPos(), getBlockType(), 0);
+		//worldObj.markBlockRangeForRenderUpdate(getPos().getX(), getPos().getY(), getPos().getZ(), getPos().getX(), getPos().getY(), getPos().getZ());
 	}
 }

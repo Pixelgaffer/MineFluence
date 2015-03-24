@@ -44,6 +44,6 @@ public interface IMachinePart {
 
 	@SideOnly(Side.CLIENT)
 	public enum BorderType{
-		DEFAULT;
+		DEFAULT, RED, GREEN
 	}
 }

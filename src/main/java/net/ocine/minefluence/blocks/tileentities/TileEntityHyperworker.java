@@ -10,11 +10,6 @@ public class TileEntityHyperworker extends TileEntityMachinePart {
 	@SideOnly(Side.CLIENT)
 	private static ResourceLocation texture = new ResourceLocation(MineFluence.MODID, "textures/blocks/machineblocks/machineblock_hyperworker.png");
 
-	@SideOnly(Side.CLIENT)
-	@Override public BorderType getBorderType() {
-		return BorderType.DEFAULT;
-	}
-
 	@Override
 	public MachineBlocks.Machines getType() {
 		return MachineBlocks.Machines.HYPERWORKER;

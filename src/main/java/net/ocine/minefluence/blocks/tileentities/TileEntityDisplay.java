@@ -27,11 +27,6 @@ public class TileEntityDisplay extends TileEntityMachinePart {
 	@SideOnly(Side.CLIENT)
 	private static ResourceLocation texture_100 = new ResourceLocation(MineFluence.MODID, "textures/blocks/machineblocks/machineblock_display_100.png");
 
-	@SideOnly(Side.CLIENT)
-	@Override public BorderType getBorderType() {
-		return BorderType.DEFAULT;
-	}
-
 	@Override
 	public MachineBlocks.Machines getType() {
 		return MachineBlocks.Machines.DISPLAY;
@@ -75,7 +70,7 @@ public class TileEntityDisplay extends TileEntityMachinePart {
 	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
 		readFromNBT(pkt.getNbtCompound());
 		progress = pkt.getNbtCompound().getInteger("progress");
-		worldObj.scheduleUpdate(getPos(), getBlockType(), 0);
-		worldObj.markBlockRangeForRenderUpdate(getPos().getX(), getPos().getY(), getPos().getZ(), getPos().getX(), getPos().getY(), getPos().getZ());
+		//worldObj.scheduleUpdate(getPos(), getBlockType(), 0);
+		//worldObj.markBlockRangeForRenderUpdate(getPos().getX(), getPos().getY(), getPos().getZ(), getPos().getX(), getPos().getY(), getPos().getZ());
 	}
 }

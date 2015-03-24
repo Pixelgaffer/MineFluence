@@ -42,5 +42,7 @@ public class MachineBlockRenderer extends TileEntitySpecialRenderer {
 
 	static {
 		borders.put(IMachinePart.BorderType.DEFAULT, new ResourceLocation("minefluence", "textures/blocks/machineblocks/machineblock_border.png"));
+		borders.put(IMachinePart.BorderType.RED, new ResourceLocation("minefluence", "textures/blocks/machineblocks/machineblock_border_red.png"));
+		borders.put(IMachinePart.BorderType.GREEN, new ResourceLocation("minefluence", "textures/blocks/machineblocks/machineblock_border_green.png"));
 	}
 }
