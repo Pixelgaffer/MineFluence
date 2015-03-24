@@ -8,4 +8,6 @@ machineBlocks.input.name=Input Machine Block
 machineBlocks.output.name=Output Machine Block
 machineBlocks.worker.name=Worker Machine Block
 machineBlocks.hyperworker.name=Hyperworker Machine Block
+machineBlocks.fan.name=Fan
+machineBlocks.watercooling.name=Water Cooling
 itemGroup.tabMineFluence=MineFluence
