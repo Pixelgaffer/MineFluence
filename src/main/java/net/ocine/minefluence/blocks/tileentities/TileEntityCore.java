@@ -21,12 +21,8 @@ import net.ocine.minefluence.blocks.MachineBlocks;
 import net.ocine.minefluence.machines.AbstractMachineLogic;
 import net.ocine.minefluence.machines.Machine;
 import net.ocine.minefluence.machines.MachineLogicManager;
-import scala.actors.threadpool.Arrays;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class TileEntityCore extends TileEntity implements Machine, IMachinePart, IUpdatePlayerListBox {
 	Collection<Algorithm.Vector> parts = new ArrayList<Algorithm.Vector>();
