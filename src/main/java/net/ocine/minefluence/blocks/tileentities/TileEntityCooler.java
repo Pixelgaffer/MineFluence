@@ -33,8 +33,8 @@ public class TileEntityCooler extends TileEntityMachinePart implements IUpdatePl
 
 	@Override
 	public void update() {
-		if(machinePartBase != null) {
-			machinePartBase.getMachine().cool(coolAmount);
+		if(!worldObj.isRemote) {
+			getMachine().cool(coolAmount);
 		}
 	}
 }
