@@ -9,8 +9,8 @@ public class TransformationLogic extends AbstractMachineLogic {
 	Collection<ItemStack> input;
 	Collection<ItemStack> output;
 
-	public TransformationLogic(String name, int processTime, Collection<ItemStack> input, Collection<ItemStack> output) {
-		super(name, processTime);
+	public TransformationLogic(String name, int processTime, int heatGeneration, Collection<ItemStack> input, Collection<ItemStack> output) {
+		super(name, processTime, heatGeneration);
 		this.input = input;
 		this.output = output;
 	}

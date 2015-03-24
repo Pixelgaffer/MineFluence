@@ -43,6 +43,10 @@ public interface Machine {
 
 	public void setOutputInventory(ItemStack[] inv);
 
+	public int getHeat();
+	
+	public void cool(int amt);
+	
 	/**
 	 * percentage  progress for display
 	 *

@@ -31,6 +31,7 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart,
 	Collection<ItemStack> items;
 	int remainingTime;
 	int numWorkers;
+	public int heat;
 	@SideOnly(Side.CLIENT)
 	private static ResourceLocation texture = new ResourceLocation(MineFluence.MODID, "textures/blocks/machineblocks/machineblock_core.png");
 
@@ -42,6 +43,7 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart,
 				return;
 			}
 			if (logic == null) {
+				cool();
 				if (counter >= 20) {
 					counter = 0;
 					parts = Algorithm.doMagic(new Algorithm.Vector(getX(), getY(), getZ()), getWorld());
@@ -61,6 +63,10 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart,
 			}
 			else {
 				if (isTransformationInProgress()) {
+					heat += logic.heatGeneration;
+					if(heat > getMaxHeat()) {
+						worldObj.createExplosion(null, getX() + 0.5, getY() + 0.5, getZ() + 0.5, 5.0f, true);
+					}
 					remainingTime--;
 					super.markDirty();
 					if (remainingTime <= 0) {
@@ -68,13 +74,25 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart,
 					}
 				}
 				if (!isTransformationInProgress()) {
+					cool();
 					startNewProcess();
 				}
 				updateDisplays();
 			}
 		}
 	}
-
+	
+	private int getMaxHeat() {
+		return 200;
+	}
+	
+	private void cool() {
+		cool(2);
+		if(heat < 0) {
+			heat = 0;
+		}
+	}
+	
 	private void updateDisplays() {
 		for (Algorithm.Vector vec : parts) {
 			TileEntity part = worldObj.getTileEntity(new BlockPos(vec.x, vec.y, vec.z));
@@ -482,5 +500,15 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart,
 				parts.add(new Algorithm.Vector(part.getInteger("x"), part.getInteger("y"), part.getInteger("z")));
 			}
 		}
+	}
+
+	@Override
+	public int getHeat() {
+		return heat;
+	}
+
+	@Override
+	public void cool(int amt) {
+		heat -= amt;		
 	}
 }

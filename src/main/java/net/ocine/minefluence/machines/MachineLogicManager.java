@@ -11,10 +11,10 @@ import java.util.Arrays;
  */
 public class MachineLogicManager {
 
-	public static AbstractMachineLogic dirtToDiamond = new TransformationLogic("Magie Mit Erde", 400,
+	public static AbstractMachineLogic dirtToDiamond = new TransformationLogic("Magie Mit Erde", 400, 5,
 			Arrays.asList(new ItemStack(Blocks.dirt)), Arrays.asList(new ItemStack(Items.diamond)));
 
-	public static AbstractMachineLogic magicIron = new TransformationLogic("Magie Mit Erde 2", 800,
+	public static AbstractMachineLogic magicIron = new TransformationLogic("Magie Mit Erde 2", 800, 5,
 			Arrays.asList(new ItemStack(Blocks.dirt), new ItemStack(Blocks.stone)),
 			Arrays.asList(new ItemStack(Blocks.diamond_block), new ItemStack(Blocks.iron_bars)));
 

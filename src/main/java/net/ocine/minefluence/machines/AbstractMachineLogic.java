@@ -12,10 +12,12 @@ public abstract class AbstractMachineLogic {
 	String name;
 
 	public int processTime;
+	public int heatGeneration;
 
-	protected AbstractMachineLogic(String name, int processTime) {
+	protected AbstractMachineLogic(String name, int processTime, int heatGeneration) {
 		this.name = name;
 		this.processTime = processTime;
+		this.heatGeneration = heatGeneration;
 	}
 
 	/**

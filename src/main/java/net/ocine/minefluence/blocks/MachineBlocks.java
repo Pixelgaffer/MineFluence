@@ -1,6 +1,7 @@
 package net.ocine.minefluence.blocks;
 
 import com.google.common.collect.Lists;
+
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
@@ -30,10 +31,10 @@ public class MachineBlocks extends BlockContainer {
 	public static final String UNLOCALIZED_NAME = "machineBlocks";
 
 	public static final String[] names = { "core", "display", "input",
-			"output", "worker", "hyperworker" };
+			"output", "worker", "hyperworker", "fan", "watercooling" };
 
 	public static enum Machines implements IStringSerializable {
-		CORE, DISPLAY, INPUT, OUTPUT, WORKER, HYPERWORKER;
+		CORE, DISPLAY, INPUT, OUTPUT, WORKER, HYPERWORKER, FAN, WATER_COOLING;
 
 		@Override public String getName() {
 			return name();
@@ -123,6 +124,12 @@ public class MachineBlocks extends BlockContainer {
 		}
 		if (metadata == Machines.HYPERWORKER.ordinal()) {
 			return new TileEntityHyperworker();
+		}
+		if (metadata == Machines.FAN.ordinal()) {
+			return new TileEntityCooler(Machines.FAN, "textures/blocks/machineblocks/machineblock_fan.png", 7);
+		}
+		if (metadata == Machines.WATER_COOLING.ordinal()) {
+			return new TileEntityCooler(Machines.WATER_COOLING, "textures/blocks/machineblocks/machineblock_watercooling.png", 20);
 		}
 		return null;
 	}
