@@ -93,7 +93,8 @@ public class MachineBlocks extends BlockContainer {
 					pos.getX(), pos.getY(), pos.getZ());
 			return true;
 		}
-		if (tileEntity instanceof TileEntityDisplay) {
+		// TODO fix display gui
+		if (false && tileEntity instanceof TileEntityDisplay) {
 			player.openGui(MineFluence.instance, GUIs.DISPLAY.ordinal(), world,
 					pos.getX(), pos.getY(), pos.getZ());
 			return true;
