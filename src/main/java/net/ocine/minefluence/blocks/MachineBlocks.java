@@ -34,7 +34,7 @@ public class MachineBlocks extends BlockContainer {
 			"output", "worker", "hyperworker", "fan", "watercooling" };
 
 	public static enum Machines implements IStringSerializable {
-		CORE, DISPLAY, INPUT, OUTPUT, WORKER, HYPERWORKER, FAN, WATER_COOLING;
+		CORE, DISPLAY, INPUT, OUTPUT, WORKER, HYPERWORKER, FAN, WATERCOOLING;
 
 		@Override public String getName() {
 			return name();
@@ -128,8 +128,8 @@ public class MachineBlocks extends BlockContainer {
 		if (metadata == Machines.FAN.ordinal()) {
 			return new TileEntityCooler(Machines.FAN, "textures/blocks/machineblocks/machineblock_fan.png", 7);
 		}
-		if (metadata == Machines.WATER_COOLING.ordinal()) {
-			return new TileEntityCooler(Machines.WATER_COOLING, "textures/blocks/machineblocks/machineblock_watercooling.png", 20);
+		if (metadata == Machines.WATERCOOLING.ordinal()) {
+			return new TileEntityCooler(Machines.WATERCOOLING, "textures/blocks/machineblocks/machineblock_watercooling.png", 20);
 		}
 		return null;
 	}

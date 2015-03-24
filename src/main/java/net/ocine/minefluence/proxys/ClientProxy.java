@@ -28,6 +28,7 @@ public class ClientProxy extends CommonProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityOutput.class, renderer);
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityWorker.class, renderer);
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHyperworker.class, renderer);
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCooler.class, renderer);
 
 		// Item
 		RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
@@ -43,6 +44,8 @@ public class ClientProxy extends CommonProxy {
 		ModelBakery.addVariantName(itemMachineBlock, MineFluence.MODID + ":" + MachineBlocks.UNLOCALIZED_NAME + "_output");
 		ModelBakery.addVariantName(itemMachineBlock, MineFluence.MODID + ":" + MachineBlocks.UNLOCALIZED_NAME + "_worker");
 		ModelBakery.addVariantName(itemMachineBlock, MineFluence.MODID + ":" + MachineBlocks.UNLOCALIZED_NAME + "_hyperworker");
+		ModelBakery.addVariantName(itemMachineBlock, MineFluence.MODID + ":" + MachineBlocks.UNLOCALIZED_NAME + "_fan");
+		ModelBakery.addVariantName(itemMachineBlock, MineFluence.MODID + ":" + MachineBlocks.UNLOCALIZED_NAME + "_watercooling");
 
 		renderItem.getItemModelMesher().register(Item.getItemFromBlock(Blocks.machineBlocks), 0, new ModelResourceLocation(MineFluence.MODID + ":" + MachineBlocks.UNLOCALIZED_NAME, "inventory"));
 		renderItem.getItemModelMesher().register(Item.getItemFromBlock(Blocks.machineBlocks), 1, new ModelResourceLocation(MineFluence.MODID + ":" + MachineBlocks.UNLOCALIZED_NAME + "_display", "inventory"));
@@ -50,6 +53,8 @@ public class ClientProxy extends CommonProxy {
 		renderItem.getItemModelMesher().register(Item.getItemFromBlock(Blocks.machineBlocks), 3, new ModelResourceLocation(MineFluence.MODID + ":" + MachineBlocks.UNLOCALIZED_NAME + "_output", "inventory"));
 		renderItem.getItemModelMesher().register(Item.getItemFromBlock(Blocks.machineBlocks), 4, new ModelResourceLocation(MineFluence.MODID + ":" + MachineBlocks.UNLOCALIZED_NAME + "_worker", "inventory"));
 		renderItem.getItemModelMesher().register(Item.getItemFromBlock(Blocks.machineBlocks), 5, new ModelResourceLocation(MineFluence.MODID + ":" + MachineBlocks.UNLOCALIZED_NAME + "_hyperworker", "inventory"));
+		renderItem.getItemModelMesher().register(Item.getItemFromBlock(Blocks.machineBlocks), 6, new ModelResourceLocation(MineFluence.MODID + ":" + MachineBlocks.UNLOCALIZED_NAME + "_fan", "inventory"));
+		renderItem.getItemModelMesher().register(Item.getItemFromBlock(Blocks.machineBlocks), 7, new ModelResourceLocation(MineFluence.MODID + ":" + MachineBlocks.UNLOCALIZED_NAME + "_watercooling", "inventory"));
 	}
 
 }

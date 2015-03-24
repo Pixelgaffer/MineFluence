@@ -7,4 +7,6 @@ machineBlocks.display.name=Anzeigemaschineblock
 machineBlocks.input.name=Eingabemaschinenblock
 machineBlocks.output.name=Ausgabemaschineblock
 machineBlocks.worker.name=Arbeitermaschinenblock
+machineBlocks.fan.name=Lüfter
+machineBlocks.watercooling.name=Wasserkühlung
 itemGroup.tabMineFluence=MineFluence
