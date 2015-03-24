@@ -47,10 +47,9 @@ public class MachineBlocks extends BlockContainer {
 				UNLOCALIZED_NAME);
 		setCreativeTab(tab);
 	}
-// TODO
-	/*
+
 	@Override
-	public void onBlockPreDestroy(World world, BlockPos pos, IBlockState metadata) {
+	public void breakBlock(World world, BlockPos pos, IBlockState state){
 		IMachinePart machineBlock = (IMachinePart) world.getTileEntity(pos);
 		if (machineBlock == null) {
 			return;
@@ -63,7 +62,6 @@ public class MachineBlocks extends BlockContainer {
 					world, pos.getX(), pos.getY(), pos.getZ());
 		}
 	}
-	*/
 
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState iBlockState,
