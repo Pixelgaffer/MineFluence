@@ -1,5 +1,7 @@
 package net.ocine.minefluence;
 
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -8,8 +10,6 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 import net.ocine.minefluence.blocks.Blocks;
 import net.ocine.minefluence.gui.GuiHandler;
 import net.ocine.minefluence.items.Items;

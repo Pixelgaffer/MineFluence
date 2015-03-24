@@ -4,8 +4,10 @@ import com.google.common.collect.Maps;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.ocine.minefluence.blocks.tileentities.IMachinePart;
+import net.ocine.minefluence.blocks.tileentities.TileEntityDisplay;
 import net.ocine.minefluence.models.ModelMachineBlockBlock;
 import net.ocine.minefluence.models.ModelMachineBlockBorder;
 import org.lwjgl.opengl.GL11;
@@ -27,6 +29,14 @@ public class MachineBlockRenderer extends TileEntitySpecialRenderer {
 		IMachinePart machinePart = (IMachinePart) tileEntity;
 		GL11.glPushMatrix();
 		GL11.glTranslatef((float) x + 0.5F, (float) y + 1.5F, (float) z + 0.5F);
+		if(tileEntity instanceof TileEntityDisplay) {
+			EnumFacing face = ((TileEntityDisplay) tileEntity).facing;
+			float rot = 90;
+			if(face == EnumFacing.NORTH)rot = 180;
+			if(face == EnumFacing.WEST)rot = 270;
+			if(face == EnumFacing.SOUTH)rot = 0;
+			GL11.glRotatef(rot, 0, 1, 0);
+		}
 		GL11.glPushMatrix();
 		GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
 		Minecraft.getMinecraft().renderEngine.bindTexture(machinePart.getTexture());

@@ -1,11 +1,13 @@
 package net.ocine.minefluence.blocks;
 
+import com.google.common.collect.Lists;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -20,6 +22,7 @@ import net.ocine.minefluence.MineFluence;
 import net.ocine.minefluence.blocks.tileentities.*;
 import net.ocine.minefluence.gui.GUIs;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class MachineBlocks extends BlockContainer {
@@ -40,12 +43,22 @@ public class MachineBlocks extends BlockContainer {
 
 	public static final PropertyEnum TYPE = PropertyEnum.create("type", Machines.class);
 
+	private static final LinkedList<EnumFacing> faces = Lists.newLinkedList();
+
 	public MachineBlocks(CreativeTabs tab) {
 		super(Material.iron);
 		setDefaultState(blockState.getBaseState().withProperty(TYPE, Machines.CORE));
 		GameRegistry.registerBlock(this, MachineBlocksItemBlock.class,
 				UNLOCALIZED_NAME);
 		setCreativeTab(tab);
+	}
+
+	@Override public IBlockState onBlockPlaced(final World worldIn, final BlockPos pos, final EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+		IBlockState iBlockState = super.onBlockPlaced(worldIn, pos, facing, hitX, hitY, hitZ, meta, placer);
+		if(iBlockState.getValue(TYPE).equals(Machines.DISPLAY) && facing.getAxis() != EnumFacing.Axis.Y && !worldIn.isRemote) {
+			faces.add(facing.getOpposite());
+		}
+		return iBlockState;
 	}
 
 	@Override
@@ -94,7 +107,9 @@ public class MachineBlocks extends BlockContainer {
 			return new TileEntityCore();
 		}
 		if (metadata == Machines.DISPLAY.ordinal()) {
-			return new TileEntityDisplay();
+			TileEntityDisplay tileEntityDisplay = new TileEntityDisplay();
+			if(!faces.isEmpty())tileEntityDisplay.facing = faces.remove(0);
+			return tileEntityDisplay;
 		}
 		if (metadata == Machines.INPUT.ordinal()) {
 			return new TileEntityInput();
