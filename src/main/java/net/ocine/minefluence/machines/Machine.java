@@ -45,6 +45,8 @@ public interface Machine {
 
 	public int getHeat();
 	
+	public int getMaxHeat();
+	
 	public void cool(int amt);
 	
 	/**

@@ -63,7 +63,7 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart,
 			}
 			else {
 				if (isTransformationInProgress()) {
-					heat += logic.heatGeneration;
+					heat += logic.heatGeneration * Math.pow(getWorkers(), 0.95);
 					if(heat > getMaxHeat()) {
 						worldObj.createExplosion(null, getX() + 0.5, getY() + 0.5, getZ() + 0.5, 5.0f, true);
 					}
@@ -82,7 +82,8 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart,
 		}
 	}
 	
-	private int getMaxHeat() {
+	@Override
+	public int getMaxHeat() {
 		return 200;
 	}
 	
