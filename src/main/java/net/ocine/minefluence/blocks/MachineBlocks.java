@@ -155,7 +155,7 @@ public class MachineBlocks extends BlockContainer {
 	}
 
 	@Override public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side) {
-		// we render it our selfes
+		// we render it our selves
 		return false;
 	}
 
