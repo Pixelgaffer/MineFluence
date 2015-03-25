@@ -1,6 +1,13 @@
 {
-  "parent": "block/cube_all",
+  "parent": "minefluence:block/machineBlocks_base",
   "textures": {
-    "all": "minefluence:blocks/mblock_watercooling"
+    "texture": "minefluence:blocks/mblock_watercooling",
+    "top": "minefluence:blocks/mblock_watercooling",
+    "bottom": "minefluence:blocks/mblock_watercooling",
+    "left": "minefluence:blocks/mblock_watercooling",
+    "right": "minefluence:blocks/mblock_watercooling",
+    "back": "minefluence:blocks/mblock_watercooling",
+    "front": "minefluence:blocks/mblock_watercooling",
+    "border": "minefluence:blocks/mblock_flair_gray"
   }
 }
