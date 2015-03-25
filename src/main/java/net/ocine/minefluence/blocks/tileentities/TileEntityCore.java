@@ -62,6 +62,8 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart,
 					heat += logic.heatGeneration * Math.pow(getWorkers(), 0.95);
 					if(heat > getMaxHeat()) {
 						worldObj.createExplosion(null, getX() + 0.5, getY() + 0.5, getZ() + 0.5, 5.0f, true);
+						// return here to prevent crash below because of missing tile entities
+						return;
 					}
 					remainingTime--;
 					super.markDirty();
