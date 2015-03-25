@@ -371,6 +371,7 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart,
 		super.readFromNBT(compound);
 		remainingTime = compound.getInteger("remaining");
 		numWorkers = compound.getInteger("numWorkers");
+		heat = compound.getInteger("heat");
 		if (compound.hasKey("items")) {
 			items = new ArrayList<ItemStack>();
 			NBTTagList list = compound.getTagList("items", Constants.NBT.TAG_COMPOUND);
@@ -397,6 +398,7 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart,
 		super.writeToNBT(compound);
 		compound.setInteger("remaining", remainingTime);
 		compound.setInteger("numWorkers", numWorkers);
+		compound.setInteger("heat", heat);
 		if (items != null) {
 			NBTTagList list = new NBTTagList();
 			for (ItemStack is : items) {
@@ -450,6 +452,7 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart,
 		writeToNBT(compound);
 		compound.setInteger("remaining", remainingTime);
 		compound.setInteger("numWorkers", numWorkers);
+		compound.setInteger("heat", heat);
 		if (items != null) {
 			NBTTagList list = new NBTTagList();
 			for (ItemStack is : items) {
@@ -475,6 +478,7 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart,
 		readFromNBT(compound);
 		remainingTime = compound.getInteger("remaining");
 		numWorkers = compound.getInteger("numWorkers");
+		heat = compound.getInteger("heat");
 		if (compound.hasKey("items")) {
 			items = new ArrayList<ItemStack>();
 			NBTTagList list = compound.getTagList("items", Constants.NBT.TAG_COMPOUND);
