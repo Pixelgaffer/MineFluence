@@ -126,10 +126,10 @@ public class MachineBlocks extends BlockContainer {
 			return new TileEntityHyperworker();
 		}
 		if (metadata == Machines.FAN.ordinal()) {
-			return new TileEntityCooler(Machines.FAN, "textures/blocks/machineblocks/machineblock_fan.png", 7);
+			return new TileEntityCooler(Machines.FAN, 7);
 		}
 		if (metadata == Machines.WATERCOOLING.ordinal()) {
-			return new TileEntityCooler(Machines.WATERCOOLING, "textures/blocks/machineblocks/machineblock_watercooling.png", 20);
+			return new TileEntityCooler(Machines.WATERCOOLING, 20);
 		}
 		return null;
 	}

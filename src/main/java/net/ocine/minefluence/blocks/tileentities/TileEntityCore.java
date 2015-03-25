@@ -10,13 +10,11 @@ import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.ocine.minefluence.Algorithm;
-import net.ocine.minefluence.MineFluence;
 import net.ocine.minefluence.blocks.MachineBlocks;
 import net.ocine.minefluence.machines.AbstractMachineLogic;
 import net.ocine.minefluence.machines.Machine;
@@ -32,8 +30,6 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart,
 	int remainingTime;
 	int numWorkers;
 	public int heat;
-	@SideOnly(Side.CLIENT)
-	private static ResourceLocation texture = new ResourceLocation(MineFluence.MODID, "textures/blocks/machineblocks/machineblock_core.png");
 
 	@Override
 	public void update() {
@@ -193,11 +189,6 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart,
 	@Override
 	public MachineBlocks.Machines getType() {
 		return MachineBlocks.Machines.CORE;
-	}
-
-	@SideOnly(Side.CLIENT)
-	@Override public ResourceLocation getTexture() {
-		return texture;
 	}
 
 	@Override
