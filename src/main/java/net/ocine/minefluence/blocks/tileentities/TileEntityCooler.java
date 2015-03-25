@@ -2,6 +2,7 @@ package net.ocine.minefluence.blocks.tileentities;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.gui.IUpdatePlayerListBox;
+import net.ocine.minefluence.blocks.MachineBlocks;
 import net.ocine.minefluence.blocks.MachineBlocks.Machines;
 
 public class TileEntityCooler extends TileEntityMachinePart implements IUpdatePlayerListBox {
@@ -20,7 +21,7 @@ public class TileEntityCooler extends TileEntityMachinePart implements IUpdatePl
 	
 	@Override
 	public Machines getType() {
-		return type;
+		return (Machines)worldObj.getBlockState(getPos()).getValue(MachineBlocks.TYPE);
 	}
 
 	@Override
@@ -33,15 +34,10 @@ public class TileEntityCooler extends TileEntityMachinePart implements IUpdatePl
 	@Override public void readFromNBT(NBTTagCompound p_145839_1_) {
 		super.readFromNBT(p_145839_1_);
 		coolAmount = p_145839_1_.getInteger("coolAmount");
-		String coolerType = p_145839_1_.getString("coolerType");
-		if(coolerType != null && !coolerType.isEmpty()){
-			type = Machines.valueOf(coolerType);
-		}
 	}
 
 	@Override public void writeToNBT(NBTTagCompound p_145841_1_) {
 		super.writeToNBT(p_145841_1_);
 		p_145841_1_.setInteger("coolAmount", coolAmount);
-		p_145841_1_.setString("coolerType", type.getName());
 	}
 }
