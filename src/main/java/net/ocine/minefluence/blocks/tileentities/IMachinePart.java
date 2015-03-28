@@ -1,5 +1,6 @@
 package net.ocine.minefluence.blocks.tileentities;
 
+import net.minecraft.util.IStringSerializable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.ocine.minefluence.machines.Machine;
@@ -36,7 +37,11 @@ public interface IMachinePart {
 	public BorderType getBorderType();
 
 	@SideOnly(Side.CLIENT)
-	public enum BorderType{
-		DEFAULT, RED, GREEN
+	public enum BorderType implements IStringSerializable{
+		DEFAULT, RED, GREEN;
+
+		@Override public String getName() {
+			return name().toLowerCase();
+		}
 	}
 }

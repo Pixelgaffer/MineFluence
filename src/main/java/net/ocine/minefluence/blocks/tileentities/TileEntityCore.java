@@ -33,17 +33,13 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart,
 	@Override
 	public void update() {
 		if (!worldObj.isRemote) {
-			//Wenn das Redstonesignal aus ist
-			if(!worldObj.isBlockPowered(getPos())) {
-				return;
-			}
 			if (logic == null) {
 				cool();
 				if (counter >= 20) {
 					counter = 0;
 					parts = Algorithm.doMagic(new Algorithm.Vector(getX(), getY(), getZ()), getWorld());
 					calcWorkers();
-					logic = MachineLogicManager.getApplicatableLogic(this);
+					if(worldObj.isBlockPowered(getPos()))logic = MachineLogicManager.getApplicatableLogic(this);
 					if (logic == null) {
 						parts.clear();
 						numWorkers = 0;
@@ -53,10 +49,10 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart,
 						((IMachinePart) worldObj.getTileEntity(new BlockPos(vector.x, vector.y, vector.z))).assignToMachine(this, true);
 					}
 					super.markDirty();
+					worldObj.markBlockForUpdate(getPos());
 				}
 				counter++;
-			}
-			else {
+			} else if(worldObj.isBlockPowered(getPos())){
 				if (isTransformationInProgress()) {
 					heat += logic.heatGeneration * Math.pow(getWorkers(), 0.95);
 					if(heat > getMaxHeat()) {
@@ -66,6 +62,7 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart,
 					}
 					remainingTime--;
 					super.markDirty();
+					worldObj.markBlockForUpdate(getPos());
 					if (remainingTime <= 0) {
 						finishProcess();
 					}
@@ -75,6 +72,12 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart,
 					startNewProcess();
 				}
 				updateDisplays();
+			} else if(logic != null){
+				logic = null;
+				parts.clear();
+				numWorkers = 0;
+				super.markDirty();
+				worldObj.markBlockForUpdate(getPos());
 			}
 		}
 	}
@@ -156,6 +159,7 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart,
 		}
 		// NO THIS CAN'T BE
 		TileEntityCore core2 = (TileEntityCore) machine;
+		// TODO maybe @nico would prefer an explosion
 		core2.worldObj.setBlockToAir(new BlockPos(getX(), getY(), getZ()));
 		return false;
 	}
@@ -201,6 +205,8 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart,
 		}
 		parts.clear();
 		logic = null;
+		super.markDirty();
+		worldObj.markBlockForUpdate(getPos());
 	}
 
 	@Override
@@ -492,6 +498,8 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart,
 				parts.add(new Algorithm.Vector(part.getInteger("x"), part.getInteger("y"), part.getInteger("z")));
 			}
 		}
+		// update render information
+		worldObj.markBlockRangeForRenderUpdate(getPos(), getPos());
 	}
 
 	@Override

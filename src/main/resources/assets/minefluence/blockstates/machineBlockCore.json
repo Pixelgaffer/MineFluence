@@ -1,5 +1,8 @@
 {
   "variants": {
-    "normal": { "model": "minefluence:machineBlockCore" }
+    "inventory": { "model": "minefluence:machineBlockCore" },
+    "border=default": { "model": "minefluence:machineBlockCore" },
+    "border=green": { "model": "minefluence:machineBlockCore_green" },
+    "border=red": { "model": "minefluence:machineBlockCore_red" }
   }
 }
