@@ -1,6 +1,11 @@
 {
   "variants": {
-    "variant=fan": { "model": "minefluence:machineBlockCooler.fan" },
-    "variant=watercooling": { "model": "minefluence:machineBlockCooler.watercooling" }
+    "inventory": { "model": "minefluence:machineBlockCooler.fan" },
+    "border=default,variant=fan": { "model": "minefluence:machineBlockCooler.fan" },
+    "border=green,variant=fan": { "model": "minefluence:machineBlockCooler.fan_green" },
+    "border=red,variant=fan": { "model": "minefluence:machineBlockCooler.fan_red" },
+    "border=default,variant=watercooling": { "model": "minefluence:machineBlockCooler.watercooling" },
+    "border=green,variant=watercooling": { "model": "minefluence:machineBlockCooler.watercooling_green" },
+    "border=red,variant=watercooling": { "model": "minefluence:machineBlockCooler.watercooling_red" }
   }
 }

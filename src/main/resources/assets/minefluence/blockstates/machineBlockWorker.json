@@ -1,6 +1,10 @@
 {
   "variants": {
-    "variant=worker": { "model": "minefluence:machineBlockWorker.worker" },
-    "variant=hyperworker": { "model": "minefluence:machineBlockWorker.hyperworker" }
+    "border=default,variant=worker": { "model": "minefluence:machineBlockWorker.worker" },
+    "border=green,variant=worker": { "model": "minefluence:machineBlockWorker.worker_green" },
+    "border=red,variant=worker": { "model": "minefluence:machineBlockWorker.worker_red" },
+    "border=default,variant=hyperworker": { "model": "minefluence:machineBlockWorker.hyperworker" },
+    "border=green,variant=hyperworker": { "model": "minefluence:machineBlockWorker.hyperworker_green" },
+    "border=red,variant=hyperworker": { "model": "minefluence:machineBlockWorker.hyperworker_red" }
   }
 }

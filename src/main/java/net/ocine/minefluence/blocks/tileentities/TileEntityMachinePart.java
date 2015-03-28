@@ -76,5 +76,6 @@ public abstract class TileEntityMachinePart extends TileEntity implements IMachi
 	@Override
 	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
 		readFromNBT(pkt.getNbtCompound());
+		worldObj.markBlockRangeForRenderUpdate(getPos(), getPos());
 	}
 }

@@ -73,11 +73,7 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart,
 				}
 				updateDisplays();
 			} else if(logic != null){
-				logic = null;
-				parts.clear();
-				numWorkers = 0;
-				super.markDirty();
-				worldObj.markBlockForUpdate(getPos());
+				removePart(getParts().iterator().next());
 			}
 		}
 	}

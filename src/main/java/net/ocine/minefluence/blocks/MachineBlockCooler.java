@@ -6,13 +6,12 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.ocine.minefluence.blocks.tileentities.IMachinePart;
@@ -33,16 +32,14 @@ public class MachineBlockCooler extends BlockContainer {
 	}
 
 	public static final PropertyEnum PROP_VARIANT = PropertyEnum.create("variant", Variant.class);
+	public static final PropertyEnum PROP_BORDER = PropertyEnum.create("border", IMachinePart.BorderType.class);
 
 	public MachineBlockCooler(CreativeTabs tab) {
 		super(Material.iron);
-		setDefaultState(blockState.getBaseState().withProperty(PROP_VARIANT, Variant.FAN));
+		setDefaultState(blockState.getBaseState().withProperty(PROP_VARIANT, Variant.FAN)
+				.withProperty(PROP_BORDER, IMachinePart.BorderType.DEFAULT));
 		GameRegistry.registerBlock(this, MachineBlockCoolerItem.class,NAME);
 		setCreativeTab(tab);
-	}
-
-	@Override public IBlockState onBlockPlaced(final World worldIn, final BlockPos pos, final EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-		return super.onBlockPlaced(worldIn, pos, facing, hitX, hitY, hitZ, meta, placer);
 	}
 
 	@Override
@@ -81,7 +78,16 @@ public class MachineBlockCooler extends BlockContainer {
 	}
 
 	@Override protected BlockState createBlockState() {
-		return new BlockState(this, PROP_VARIANT);
+		return new BlockState(this, PROP_VARIANT, PROP_BORDER);
+	}
+
+	@Override public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
+		IBlockState actualState = super.getActualState(state, worldIn, pos);
+		TileEntityCooler tileEntityCooler = (TileEntityCooler) worldIn.getTileEntity(pos);
+		if(tileEntityCooler != null){
+			actualState = actualState.withProperty(PROP_BORDER, tileEntityCooler.getBorderType());
+		}
+		return actualState;
 	}
 
 	@Override

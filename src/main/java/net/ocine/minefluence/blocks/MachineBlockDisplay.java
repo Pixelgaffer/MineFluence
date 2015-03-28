@@ -3,6 +3,7 @@ package net.ocine.minefluence.blocks;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
+import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -11,6 +12,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.ocine.minefluence.MineFluence;
@@ -23,10 +25,12 @@ public class MachineBlockDisplay extends BlockContainer {
 	public static final String NAME = "machineBlockDisplay";
 
 	public static final PropertyDirection PROP_FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
+	public static final PropertyEnum PROP_BORDER = PropertyEnum.create("border", IMachinePart.BorderType.class);
 
 	public MachineBlockDisplay(CreativeTabs tab) {
 		super(Material.iron);
-		setDefaultState(blockState.getBaseState().withProperty(PROP_FACING, EnumFacing.EAST));
+		setDefaultState(blockState.getBaseState().withProperty(PROP_FACING, EnumFacing.EAST)
+				.withProperty(PROP_BORDER, IMachinePart.BorderType.DEFAULT));
 		setUnlocalizedName(NAME);
 		GameRegistry.registerBlock(this, NAME);
 		setCreativeTab(tab);
@@ -69,7 +73,16 @@ public class MachineBlockDisplay extends BlockContainer {
 	}
 
 	@Override protected BlockState createBlockState() {
-		return new BlockState(this, PROP_FACING);
+		return new BlockState(this, PROP_FACING, PROP_BORDER);
+	}
+
+	@Override public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
+		IBlockState actualState = super.getActualState(state, worldIn, pos);
+		TileEntityDisplay tileEntityDisplay = (TileEntityDisplay) worldIn.getTileEntity(pos);
+		if(tileEntityDisplay != null){
+			actualState = actualState.withProperty(PROP_BORDER, tileEntityDisplay.getBorderType());
+		}
+		return actualState;
 	}
 
 	/**

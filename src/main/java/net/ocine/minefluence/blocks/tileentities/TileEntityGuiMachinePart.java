@@ -79,5 +79,6 @@ public abstract class TileEntityGuiMachinePart extends InventoryTileEntity imple
 	@Override
 	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
 		readFromNBT(pkt.getNbtCompound());
+		worldObj.markBlockRangeForRenderUpdate(getPos(), getPos());
 	}
 }

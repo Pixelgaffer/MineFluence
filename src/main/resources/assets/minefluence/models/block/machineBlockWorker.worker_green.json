@@ -1,0 +1,13 @@
+{
+  "parent": "minefluence:block/machineBlocks_base",
+  "textures": {
+    "texture": "minefluence:blocks/mblock_worker_top",
+    "top": "minefluence:blocks/mblock_worker_top",
+    "bottom": "minefluence:blocks/mblock_worker_bottom",
+    "left": "minefluence:blocks/mblock_worker_side",
+    "right": "minefluence:blocks/mblock_worker_side",
+    "back": "minefluence:blocks/mblock_worker_side",
+    "front": "minefluence:blocks/mblock_worker_front",
+    "border": "minefluence:blocks/mblock_flair_green"
+  }
+}
