@@ -3,7 +3,7 @@ package net.ocine.minefluence.blocks;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
-import net.minecraft.block.properties.PropertyEnum;
+import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -25,12 +25,12 @@ public class MachineBlockDisplay extends BlockContainer {
 	public static final String NAME = "machineBlockDisplay";
 
 	public static final PropertyDirection PROP_FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
-	public static final PropertyEnum PROP_BORDER = PropertyEnum.create("border", IMachinePart.BorderType.class);
+	public static final PropertyInteger PROP_PROGRESS = PropertyInteger.create("progress", 0, 6);
 
 	public MachineBlockDisplay(CreativeTabs tab) {
 		super(Material.iron);
 		setDefaultState(blockState.getBaseState().withProperty(PROP_FACING, EnumFacing.EAST)
-				.withProperty(PROP_BORDER, IMachinePart.BorderType.DEFAULT));
+				.withProperty(PROP_PROGRESS, 6));
 		setUnlocalizedName(NAME);
 		GameRegistry.registerBlock(this, NAME);
 		setCreativeTab(tab);
@@ -73,14 +73,29 @@ public class MachineBlockDisplay extends BlockContainer {
 	}
 
 	@Override protected BlockState createBlockState() {
-		return new BlockState(this, PROP_FACING, PROP_BORDER);
+		return new BlockState(this, PROP_FACING, PROP_PROGRESS);
 	}
 
 	@Override public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
 		IBlockState actualState = super.getActualState(state, worldIn, pos);
 		TileEntityDisplay tileEntityDisplay = (TileEntityDisplay) worldIn.getTileEntity(pos);
 		if(tileEntityDisplay != null){
-			actualState = actualState.withProperty(PROP_BORDER, tileEntityDisplay.getBorderType());
+			int progress = tileEntityDisplay.progress;
+			if(progress == -1){
+				actualState = actualState.withProperty(PROP_PROGRESS, 6);
+			} else if(progress < 20){
+				actualState = actualState.withProperty(PROP_PROGRESS, 0);
+			} else if(progress < 40){
+				actualState = actualState.withProperty(PROP_PROGRESS, 1);
+			} else if(progress < 70){
+				actualState = actualState.withProperty(PROP_PROGRESS, 2);
+			} else if(progress < 90){
+				actualState = actualState.withProperty(PROP_PROGRESS, 3);
+			} else if(progress < 100){
+				actualState = actualState.withProperty(PROP_PROGRESS, 4);
+			} else {
+				actualState = actualState.withProperty(PROP_PROGRESS, 5);
+			}
 		}
 		return actualState;
 	}

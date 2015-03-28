@@ -7,7 +7,7 @@
     "left": "minefluence:blocks/mblock_display_side",
     "right": "minefluence:blocks/mblock_display_side",
     "back": "minefluence:blocks/mblock_display_side",
-    "front": "minefluence:blocks/mblock_display_front",
+    "front": "minefluence:blocks/mblock_display_front_frame0",
     "border": "minefluence:blocks/mblock_flair_red"
   }
 }
