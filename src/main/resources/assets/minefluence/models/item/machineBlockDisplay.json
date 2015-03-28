@@ -1,5 +1,5 @@
 {
-  "parent": "minefluence:block/machineBlocks_input",
+  "parent": "minefluence:block/machineBlockDisplay",
   "display": {
     "thirdperson": {
       "rotation": [ 10, -45, 170 ],

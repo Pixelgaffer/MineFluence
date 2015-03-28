@@ -1,5 +1,5 @@
 {
-  "parent": "minefluence:block/machineBlocks_watercooling",
+  "parent": "minefluence:block/machineBlockCooler.watercooling",
   "display": {
     "thirdperson": {
       "rotation": [ 10, -45, 170 ],

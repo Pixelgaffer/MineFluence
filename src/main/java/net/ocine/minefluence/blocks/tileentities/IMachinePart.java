@@ -2,7 +2,6 @@ package net.ocine.minefluence.blocks.tileentities;
 
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.ocine.minefluence.blocks.MachineBlocks;
 import net.ocine.minefluence.machines.Machine;
 
 import javax.annotation.Nullable;
@@ -35,8 +34,6 @@ public interface IMachinePart {
 
 	@SideOnly(Side.CLIENT)
 	public BorderType getBorderType();
-
-	public MachineBlocks.Machines getType();
 
 	@SideOnly(Side.CLIENT)
 	public enum BorderType{

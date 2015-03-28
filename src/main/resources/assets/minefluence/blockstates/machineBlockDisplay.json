@@ -1,0 +1,9 @@
+{
+  "variants": {
+    "inventory": { "model": "minefluence:machineBlockDisplay" },
+    "facing=east": { "model": "minefluence:machineBlockDisplay", "y": 0 },
+    "facing=south": { "model": "minefluence:machineBlockDisplay", "y": 90 },
+    "facing=west": { "model": "minefluence:machineBlockDisplay", "y": 180 },
+    "facing=north": { "model": "minefluence:machineBlockDisplay", "y": 270 }
+  }
+}

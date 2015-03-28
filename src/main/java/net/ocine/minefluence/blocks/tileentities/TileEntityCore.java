@@ -15,7 +15,6 @@ import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.ocine.minefluence.Algorithm;
-import net.ocine.minefluence.blocks.MachineBlocks;
 import net.ocine.minefluence.machines.AbstractMachineLogic;
 import net.ocine.minefluence.machines.Machine;
 import net.ocine.minefluence.machines.MachineLogicManager;
@@ -189,11 +188,6 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart,
 	}
 
 	@Override
-	public MachineBlocks.Machines getType() {
-		return MachineBlocks.Machines.CORE;
-	}
-
-	@Override
 	public void addPart(IMachinePart machinePart) {
 		parts.add(new Algorithm.Vector(((TileEntity) machinePart).getPos().getX(), ((TileEntity) machinePart).getPos().getY(), ((TileEntity) machinePart).getPos().getZ()));
 	}
@@ -254,10 +248,10 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart,
 	public void calcWorkers() {
 		int i = 0;
 		for (IMachinePart part : getParts()) {
-			if (part.getType() == MachineBlocks.Machines.WORKER) {
+			if (part instanceof TileEntityWorker) {
 				i++;
 			}
-			if (part.getType() == MachineBlocks.Machines.HYPERWORKER) {
+			if (part instanceof TileEntityHyperworker) {
 				i += 10; // this is awesome
 			}
 		}
@@ -268,7 +262,7 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart,
 	public int getInputs() {
 		int i = 0;
 		for (IMachinePart part : getParts()) {
-			if (part.getType() == MachineBlocks.Machines.INPUT) {
+			if (part instanceof TileEntityInput) {
 				i++;
 			}
 		}
@@ -279,7 +273,7 @@ public class TileEntityCore extends TileEntity implements Machine, IMachinePart,
 	public int getOutputs() {
 		int i = 0;
 		for (IMachinePart part : getParts()) {
-			if (part.getType() == MachineBlocks.Machines.OUTPUT) {
+			if (part instanceof TileEntityOutput) {
 				i++;
 			}
 		}

@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "variant=fan": { "model": "minefluence:machineBlockCooler.fan" },
+    "variant=watercooling": { "model": "minefluence:machineBlockCooler.watercooling" }
+  }
+}

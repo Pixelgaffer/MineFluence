@@ -1,5 +1,5 @@
 {
-  "parent": "minefluence:block/machineBlocks_display",
+  "parent": "minefluence:block/machineBlockCooler.fan",
   "display": {
     "thirdperson": {
       "rotation": [ 10, -45, 170 ],

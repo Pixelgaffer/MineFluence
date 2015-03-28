@@ -1,5 +1,5 @@
 {
-  "parent": "minefluence:block/machineBlocks_hyperworker",
+  "parent": "minefluence:block/machineBlockWorker.hyperworker",
   "display": {
     "thirdperson": {
       "rotation": [ 10, -45, 170 ],

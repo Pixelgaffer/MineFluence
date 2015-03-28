@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "variant=worker": { "model": "minefluence:machineBlockWorker.worker" },
+    "variant=hyperworker": { "model": "minefluence:machineBlockWorker.hyperworker" }
+  }
+}
