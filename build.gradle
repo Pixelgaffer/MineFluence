@@ -22,7 +22,7 @@ group= "com.cherryworm.minefluence" // http://maven.apache.org/guides/mini/guide
 archivesBaseName = "minefluence-1.8"
 
 minecraft {
-    version = "1.8-11.14.1.1334"
+    version = "1.8-11.14.3.1446"
     runDir = "eclipse"
 }
 
